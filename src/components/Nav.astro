@@ -1,0 +1,33 @@
+---
+const links = [
+  { href: '/#proyectos', label: 'Proyectos' },
+  { href: '/#sobre-mi', label: 'Sobre mí' },
+  { href: '/#stack', label: 'Stack' },
+  { href: '/#contacto', label: 'Contacto' }
+];
+---
+<header
+  id="navbar"
+  class="fixed top-0 inset-x-0 z-40 transition-colors"
+  style="border-bottom:1px solid transparent;"
+>
+  <div class="container flex items-center justify-between py-4">
+    <a href="/" class="font-extrabold tracking-tight text-cp-text">
+      <span class="gradient-text">CP</span> · proyectospaez
+    </a>
+    <nav class="hidden md:flex items-center gap-7 text-sm font-medium text-cp-muted">
+      {links.map((l) => (
+        <a href={l.href} class="hover:text-cp-text transition-colors">{l.label}</a>
+      ))}
+    </nav>
+  </div>
+</header>
+
+<style>
+  #navbar.glass {
+    background: color-mix(in oklab, var(--cp-bg) 70%, transparent);
+    border-bottom-color: var(--cp-border) !important;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+</style>

@@ -1,0 +1,62 @@
+---
+---
+<div id="cp-cursor" aria-hidden="true"></div>
+
+<style>
+  #cp-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 22px;
+    height: 22px;
+    border: 1.5px solid var(--cp-accent);
+    border-radius: 9999px;
+    pointer-events: none;
+    z-index: 90;
+    transform: translate(-50%, -50%);
+    transition: width 0.18s ease, height 0.18s ease, background-color 0.18s ease, opacity 0.18s ease;
+    opacity: 0;
+    mix-blend-mode: difference;
+    will-change: transform;
+  }
+  #cp-cursor.cp-hover {
+    width: 44px;
+    height: 44px;
+    background: color-mix(in oklab, var(--cp-accent) 15%, transparent);
+  }
+  @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
+    #cp-cursor { display: none; }
+  }
+</style>
+
+<script>
+  const setupCursor = () => {
+    const cursor = document.getElementById('cp-cursor');
+    if (!cursor) return;
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) return;
+
+    let x = 0, y = 0, tx = 0, ty = 0;
+    const move = (e: MouseEvent) => {
+      tx = e.clientX;
+      ty = e.clientY;
+      cursor.style.opacity = '1';
+    };
+    const tick = () => {
+      x += (tx - x) * 0.2;
+      y += (ty - y) * 0.2;
+      cursor.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+      requestAnimationFrame(tick);
+    };
+    window.addEventListener('mousemove', move);
+    requestAnimationFrame(tick);
+
+    const hoverables = 'a, button, [role="button"], input, textarea, select';
+    document.querySelectorAll<HTMLElement>(hoverables).forEach((el) => {
+      el.addEventListener('mouseenter', () => cursor.classList.add('cp-hover'));
+      el.addEventListener('mouseleave', () => cursor.classList.remove('cp-hover'));
+    });
+  };
+
+  document.addEventListener('astro:page-load', setupCursor);
+</script>
