@@ -1,0 +1,169 @@
+---
+// Animación CSS infinita: 3 columnas Kanban con cards que migran
+// Crítico → Importante → Seguimiento, simulando rebalanceo nocturno.
+---
+<div class="kdemo-wrap" role="img" aria-label="Animación tablero Kanban con priorización diaria">
+  <div class="kdemo-stage">
+    <div class="kcol kcol-critical">
+      <div class="khead"><span class="kdot"></span> Crítico</div>
+      <div class="klist">
+        <div class="kcard kc-1"><span>M.González</span><b>92</b></div>
+        <div class="kcard kc-2"><span>L.Vargas</span><b>87</b></div>
+      </div>
+    </div>
+    <div class="kcol kcol-imp">
+      <div class="khead"><span class="kdot"></span> Importante</div>
+      <div class="klist">
+        <div class="kcard kc-3"><span>C.Mendoza</span><b>71</b></div>
+        <div class="kcard kc-4"><span>A.Moreno</span><b>65</b></div>
+        <div class="kcard kc-5"><span>G.Cifuentes</span><b>60</b></div>
+      </div>
+    </div>
+    <div class="kcol kcol-follow">
+      <div class="khead"><span class="kdot"></span> Seguimiento</div>
+      <div class="klist">
+        <div class="kcard kc-6"><span>J.Castellanos</span><b>42</b></div>
+      </div>
+    </div>
+  </div>
+  <div class="kbar">
+    <div class="kbar-fill"></div>
+    <span class="kbar-label">Refresh score · 02:00 COT</span>
+  </div>
+</div>
+
+<style>
+  .kdemo-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #0a1f3d 0%, #02050e 100%);
+    overflow: hidden;
+    border: 1px solid var(--cp-border);
+  }
+  .kdemo-stage {
+    position: absolute;
+    inset: 28px 28px 64px 28px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 14px;
+  }
+  .kcol {
+    border-radius: 14px;
+    padding: 14px;
+    border: 1px solid;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .kcol-critical { background: rgba(255,80,80,0.06); border-color: rgba(255,80,80,0.4); }
+  .kcol-imp      { background: rgba(239,159,39,0.06); border-color: rgba(239,159,39,0.4); }
+  .kcol-follow   { background: rgba(22,193,114,0.06); border-color: rgba(22,193,114,0.4); }
+
+  .khead {
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .kcol-critical .khead { color: #ff6b6b; }
+  .kcol-imp      .khead { color: #efb360; }
+  .kcol-follow   .khead { color: #4dd3a1; }
+  .kdot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: currentColor;
+    box-shadow: 0 0 8px currentColor;
+    animation: kpulse 2s infinite;
+  }
+  @keyframes kpulse { 0%,100%{opacity:1;} 50%{opacity:0.4;} }
+
+  .klist { display: flex; flex-direction: column; gap: 8px; }
+  .kcard {
+    background: rgba(255,255,255,0.06);
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid rgba(255,255,255,0.04);
+    will-change: transform, opacity;
+  }
+  .kcard b {
+    font-family: var(--font-mono, monospace);
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* Cards migrating to simulate nightly rebalance */
+  .kc-1 { animation: float-1 8s ease-in-out infinite; }
+  .kc-3 { animation: float-3 8s ease-in-out infinite; }
+  .kc-6 { animation: float-6 8s ease-in-out infinite; }
+
+  @keyframes float-1 {
+    0%, 100% { transform: translateY(0); opacity: 1; }
+    45% { transform: translateY(0); opacity: 1; }
+    50% { transform: translateY(-2px) scale(1.04); opacity: 1; box-shadow: 0 6px 14px rgba(255,107,107,0.35); }
+    55% { transform: translateY(0); opacity: 1; box-shadow: none; }
+  }
+  @keyframes float-3 {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-3px) scale(1.03); box-shadow: 0 6px 14px rgba(239,179,96,0.35); }
+  }
+  @keyframes float-6 {
+    0%, 100% { transform: translateY(0); }
+    25%, 75% { transform: translateY(-2px) scale(1.02); }
+  }
+
+  /* Progress bar at bottom (simulates nightly job progress) */
+  .kbar {
+    position: absolute;
+    left: 28px; right: 28px; bottom: 22px;
+    height: 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .kbar-fill {
+    flex: 1;
+    height: 3px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .kbar-fill::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, #0088ce, #16c172);
+    transform-origin: left;
+    animation: kbar 8s linear infinite;
+  }
+  @keyframes kbar {
+    0% { transform: scaleX(0); }
+    90% { transform: scaleX(1); }
+    100% { transform: scaleX(1); opacity: 0.3; }
+  }
+  .kbar-label {
+    color: rgba(255,255,255,0.55);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kc-1, .kc-3, .kc-6, .kbar-fill::before, .kdot { animation: none !important; }
+  }
+</style>

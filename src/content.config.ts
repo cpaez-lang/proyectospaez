@@ -18,8 +18,10 @@ const projects = defineCollection({
     featured: z.boolean().default(false),
     publishedAt: z.coerce.date(),
     videoUrl: z.string().optional(),
+    animationKey: z.enum(['kanban', 'video-gen', 'markowitz']).optional(),
     liveUrl: z.string().optional(),
     githubUrl: z.string().optional(),
+    orgUrl: z.string().optional(),
     order: z.number().default(0)
   })
 });

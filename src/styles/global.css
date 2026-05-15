@@ -138,6 +138,12 @@ html.light {
     opacity: 0;
     transform: translateY(20px);
   }
+
+  /* Dev mode: revela elementos solo cuando el flag está activo */
+  html.cp-dev-mode [data-cp-dev-only][hidden] {
+    display: inline-flex !important;
+  }
+  html.cp-dev-mode .cp-dev-banner { display: flex !important; }
 }
 
 @layer utilities {

@@ -2,6 +2,7 @@
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TechBadge from '../../components/TechBadge.astro';
+import MediaShowcase from '../../components/MediaShowcase.astro';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -28,8 +29,10 @@ const {
   keyMetricLabel,
   publishedAt,
   videoUrl,
+  animationKey,
   liveUrl,
-  githubUrl
+  githubUrl,
+  orgUrl
 } = project.data;
 
 const stackIconMap: Record<string, string> = {
@@ -160,6 +163,20 @@ const initials = title.split(' ').filter(Boolean).slice(0, 2).map((w: string) =>
                   Código
                 </a>
               )}
+              {orgUrl && (
+                <a
+                  href={orgUrl}
+                  target="_blank"
+                  rel="noopener"
+                  data-cp-dev-only
+                  hidden
+                  class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-cp-gold text-cp-gold hover:bg-cp-gold/10 transition font-semibold"
+                  title="Solo visible en modo dev (?dev=cpaez)"
+                >
+                  <Icon name="lucide:cloud" class="w-4 h-4" />
+                  Ir a la org Salesforce
+                </a>
+              )}
               <a
                 href="/#proyectos"
                 class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-cp-border hover:border-cp-accent transition font-semibold"
@@ -196,6 +213,13 @@ const initials = title.split(' ').filter(Boolean).slice(0, 2).map((w: string) =>
               </div>
             )}
           </div>
+
+          <MediaShowcase
+            videoUrl={videoUrl}
+            animationKey={animationKey}
+            poster={coverImage}
+            title={title}
+          />
 
           <p class="mt-8 text-xl text-cp-text/90 leading-relaxed max-w-3xl">
             {tagline}

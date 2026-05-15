@@ -1,0 +1,240 @@
+---
+// Pipeline Markdown → Frames → Audio waveform → MP4
+// Animación CSS que recorre las 4 etapas del pipeline.
+---
+<div class="vgdemo-wrap" role="img" aria-label="Pipeline de generación de video con IA">
+  <div class="vg-stage">
+    <!-- Step 1: Markdown -->
+    <div class="vg-card vg-md">
+      <div class="vg-tag">01 · Markdown</div>
+      <div class="vg-md-lines">
+        <span class="vg-line vg-line-1"></span>
+        <span class="vg-line vg-line-2"></span>
+        <span class="vg-line vg-line-3"></span>
+        <span class="vg-line vg-line-4"></span>
+      </div>
+    </div>
+
+    <div class="vg-arrow vg-arrow-1">→</div>
+
+    <!-- Step 2: Frames PIL -->
+    <div class="vg-card vg-frames">
+      <div class="vg-tag">02 · Frames</div>
+      <div class="vg-frames-strip">
+        <div class="vg-frame vg-frame-1">▶</div>
+        <div class="vg-frame vg-frame-2">★</div>
+        <div class="vg-frame vg-frame-3">⏵</div>
+      </div>
+    </div>
+
+    <div class="vg-arrow vg-arrow-2">→</div>
+
+    <!-- Step 3: Audio waveform -->
+    <div class="vg-card vg-audio">
+      <div class="vg-tag">03 · Voz CO</div>
+      <svg viewBox="0 0 200 60" class="vg-wave" aria-hidden="true">
+        <g stroke="#ff3daa" stroke-width="2.5" stroke-linecap="round" fill="none">
+          <line class="vw vw-1" x1="10" y1="30" x2="10" y2="30"/>
+          <line class="vw vw-2" x1="25" y1="30" x2="25" y2="30"/>
+          <line class="vw vw-3" x1="40" y1="30" x2="40" y2="30"/>
+          <line class="vw vw-4" x1="55" y1="30" x2="55" y2="30"/>
+          <line class="vw vw-5" x1="70" y1="30" x2="70" y2="30"/>
+          <line class="vw vw-6" x1="85" y1="30" x2="85" y2="30"/>
+          <line class="vw vw-7" x1="100" y1="30" x2="100" y2="30"/>
+          <line class="vw vw-8" x1="115" y1="30" x2="115" y2="30"/>
+          <line class="vw vw-9" x1="130" y1="30" x2="130" y2="30"/>
+          <line class="vw vw-10" x1="145" y1="30" x2="145" y2="30"/>
+          <line class="vw vw-11" x1="160" y1="30" x2="160" y2="30"/>
+          <line class="vw vw-12" x1="175" y1="30" x2="175" y2="30"/>
+          <line class="vw vw-13" x1="190" y1="30" x2="190" y2="30"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="vg-arrow vg-arrow-3">→</div>
+
+    <!-- Step 4: MP4 output -->
+    <div class="vg-card vg-output">
+      <div class="vg-tag">04 · MP4</div>
+      <div class="vg-output-icon">
+        <div class="vg-play"></div>
+      </div>
+      <div class="vg-output-label">demo-XX.mp4</div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .vgdemo-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #1a0f3a 0%, #03020a 100%);
+    overflow: hidden;
+    border: 1px solid var(--cp-border);
+    padding: 20px;
+  }
+  .vg-stage {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 24px 1fr 24px 1fr 24px 1fr;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .vg-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(122,77,255,0.25);
+    border-radius: 12px;
+    padding: 12px;
+    height: 80%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .vg-tag {
+    color: rgba(255,255,255,0.55);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .vg-md-lines { display: flex; flex-direction: column; gap: 6px; flex: 1; justify-content: center; }
+  .vg-line {
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, #7a4dff, transparent);
+    width: 100%;
+    transform-origin: left;
+    animation: vg-type 6s ease-in-out infinite;
+  }
+  .vg-line-1 { animation-delay: 0s; width: 80%; }
+  .vg-line-2 { animation-delay: 0.4s; width: 60%; }
+  .vg-line-3 { animation-delay: 0.8s; width: 75%; }
+  .vg-line-4 { animation-delay: 1.2s; width: 50%; }
+  @keyframes vg-type {
+    0%, 30% { transform: scaleX(0); opacity: 0.3; }
+    35%, 80% { transform: scaleX(1); opacity: 1; }
+    100% { transform: scaleX(1); opacity: 0.6; }
+  }
+
+  .vg-frames-strip {
+    display: flex;
+    gap: 6px;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+  }
+  .vg-frame {
+    flex: 1;
+    aspect-ratio: 16/9;
+    background: rgba(122,77,255,0.4);
+    border-radius: 4px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 800;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    animation: vg-frame-pop 6s ease-in-out infinite;
+  }
+  .vg-frame-1 { animation-delay: 1.8s; }
+  .vg-frame-2 { animation-delay: 2.1s; background: rgba(255,61,170,0.4); }
+  .vg-frame-3 { animation-delay: 2.4s; }
+  @keyframes vg-frame-pop {
+    0%, 25% { opacity: 0; transform: scale(0.85); }
+    35%, 80% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.5; }
+  }
+
+  .vg-wave {
+    width: 100%;
+    flex: 1;
+  }
+  .vw {
+    animation: vg-wave-pulse 1.2s ease-in-out infinite;
+  }
+  .vw-1 { animation-delay: 3.2s; }
+  .vw-2 { animation-delay: 3.25s; }
+  .vw-3 { animation-delay: 3.3s; }
+  .vw-4 { animation-delay: 3.35s; }
+  .vw-5 { animation-delay: 3.4s; }
+  .vw-6 { animation-delay: 3.45s; }
+  .vw-7 { animation-delay: 3.5s; }
+  .vw-8 { animation-delay: 3.55s; }
+  .vw-9 { animation-delay: 3.6s; }
+  .vw-10 { animation-delay: 3.65s; }
+  .vw-11 { animation-delay: 3.7s; }
+  .vw-12 { animation-delay: 3.75s; }
+  .vw-13 { animation-delay: 3.8s; }
+  @keyframes vg-wave-pulse {
+    0%, 100% { stroke-dasharray: 0 0; transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  .vg-output-icon {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .vg-play {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff3daa, #7a4dff);
+    position: relative;
+    box-shadow: 0 8px 24px rgba(255,61,170,0.45);
+    opacity: 0;
+    animation: vg-play-in 6s ease-in-out infinite;
+  }
+  .vg-play::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 56%;
+    transform: translate(-50%, -50%);
+    width: 0;
+    height: 0;
+    border-left: 9px solid #fff;
+    border-top: 6px solid transparent;
+    border-bottom: 6px solid transparent;
+  }
+  @keyframes vg-play-in {
+    0%, 70% { opacity: 0; transform: scale(0.6); }
+    80%, 95% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0.8; }
+  }
+  .vg-output-label {
+    text-align: center;
+    color: rgba(255,255,255,0.7);
+    font-size: 10px;
+    font-family: var(--font-mono, monospace);
+  }
+
+  .vg-arrow {
+    color: rgba(255,255,255,0.35);
+    font-size: 18px;
+    font-weight: 800;
+    text-align: center;
+    animation: vg-arrow-pulse 6s ease-in-out infinite;
+  }
+  .vg-arrow-1 { animation-delay: 1.2s; }
+  .vg-arrow-2 { animation-delay: 2.6s; }
+  .vg-arrow-3 { animation-delay: 4s; }
+  @keyframes vg-arrow-pulse {
+    0%, 25% { opacity: 0.2; }
+    30%, 80% { opacity: 1; color: var(--cp-accent); }
+    100% { opacity: 0.5; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; }
+    .vg-line, .vg-frame, .vg-play { opacity: 1 !important; transform: none !important; }
+    .vg-arrow { opacity: 1 !important; color: var(--cp-accent); }
+  }
+</style>

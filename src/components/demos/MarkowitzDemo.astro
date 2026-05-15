@@ -1,0 +1,211 @@
+---
+// Frontera eficiente trazándose en loop + 12 preguntas que se "marcan" a la izquierda
+---
+<div class="mkdemo-wrap" role="img" aria-label="Frontera eficiente Markowitz con 12 preguntas">
+  <div class="mk-stage">
+    <!-- Left: 12 preguntas -->
+    <div class="mk-questions">
+      <div class="mq-tag">12 PREGUNTAS · PERFIL DE RIESGO</div>
+      <div class="mq-grid">
+        <div class="mq mq-1">01</div>
+        <div class="mq mq-2">02</div>
+        <div class="mq mq-3">03</div>
+        <div class="mq mq-4">04</div>
+        <div class="mq mq-5">05</div>
+        <div class="mq mq-6">06</div>
+        <div class="mq mq-7">07</div>
+        <div class="mq mq-8">08</div>
+        <div class="mq mq-9">09</div>
+        <div class="mq mq-10">10</div>
+        <div class="mq mq-11">11</div>
+        <div class="mq mq-12">12</div>
+      </div>
+      <div class="mq-result">
+        <span>Perfil:</span>
+        <strong class="mq-profile">moderado</strong>
+      </div>
+    </div>
+
+    <!-- Right: efficient frontier -->
+    <div class="mk-chart">
+      <div class="mc-tag">FRONTERA EFICIENTE</div>
+      <svg viewBox="0 0 360 220" class="mc-svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="mc-grad" x1="0" y1="0" x2="1" y2="0">
+            <stop offset="0%" stop-color="#1FE0E0"/>
+            <stop offset="100%" stop-color="#16C172"/>
+          </linearGradient>
+        </defs>
+        <!-- Axes -->
+        <line x1="40" y1="180" x2="340" y2="180" stroke="rgba(255,255,255,0.25)"/>
+        <line x1="40" y1="40" x2="40" y2="180" stroke="rgba(255,255,255,0.25)"/>
+        <text x="340" y="200" text-anchor="end" fill="rgba(255,255,255,0.4)" font-size="10" font-family="var(--font-mono, monospace)">riesgo σ</text>
+        <text x="32" y="40" text-anchor="end" fill="rgba(255,255,255,0.4)" font-size="10" font-family="var(--font-mono, monospace)" transform="rotate(-90 32 40)">retorno μ</text>
+
+        <!-- Curve drawn with stroke-dashoffset animation -->
+        <path
+          class="mc-curve"
+          d="M 40 180 Q 90 150 140 110 T 240 60 T 340 30"
+          stroke="url(#mc-grad)" stroke-width="3" fill="none"
+          stroke-dasharray="500" stroke-dashoffset="500"
+        />
+
+        <!-- Optimum point -->
+        <circle cx="180" cy="80" r="0" fill="#16C172" class="mc-point">
+        </circle>
+        <g class="mc-tag-group" opacity="0">
+          <line x1="180" y1="80" x2="220" y2="50" stroke="rgba(255,255,255,0.4)"/>
+          <rect x="220" y="32" width="120" height="32" rx="8" fill="#16C172"/>
+          <text x="280" y="53" text-anchor="middle" fill="#02110A" font-size="11" font-weight="800">ÓPTIMO MODERADO</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</div>
+
+<style>
+  .mkdemo-wrap {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 24px;
+    background: linear-gradient(135deg, #0a2e3d 0%, #020a0e 100%);
+    overflow: hidden;
+    border: 1px solid var(--cp-border);
+    padding: 22px;
+  }
+  .mk-stage {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 22px;
+  }
+
+  /* Left side: questions */
+  .mk-questions { display: flex; flex-direction: column; gap: 12px; }
+  .mq-tag {
+    color: rgba(255,255,255,0.55);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .mq-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+  }
+  .mq {
+    aspect-ratio: 1;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(31,224,224,0.2);
+    border-radius: 8px;
+    color: rgba(255,255,255,0.45);
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font-mono, monospace);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: mq-fill 9s linear infinite;
+  }
+  .mq-1  { animation-delay: 0s; }
+  .mq-2  { animation-delay: 0.3s; }
+  .mq-3  { animation-delay: 0.6s; }
+  .mq-4  { animation-delay: 0.9s; }
+  .mq-5  { animation-delay: 1.2s; }
+  .mq-6  { animation-delay: 1.5s; }
+  .mq-7  { animation-delay: 1.8s; }
+  .mq-8  { animation-delay: 2.1s; }
+  .mq-9  { animation-delay: 2.4s; }
+  .mq-10 { animation-delay: 2.7s; }
+  .mq-11 { animation-delay: 3.0s; }
+  .mq-12 { animation-delay: 3.3s; }
+  @keyframes mq-fill {
+    0% { background: rgba(255,255,255,0.04); border-color: rgba(31,224,224,0.2); color: rgba(255,255,255,0.45); transform: scale(1); }
+    8% { background: rgba(31,224,224,0.18); border-color: #1FE0E0; color: #fff; transform: scale(1.05); box-shadow: 0 0 12px rgba(31,224,224,0.4); }
+    14%, 90% { background: rgba(22,193,114,0.18); border-color: #16C172; color: #fff; transform: scale(1); box-shadow: none; }
+    100% { background: rgba(255,255,255,0.04); border-color: rgba(31,224,224,0.2); color: rgba(255,255,255,0.45); }
+  }
+
+  .mq-result {
+    margin-top: auto;
+    color: rgba(255,255,255,0.7);
+    font-size: 11px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .mq-profile {
+    color: #16C172;
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0;
+    animation: mq-profile-show 9s ease-in-out infinite;
+  }
+  @keyframes mq-profile-show {
+    0%, 50% { opacity: 0; transform: translateY(4px); }
+    60%, 95% { opacity: 1; transform: translateY(0); }
+    100% { opacity: 0; }
+  }
+
+  /* Right side: chart */
+  .mk-chart {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .mc-tag {
+    color: rgba(255,255,255,0.55);
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .mc-svg { width: 100%; flex: 1; }
+
+  .mc-curve {
+    animation: mc-draw 9s ease-in-out infinite;
+  }
+  @keyframes mc-draw {
+    0%, 50% { stroke-dashoffset: 500; }
+    65%, 95% { stroke-dashoffset: 0; }
+    100% { stroke-dashoffset: 500; }
+  }
+
+  .mc-point {
+    animation: mc-point-pop 9s ease-in-out infinite;
+    transform-origin: center;
+  }
+  @keyframes mc-point-pop {
+    0%, 70% { r: 0; opacity: 0; }
+    78%, 95% { r: 7; opacity: 1; filter: drop-shadow(0 0 8px #16C172); }
+    100% { r: 0; opacity: 0; }
+  }
+
+  .mc-tag-group {
+    animation: mc-tag-show 9s ease-in-out infinite;
+  }
+  @keyframes mc-tag-show {
+    0%, 75% { opacity: 0; }
+    82%, 95% { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; }
+    .mc-curve { stroke-dashoffset: 0 !important; }
+    .mc-point { r: 7 !important; opacity: 1 !important; }
+    .mc-tag-group { opacity: 1 !important; }
+    .mq { background: rgba(22,193,114,0.18) !important; border-color: #16C172 !important; color: #fff !important; }
+    .mq-profile { opacity: 1 !important; }
+  }
+</style>

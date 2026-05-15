@@ -59,10 +59,29 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
         const sysLight = window.matchMedia('(prefers-color-scheme: light)').matches;
         if (saved === 'light' || (!saved && sysLight)) document.documentElement.classList.add('light');
       })();
+
+      // Dev mode (Camilo): toggle vía ?dev=cpaez (on) o ?dev=off (off).
+      // Cuando activo, agrega clase html.cp-dev-mode y revela elementos [data-cp-dev-only].
+      (function() {
+        try {
+          var p = new URLSearchParams(window.location.search);
+          var devParam = p.get('dev');
+          if (devParam === 'cpaez') localStorage.setItem('cpDevMode', '1');
+          else if (devParam === 'off') localStorage.removeItem('cpDevMode');
+          if (localStorage.getItem('cpDevMode') === '1') {
+            document.documentElement.classList.add('cp-dev-mode');
+          }
+        } catch (e) { /* noop */ }
+      })();
     </script>
   </head>
   <body class="noise">
     <a href="#main" class="sr-only focus:not-sr-only fixed top-2 left-2 z-50 px-4 py-2 bg-cp-accent text-white rounded">Saltar al contenido</a>
+
+    <div class="cp-dev-banner fixed bottom-4 right-4 z-50 hidden items-center gap-3 px-4 py-2.5 rounded-full bg-cp-gold text-cp-bg text-xs font-bold shadow-lg" style="display:none;">
+      <span>👤 Modo dev — links a orgs visibles</span>
+      <a href="?dev=off" class="underline hover:opacity-80">desactivar</a>
+    </div>
 
     <Nav />
 
