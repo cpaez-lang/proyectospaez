@@ -1,0 +1,392 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DealNav from '../../components/DealNav.astro';
+import { Icon } from 'astro-icon/components';
+import {
+  heroKpis,
+  profile,
+  pillars,
+  dealStructure,
+  dealGap,
+  anchor,
+  horizons,
+  stakeholders,
+  risks,
+  successCriteria,
+  nextSteps,
+  thesis
+} from '../../data/laprevisora-bigdeal';
+import '../../styles/bigdeals.css';
+
+const probBadge = (p: string) => {
+  switch (p) {
+    case 'low':    return { label: 'Baja',  classes: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' };
+    case 'medium': return { label: 'Media', classes: 'bg-amber-500/15 text-amber-300 border-amber-500/30' };
+    case 'high':   return { label: 'Alta',  classes: 'bg-red-500/15 text-red-300 border-red-500/30' };
+    default:       return { label: '—',     classes: '' };
+  }
+};
+
+const impactBadge = (s: string) => {
+  switch (s) {
+    case 'low':      return { label: 'Bajo',     classes: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' };
+    case 'medium':   return { label: 'Medio',    classes: 'bg-amber-500/15 text-amber-300 border-amber-500/30' };
+    case 'high':     return { label: 'Alto',     classes: 'bg-orange-500/15 text-orange-300 border-orange-500/30' };
+    case 'critical': return { label: 'Muy alto', classes: 'bg-red-500/15 text-red-300 border-red-500/30' };
+    default:         return { label: '—',        classes: '' };
+  }
+};
+
+const alignClass = (level: string) => {
+  if (level === 'high') return 'bd-stake-align-high';
+  if (level === 'medium') return 'bd-stake-align-medium';
+  return 'bd-stake-align-tech';
+};
+---
+<Layout
+  title="BigDeal La Previsora — Camilo Páez"
+  description="Business case ejecutivo: la primera aseguradora pública de Colombia con IA integrada al core. ACV $766K · target $1M."
+>
+  <div class="deal-prev">
+    <DealNav current="previsora" />
+
+    <!-- 0. HERO -->
+    <section class="bd-hero relative overflow-hidden">
+      <div class="absolute inset-0 -z-10" aria-hidden="true">
+        <div class="absolute inset-0" style="background:radial-gradient(ellipse 80% 50% at 50% 0%, rgba(58,123,213,0.18), transparent 60%);"></div>
+        <svg class="absolute inset-0 w-full h-full opacity-[0.04]" aria-hidden="true">
+          <pattern id="bd-grid-prev" width="48" height="48" patternUnits="userSpaceOnUse">
+            <path d="M48 0H0V48" fill="none" stroke="currentColor" stroke-width="0.5"/>
+          </pattern>
+          <rect width="100%" height="100%" fill="url(#bd-grid-prev)"/>
+        </svg>
+      </div>
+
+      <div class="container pt-12 pb-12">
+        <div class="bd-tag inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[11px] font-bold uppercase tracking-[0.18em] mb-8" style="border-color: rgba(200,169,81,0.4); background: rgba(200,169,81,0.08); color: #DCC07F;">
+          <Icon name="lucide:shield" class="w-3.5 h-3.5" />
+          Sector Público · Seguros · Colombia
+        </div>
+
+        <h1 class="bd-title">BigDeal La Previsora S.A.</h1>
+        <p class="bd-subtitle">La primera aseguradora pública de Colombia con IA integrada al core del negocio.</p>
+
+        <div class="bd-kpi-grid mt-14">
+          {heroKpis.map((k, i) => (
+            <article class={`bd-kpi-card bd-kpi-${i}`}>
+              <div class="bd-kpi-icon"><Icon name={k.icon} class="w-6 h-6" /></div>
+              <div class="bd-kpi-label">{k.label}</div>
+              <div class="bd-kpi-value">{k.value}</div>
+              {k.sub && <div class="bd-kpi-sub">{k.sub}</div>}
+            </article>
+          ))}
+        </div>
+
+        <div class="bd-callout bd-callout-warning mt-10">
+          <Icon name="lucide:flag" class="w-5 h-5 shrink-0 mt-0.5" />
+          <div>
+            <div class="font-bold mb-1">Deal activo FY27 Q3</div>
+            <div class="text-sm leading-relaxed">
+              Pliego de IA vigente · Caso de uso ancla: <strong>Agentforce para Suscripción Técnica</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 1. PERFIL -->
+    <section class="bd-section">
+      <div class="container">
+        <div class="bd-eyebrow">01 · Cliente</div>
+        <h2 class="bd-h2">Perfil de La Previsora</h2>
+        <div class="bd-profile mt-8">
+          {profile.map((row) => (
+            <div class="bd-profile-row">
+              <div class="bd-profile-key">{row.dimension}</div>
+              <div class="bd-profile-val">{row.detail}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. TESIS -->
+    <section class="bd-section">
+      <div class="container">
+        <div class="bd-eyebrow">02 · Tesis estratégica</div>
+        <h2 class="bd-h2">Por qué Salesforce — y por qué ahora</h2>
+        <p class="bd-lead max-w-3xl mt-5">{thesis.problem}</p>
+        <p class="bd-lead max-w-3xl mt-4"><strong>{thesis.context}</strong></p>
+        <aside class="bd-highlight mt-8">
+          <div class="bd-highlight-bar"></div>
+          <div class="bd-highlight-body">
+            <p>{thesis.positioning}</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- 3. PILARES -->
+    <section class="bd-section bd-section-spotlight">
+      <div class="container">
+        <div class="bd-eyebrow">03 · Plan estratégico 2025-2026</div>
+        <h2 class="bd-h2">Los 7 pilares — dolor real vs. solución Salesforce</h2>
+
+        <div class="bd-table mt-8">
+          <table>
+            <thead>
+              <tr>
+                <th>Pilar estratégico</th>
+                <th>Dolor real identificado</th>
+                <th>Solución Salesforce</th>
+              </tr>
+            </thead>
+            <tbody>
+              {pillars.map((p) => (
+                <tr>
+                  <td><div class="bd-pillar-name">{p.pillar}</div></td>
+                  <td class="text-cp-muted text-sm">{p.pain}</td>
+                  <td class="text-sm font-semibold">{p.solution}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. ESTRUCTURA DEL DEAL -->
+    <section class="bd-section">
+      <div class="container">
+        <div class="bd-eyebrow">04 · Estructura del deal</div>
+        <h2 class="bd-h2">Componentes del Big Deal · ACV consolidado</h2>
+
+        <div class="bd-table mt-8">
+          <table>
+            <thead>
+              <tr>
+                <th>Componente</th>
+                <th>Descripción</th>
+                <th class="text-right">ACV</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dealStructure.map((row) => {
+                const cls = row.isTotal ? 'bd-row-total' : row.isTarget ? 'bd-row-target' : '';
+                return (
+                  <tr class={cls}>
+                    <td class={row.isTotal || row.isTarget ? 'font-extrabold' : 'font-semibold'}>{row.component}</td>
+                    <td class="text-cp-muted text-sm">{row.description}</td>
+                    <td class="text-right tabular-nums font-bold">{row.acv}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="bd-callout bd-callout-warning mt-6">
+          <Icon name="lucide:trending-up" class="w-5 h-5 shrink-0 mt-0.5" />
+          <div>
+            <div class="font-bold mb-1">Gap a cerrar: {dealGap.amount}</div>
+            <div class="text-sm leading-relaxed">Camino: <strong>{dealGap.path}</strong></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. ANCHOR -->
+    <section class="bd-section">
+      <div class="container">
+        <div class="bd-eyebrow">05 · Caso de uso ancla</div>
+        <h2 class="bd-h2">Agentforce para Suscripción Técnica</h2>
+        <p class="bd-lead max-w-3xl mt-3">El caso que ancla el deal — alineado al pliego activo de IA y a la CBJ 006/2025.</p>
+
+        <article class="bd-anchor mt-10">
+          <span class="bd-anchor-tag">
+            <Icon name="lucide:bot" class="w-3.5 h-3.5" />
+            Ancla del deal
+          </span>
+          <h3 class="bd-anchor-title">{anchor.title}</h3>
+
+          <div class="bd-anchor-grid">
+            <div class="bd-anchor-block">
+              <h4>Problema validado</h4>
+              <p>{anchor.problem}</p>
+            </div>
+            <div class="bd-anchor-block">
+              <h4>Contexto contractual</h4>
+              <p>{anchor.contractContext}</p>
+            </div>
+          </div>
+
+          <div class="bd-anchor-features">
+            {anchor.features.map((f) => (
+              <div class="bd-anchor-feature">
+                <Icon name="lucide:check-circle-2" class="bd-anchor-feature-icon w-5 h-5" />
+                <span>{f}</span>
+              </div>
+            ))}
+          </div>
+
+          <div class="bd-anchor-foot">
+            <div class="bd-anchor-foot-block">
+              <span class="bd-anchor-foot-icon">
+                <Icon name="lucide:users" class="w-5 h-5" />
+              </span>
+              <div>
+                <h5>Alcance</h5>
+                <p>{anchor.scope}</p>
+              </div>
+            </div>
+            <div class="bd-anchor-foot-block">
+              <span class="bd-anchor-foot-icon">
+                <Icon name="lucide:target" class="w-5 h-5" />
+              </span>
+              <div>
+                <h5>Criterio de éxito</h5>
+                <p>{anchor.successCriterion}</p>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- 6. ROADMAP -->
+    <section class="bd-section">
+      <div class="container">
+        <div class="bd-eyebrow">06 · Roadmap</div>
+        <h2 class="bd-h2">3 horizontes · valor temprano, escala progresiva</h2>
+
+        <div class="bd-horizons mt-12">
+          {horizons.map((h) => (
+            <article class={`bd-horizon ${h.highlight ? 'bd-horizon-highlight' : ''}`}>
+              <div class="bd-horizon-num">{h.number}</div>
+              <div>
+                <div class="flex items-baseline justify-between gap-4 flex-wrap">
+                  <h3 class="bd-horizon-name">Horizonte {h.number} — {h.name}</h3>
+                  <span class="bd-horizon-range">{h.range}</span>
+                </div>
+                <ul class="bd-horizon-bullets">
+                  {h.bullets.map((b) => <li>{b}</li>)}
+                </ul>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 7. STAKEHOLDERS -->
+    <section class="bd-section">
+      <div class="container">
+        <div class="bd-eyebrow">07 · Stakeholders</div>
+        <h2 class="bd-h2">Mapa de interlocutores</h2>
+
+        <div class="bd-grid-3 mt-10">
+          {stakeholders.map((s) => (
+            <article class="bd-stake-card">
+              <div class="bd-stake-name">{s.name}</div>
+              <div class="bd-stake-role">{s.role}</div>
+              <div class={`bd-stake-align ${alignClass(s.alignmentLevel)}`}>{s.alignment}</div>
+              <div class="bd-stake-quote">{s.message}</div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. RIESGOS -->
+    <section class="bd-section">
+      <div class="container">
+        <div class="bd-eyebrow">08 · Mitigación</div>
+        <h2 class="bd-h2">Riesgos identificados y respuestas</h2>
+
+        <div class="bd-table mt-8">
+          <table>
+            <thead>
+              <tr>
+                <th>Riesgo</th>
+                <th>Probabilidad</th>
+                <th>Impacto</th>
+                <th>Respuesta</th>
+              </tr>
+            </thead>
+            <tbody>
+              {risks.map((r) => {
+                const pb = probBadge(r.prob);
+                const ib = impactBadge(r.impact);
+                return (
+                  <tr>
+                    <td class="font-semibold">{r.risk}</td>
+                    <td><span class={`bd-badge ${pb.classes}`}>{pb.label}</span></td>
+                    <td><span class={`bd-badge ${ib.classes}`}>{ib.label}</span></td>
+                    <td class="text-sm">{r.response}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. CRITERIOS DE ÉXITO -->
+    <section class="bd-section">
+      <div class="container">
+        <div class="bd-eyebrow">09 · Definición de éxito</div>
+        <h2 class="bd-h2">Criterios objetivos · Q3 FY27</h2>
+
+        <div class="bd-success-grid mt-10">
+          {successCriteria.map((s) => (
+            <article class="bd-success-card">
+              <span class="bd-success-icon">
+                <Icon name="lucide:check-circle-2" class="w-5 h-5" />
+              </span>
+              <div>
+                <div class="bd-success-cat">{s.category}</div>
+                <div class="bd-success-text">{s.text}</div>
+              </div>
+            </article>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. NEXT STEPS -->
+    <section class="bd-section">
+      <div class="container">
+        <div class="bd-eyebrow">10 · Acción</div>
+        <h2 class="bd-h2">Próximos pasos</h2>
+
+        <ul class="bd-checklist mt-10">
+          {nextSteps.map((s) => (
+            <li class="bd-checkitem">
+              <span class="bd-check"><Icon name="lucide:check" class="w-3.5 h-3.5" /></span>
+              <span>{s.task}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </section>
+
+    <section class="bd-meta">
+      <div class="container py-12">
+        <div class="bd-meta-line"></div>
+        <div class="grid sm:grid-cols-2 gap-6 text-sm">
+          <div>
+            <div class="text-xs uppercase tracking-[0.2em] text-cp-muted mb-2">Preparado por</div>
+            <div class="font-bold">Camilo Páez</div>
+            <div class="text-cp-muted">Lead SE · Salesforce Colombia</div>
+          </div>
+          <div class="sm:text-right">
+            <div class="text-xs uppercase tracking-[0.2em] text-cp-muted mb-2">Versión</div>
+            <div class="font-bold">FY2027 Q3</div>
+            <div class="text-cp-muted">Pliego AI vigente · ancla validada</div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</Layout>

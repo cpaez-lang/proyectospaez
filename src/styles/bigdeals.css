@@ -1,0 +1,1420 @@
+/* ============================================================
+   BigDeals shared design system.
+   Importado por /bigdeals, /bigdeals/bbva-colombia y /bigdeals/la-previsora.
+   Paleta default: navy #0A0F1E + azul eléctrico #3B82F6 + dorado #F59E0B.
+   Cada deal puede sobreescribir tokens via .deal-bbva / .deal-prev / etc.
+   ============================================================ */
+
+:root {
+  --bd-navy: #0a0f1e;
+  --bd-navy-2: #0e1428;
+  --bd-card: #121935;
+  --bd-border: rgba(255, 255, 255, 0.08);
+  --bd-border-strong: rgba(255, 255, 255, 0.16);
+  --bd-text: #e6e9f2;
+  --bd-muted: #8b91a7;
+  --bd-electric: #3b82f6;
+  --bd-electric-soft: rgba(59, 130, 246, 0.16);
+  --bd-gold: #f59e0b;
+  --bd-gold-soft: rgba(245, 158, 11, 0.16);
+}
+
+/* La Previsora identity override */
+.deal-prev {
+  --bd-electric: #3a7bd5;
+  --bd-electric-soft: rgba(58, 123, 213, 0.18);
+  --bd-gold: #c8a951;
+  --bd-gold-soft: rgba(200, 169, 81, 0.18);
+}
+
+/* Override body bg (war-room) when bigdeal hero present */
+body:has(.bd-hero) {
+  background: var(--bd-navy);
+}
+
+.bd-hero,
+.bd-section,
+.bd-meta {
+  color: var(--bd-text);
+}
+
+.bd-section {
+  padding: 88px 0;
+  border-top: 1px solid var(--bd-border);
+}
+.bd-section-spotlight {
+  background: linear-gradient(180deg, rgba(59, 130, 246, 0.04) 0%, transparent 100%);
+}
+.deal-prev .bd-section-spotlight {
+  background: linear-gradient(180deg, rgba(58, 123, 213, 0.05) 0%, transparent 100%);
+}
+.bd-meta {
+  border-top: 1px solid var(--bd-border);
+  background: var(--bd-navy-2);
+}
+.bd-meta-line {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--bd-border-strong), transparent);
+  margin-bottom: 28px;
+}
+
+/* Typography */
+.bd-eyebrow {
+  color: var(--bd-electric);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+.bd-h2 {
+  margin-top: 12px;
+  font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  line-height: 1.1;
+}
+.bd-lead {
+  color: var(--bd-muted);
+  font-size: 17px;
+  line-height: 1.6;
+}
+.bd-lead strong {
+  color: var(--bd-text);
+  font-weight: 700;
+}
+
+/* Hero */
+.bd-title {
+  font-size: clamp(2.6rem, 4vw + 1rem, 4.25rem);
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+}
+.bd-subtitle {
+  margin-top: 18px;
+  font-size: clamp(1.05rem, 1vw + 0.5rem, 1.35rem);
+  color: var(--bd-muted);
+  max-width: 760px;
+  line-height: 1.5;
+}
+
+/* KPI cards */
+.bd-kpi-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .bd-kpi-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+.bd-kpi-card {
+  position: relative;
+  background: linear-gradient(180deg, var(--bd-card), var(--bd-navy-2));
+  border: 1px solid var(--bd-border);
+  border-radius: 18px;
+  padding: 26px;
+  overflow: hidden;
+}
+.bd-kpi-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 20% -20%, rgba(59, 130, 246, 0.18), transparent 60%);
+  pointer-events: none;
+}
+.bd-kpi-1::before {
+  background: radial-gradient(circle at 20% -20%, rgba(245, 158, 11, 0.18), transparent 60%);
+}
+.bd-kpi-2::before {
+  background: radial-gradient(circle at 20% -20%, rgba(22, 163, 74, 0.18), transparent 60%);
+}
+
+.bd-kpi-icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 11px;
+  background: var(--bd-electric-soft);
+  color: var(--bd-electric);
+  margin-bottom: 16px;
+}
+.bd-kpi-1 .bd-kpi-icon {
+  background: var(--bd-gold-soft);
+  color: var(--bd-gold);
+}
+.bd-kpi-2 .bd-kpi-icon {
+  background: rgba(22, 163, 74, 0.18);
+  color: #4ade80;
+}
+
+.bd-kpi-label {
+  color: var(--bd-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.bd-kpi-value {
+  margin-top: 8px;
+  font-size: clamp(1.85rem, 2vw + 1rem, 2.6rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  color: var(--bd-text);
+}
+.bd-kpi-1 .bd-kpi-value {
+  color: var(--bd-gold);
+}
+.bd-kpi-sub {
+  color: var(--bd-muted);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+/* Callouts */
+.bd-callout {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 22px;
+  border-radius: 14px;
+  border: 1px solid var(--bd-border);
+  background: var(--bd-navy-2);
+}
+.bd-callout-warning {
+  border-color: rgba(245, 158, 11, 0.35);
+  background: rgba(245, 158, 11, 0.06);
+  color: #fbbf24;
+}
+.bd-callout-warning strong {
+  color: #ffe2a0;
+}
+.bd-callout-info {
+  border-color: rgba(59, 130, 246, 0.35);
+  background: rgba(59, 130, 246, 0.06);
+  color: #93c5fd;
+}
+.bd-callout-info strong {
+  color: #dbeafe;
+}
+
+/* Highlight box */
+.bd-highlight {
+  display: flex;
+  background: var(--bd-card);
+  border: 1px solid var(--bd-border);
+  border-radius: 16px;
+  overflow: hidden;
+}
+.bd-highlight-bar {
+  width: 4px;
+  background: linear-gradient(180deg, var(--bd-electric), var(--bd-gold));
+  flex-shrink: 0;
+}
+.bd-highlight-body {
+  padding: 22px 26px;
+  line-height: 1.65;
+  font-size: 16px;
+}
+.bd-highlight-body strong {
+  color: var(--bd-text);
+}
+
+/* Tables */
+.bd-table {
+  overflow-x: auto;
+  border-radius: 14px;
+  border: 1px solid var(--bd-border);
+}
+.bd-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--bd-card);
+  font-size: 14px;
+}
+.bd-table thead th {
+  text-align: left;
+  padding: 14px 16px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--bd-muted);
+  background: var(--bd-navy-2);
+  border-bottom: 1px solid var(--bd-border-strong);
+}
+.bd-table tbody td {
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--bd-border);
+  vertical-align: top;
+}
+.bd-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.bd-row-warn td {
+  background: rgba(239, 68, 68, 0.04);
+}
+.bd-row-critical td:first-child {
+  border-left: 3px solid var(--bd-gold);
+  padding-left: 13px;
+}
+.bd-row-critical td {
+  background: rgba(245, 158, 11, 0.05);
+}
+
+.bd-row-total td {
+  background: var(--bd-electric-soft);
+  color: var(--bd-text);
+  font-size: 16px;
+  border-top: 1px solid rgba(59, 130, 246, 0.4);
+}
+.bd-row-target td {
+  background: var(--bd-gold-soft);
+  color: var(--bd-gold);
+  font-size: 15px;
+  font-weight: 800;
+  border-top: 1px solid rgba(245, 158, 11, 0.45);
+  border-bottom: none;
+}
+.bd-row-subtotal td {
+  background: rgba(255, 255, 255, 0.04);
+  border-top: 1px solid var(--bd-border-strong);
+  font-weight: 800;
+}
+
+/* Badges */
+.bd-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  border: 1px solid;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+}
+
+/* Grids */
+.bd-grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 720px) {
+  .bd-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (min-width: 1024px) {
+  .bd-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Agent / generic content cards */
+.bd-agent-card {
+  background: var(--bd-card);
+  border: 1px solid var(--bd-border);
+  border-radius: 16px;
+  padding: 24px;
+  transition: border-color 0.25s, transform 0.25s;
+  display: flex;
+  flex-direction: column;
+}
+.bd-agent-card:hover {
+  border-color: var(--bd-electric);
+  transform: translateY(-2px);
+}
+.bd-agent-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--bd-electric-soft);
+  color: var(--bd-electric);
+  margin-bottom: 14px;
+}
+.bd-agent-name {
+  font-size: 18px;
+  font-weight: 800;
+  margin-bottom: 6px;
+  letter-spacing: -0.01em;
+}
+.bd-agent-fn {
+  color: var(--bd-muted);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+.bd-agent-impact {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 8px;
+  background: var(--bd-electric-soft);
+  color: var(--bd-electric);
+  font-size: 13px;
+  font-weight: 800;
+  margin-bottom: 12px;
+  align-self: flex-start;
+}
+.bd-agent-source {
+  font-size: 11px;
+  color: var(--bd-muted);
+  border-top: 1px solid var(--bd-border);
+  padding-top: 10px;
+  margin-top: auto;
+}
+
+/* ROI accordions */
+.bd-roi-levels {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.bd-acc {
+  border: 1px solid var(--bd-border);
+  border-radius: 14px;
+  background: var(--bd-card);
+  overflow: hidden;
+}
+.bd-acc-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 22px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+.bd-acc-summary::-webkit-details-marker {
+  display: none;
+}
+.bd-acc-num {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 900;
+  flex-shrink: 0;
+}
+.bd-acc-1 {
+  background: rgba(59, 130, 246, 0.18);
+  color: var(--bd-electric);
+}
+.bd-acc-2 {
+  background: rgba(22, 163, 74, 0.18);
+  color: #4ade80;
+}
+.bd-acc-3 {
+  background: rgba(245, 158, 11, 0.18);
+  color: var(--bd-gold);
+}
+.bd-acc-title {
+  display: block;
+  font-size: 17px;
+  font-weight: 800;
+}
+.bd-acc-meta {
+  display: block;
+  font-size: 12px;
+  color: var(--bd-muted);
+  margin-top: 2px;
+}
+.bd-acc-chev {
+  color: var(--bd-muted);
+  transition: transform 0.25s;
+}
+.bd-acc[open] .bd-acc-chev {
+  transform: rotate(180deg);
+}
+.bd-acc[open] .bd-table {
+  margin: 0 22px 22px;
+  border-radius: 10px;
+}
+
+/* ROI summary table */
+.bd-table-summary table {
+  font-size: 15px;
+}
+.bd-table-summary tbody td {
+  padding: 16px 18px;
+}
+.bd-row-gross td {
+  background: rgba(59, 130, 246, 0.1);
+  color: #dbeafe;
+  font-weight: 800;
+  border-top: 1px solid rgba(59, 130, 246, 0.4);
+}
+.bd-row-negative td {
+  color: #fca5a5;
+  font-weight: 700;
+}
+.bd-row-net td {
+  background: rgba(34, 197, 94, 0.1);
+  color: #86efac;
+  font-weight: 800;
+  border-top: 1px solid rgba(34, 197, 94, 0.4);
+  border-bottom: none;
+}
+
+/* ROI badges */
+.bd-roi-badges {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 14px;
+}
+@media (min-width: 768px) {
+  .bd-roi-badges {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+.bd-roi-badge {
+  border-radius: 18px;
+  padding: 22px;
+  text-align: center;
+  border: 1px solid;
+  background: var(--bd-card);
+}
+.bd-roi-badge-amber {
+  border-color: rgba(245, 158, 11, 0.5);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.12), rgba(245, 158, 11, 0.02));
+}
+.bd-roi-badge-amber .bd-roi-badge-value {
+  color: var(--bd-gold);
+}
+.bd-roi-badge-green {
+  border-color: rgba(22, 163, 74, 0.5);
+  background: linear-gradient(180deg, rgba(22, 163, 74, 0.12), rgba(22, 163, 74, 0.02));
+}
+.bd-roi-badge-green .bd-roi-badge-value {
+  color: #4ade80;
+}
+.bd-roi-badge-green-bright {
+  border-color: rgba(34, 197, 94, 0.7);
+  background: linear-gradient(180deg, rgba(34, 197, 94, 0.22), rgba(34, 197, 94, 0.04));
+  box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.18) inset;
+}
+.bd-roi-badge-green-bright .bd-roi-badge-value {
+  color: #86efac;
+  text-shadow: 0 0 24px rgba(134, 239, 172, 0.5);
+}
+.bd-roi-badge-year {
+  color: var(--bd-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.bd-roi-badge-value {
+  margin-top: 8px;
+  font-size: clamp(2rem, 2vw + 1rem, 2.75rem);
+  font-weight: 900;
+  letter-spacing: -0.025em;
+  line-height: 1;
+}
+.bd-roi-badge-blurb {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--bd-muted);
+}
+
+/* Inaction */
+.bd-inaction-hero {
+  text-align: center;
+  padding: 32px 0;
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  border-radius: 22px;
+  background: radial-gradient(ellipse at center, rgba(239, 68, 68, 0.08), transparent 70%);
+}
+.bd-inaction-amount {
+  font-size: clamp(3.5rem, 8vw + 1rem, 7rem);
+  font-weight: 900;
+  color: #fca5a5;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  text-shadow: 0 0 40px rgba(252, 165, 165, 0.25);
+}
+.bd-inaction-period {
+  margin-top: 8px;
+  color: #fca5a5;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+}
+.bd-inaction-quote {
+  text-align: center;
+  font-size: 18px;
+  font-style: italic;
+  font-weight: 700;
+  color: var(--bd-text);
+  line-height: 1.5;
+}
+
+/* Roadmap (BBVA phases) */
+.bd-roadmap {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.bd-phase {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 18px;
+  background: var(--bd-card);
+  border: 1px solid var(--bd-border);
+  border-radius: 16px;
+  padding: 22px;
+  align-items: stretch;
+}
+.bd-phase-quickwin {
+  border-color: rgba(245, 158, 11, 0.4);
+  background: linear-gradient(180deg, rgba(245, 158, 11, 0.06), var(--bd-card));
+}
+.bd-phase-num {
+  width: 88px;
+  min-height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, var(--bd-electric-soft), transparent);
+  border-radius: 12px;
+  color: var(--bd-electric);
+  font-size: 32px;
+  font-weight: 900;
+  letter-spacing: -0.05em;
+}
+.bd-phase-quickwin .bd-phase-num {
+  background: linear-gradient(180deg, var(--bd-gold-soft), transparent);
+  color: var(--bd-gold);
+}
+.bd-phase-name {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.bd-phase-range {
+  color: var(--bd-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--bd-border);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.bd-phase-bullets {
+  margin-top: 10px;
+  list-style: none;
+  padding: 0;
+}
+.bd-phase-bullets li {
+  color: var(--bd-text);
+  font-size: 14px;
+  padding: 4px 0 4px 20px;
+  position: relative;
+  line-height: 1.5;
+}
+.bd-phase-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bd-electric);
+}
+.bd-phase-delivers {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: rgba(34, 197, 94, 0.12);
+  color: #86efac;
+  border: 1px solid rgba(34, 197, 94, 0.35);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+/* Before/after */
+.bd-ba-card {
+  background: var(--bd-card);
+  border: 1px solid var(--bd-border);
+  border-radius: 16px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.bd-ba-block {
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: var(--bd-navy-2);
+  border: 1px solid var(--bd-border);
+}
+.bd-ba-after {
+  border-color: rgba(34, 197, 94, 0.35);
+  background: rgba(34, 197, 94, 0.06);
+}
+.bd-ba-tag {
+  color: var(--bd-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 3px;
+  margin-bottom: 6px;
+}
+.bd-ba-tag-after {
+  color: #4ade80;
+}
+.bd-ba-block p {
+  font-size: 14px;
+  line-height: 1.55;
+}
+.bd-ba-arrow {
+  align-self: center;
+  color: var(--bd-electric);
+}
+.bd-ba-impact {
+  margin-top: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: 10px;
+  background: var(--bd-electric-soft);
+  color: var(--bd-electric);
+  font-size: 12px;
+  font-weight: 700;
+  align-self: flex-start;
+}
+
+/* Benchmarks */
+.bd-bench-card {
+  background: var(--bd-card);
+  border: 1px solid var(--bd-border);
+  border-radius: 14px;
+  padding: 22px;
+  display: flex;
+  flex-direction: column;
+}
+.bd-bench-icon {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  background: var(--bd-gold-soft);
+  color: var(--bd-gold);
+  margin-bottom: 14px;
+}
+.bd-bench-source {
+  color: var(--bd-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.bd-bench-highlight {
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--bd-text);
+  letter-spacing: -0.01em;
+  line-height: 1.25;
+}
+.bd-bench-detail {
+  margin-top: 8px;
+  color: var(--bd-muted);
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+/* Group effect */
+.bd-group-card {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.18), rgba(245, 158, 11, 0.1));
+  border: 1px solid rgba(59, 130, 246, 0.35);
+  border-radius: 22px;
+  padding: 36px;
+  text-align: center;
+}
+.bd-group-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 16px;
+  color: var(--bd-electric);
+}
+.bd-group-text {
+  font-size: clamp(1.05rem, 1vw + 0.4rem, 1.3rem);
+  line-height: 1.55;
+  color: var(--bd-text);
+  max-width: 760px;
+  margin: 0 auto;
+}
+.bd-group-text strong {
+  color: var(--bd-gold);
+}
+.bd-flags {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+.bd-flag {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--bd-border);
+  padding: 10px 16px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+}
+.bd-flag-highlight {
+  border-color: var(--bd-gold);
+  background: var(--bd-gold-soft);
+  color: var(--bd-gold);
+  font-weight: 800;
+}
+.bd-flag-emoji {
+  font-size: 18px;
+  line-height: 1;
+}
+
+/* Checklist */
+.bd-checklist {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bd-checkitem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  background: var(--bd-card);
+  border: 1px solid var(--bd-border);
+  border-radius: 12px;
+  padding: 14px 18px;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+.bd-check {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--bd-electric-soft);
+  color: var(--bd-electric);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+/* ============================================================
+   DealNav (sticky tabs to switch between deals)
+   ============================================================ */
+.bd-dealnav {
+  position: sticky;
+  top: 64px;
+  z-index: 30;
+  background: color-mix(in oklab, var(--bd-navy) 85%, transparent);
+  backdrop-filter: blur(14px) saturate(140%);
+  -webkit-backdrop-filter: blur(14px) saturate(140%);
+  border-bottom: 1px solid var(--bd-border);
+}
+.bd-dealnav-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.bd-dealnav-row::-webkit-scrollbar {
+  display: none;
+}
+.bd-dealnav-label {
+  color: var(--bd-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  margin-right: 4px;
+}
+.bd-dealtab {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px solid var(--bd-border);
+  background: var(--bd-card);
+  color: var(--bd-text);
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+.bd-dealtab:hover {
+  border-color: var(--bd-electric);
+  color: var(--bd-electric);
+}
+.bd-dealtab[data-active='true'] {
+  background: var(--bd-electric-soft);
+  border-color: var(--bd-electric);
+  color: var(--bd-electric);
+}
+
+/* ============================================================
+   Landing /bigdeals — deal index cards
+   ============================================================ */
+.bd-deal-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 22px;
+}
+@media (min-width: 768px) {
+  .bd-deal-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.bd-deal-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, var(--bd-card), var(--bd-navy-2));
+  border: 1px solid var(--bd-border);
+  border-radius: 22px;
+  padding: 32px;
+  overflow: hidden;
+  transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+}
+.bd-deal-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--bd-electric);
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, 0.55);
+}
+.bd-deal-card-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--bd-gold-soft);
+  color: var(--bd-gold);
+  border: 1px solid rgba(245, 158, 11, 0.35);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  align-self: flex-start;
+  margin-bottom: 18px;
+}
+.bd-deal-card-name {
+  font-size: clamp(1.5rem, 1.5vw + 1rem, 2.2rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.bd-deal-card-tagline {
+  margin-top: 10px;
+  color: var(--bd-muted);
+  font-size: 15px;
+  line-height: 1.55;
+}
+.bd-deal-card-meta {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+.bd-deal-card-meta > div {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+.bd-deal-card-meta strong {
+  display: block;
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--bd-text);
+}
+.bd-deal-card-meta span {
+  display: block;
+  font-size: 10px;
+  color: var(--bd-muted);
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-top: 2px;
+}
+.bd-deal-card-cta {
+  margin-top: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--bd-electric);
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  align-self: flex-start;
+}
+.bd-deal-card-cta::after {
+  content: '→';
+  transition: transform 0.2s;
+}
+.bd-deal-card:hover .bd-deal-card-cta::after {
+  transform: translateX(4px);
+}
+
+/* ============================================================
+   Pillars (Previsora Section 3)
+   ============================================================ */
+.bd-pillar-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+}
+@media (min-width: 900px) {
+  .bd-pillar-row {
+    grid-template-columns: 220px 1fr 1fr;
+    align-items: start;
+  }
+}
+.bd-pillar-name {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--bd-text);
+  letter-spacing: -0.01em;
+  position: relative;
+  padding-left: 14px;
+}
+.bd-pillar-name::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  border-radius: 2px;
+  background: var(--bd-electric);
+}
+.bd-pillar-pain {
+  color: var(--bd-muted);
+  font-size: 14px;
+  line-height: 1.55;
+}
+.bd-pillar-solution {
+  color: var(--bd-text);
+  font-size: 14px;
+  line-height: 1.55;
+  font-weight: 600;
+}
+
+/* ============================================================
+   Anchor card (Previsora Section 5)
+   ============================================================ */
+.bd-anchor {
+  background:
+    linear-gradient(180deg, rgba(58, 123, 213, 0.08), transparent 50%),
+    var(--bd-card);
+  border: 1px solid rgba(58, 123, 213, 0.5);
+  border-radius: 22px;
+  padding: 36px;
+  position: relative;
+  overflow: hidden;
+}
+.bd-anchor::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at 100% 0%, rgba(200, 169, 81, 0.1), transparent 40%);
+  pointer-events: none;
+}
+.bd-anchor-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: var(--bd-electric-soft);
+  color: var(--bd-electric);
+  border: 1px solid rgba(58, 123, 213, 0.45);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.bd-anchor-title {
+  margin-top: 14px;
+  font-size: clamp(1.5rem, 1.5vw + 1rem, 2.1rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+}
+.bd-anchor-grid {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 768px) {
+  .bd-anchor-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.bd-anchor-block {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--bd-border);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.bd-anchor-block h4 {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--bd-muted);
+  margin-bottom: 8px;
+}
+.bd-anchor-block p {
+  color: var(--bd-text);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+.bd-anchor-features {
+  margin-top: 22px;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+@media (min-width: 768px) {
+  .bd-anchor-features {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.bd-anchor-feature {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  background: rgba(34, 197, 94, 0.06);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: var(--bd-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.bd-anchor-feature-icon {
+  color: #4ade80;
+  flex-shrink: 0;
+}
+.bd-anchor-foot {
+  margin-top: 24px;
+  padding-top: 22px;
+  border-top: 1px solid var(--bd-border);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 768px) {
+  .bd-anchor-foot {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+.bd-anchor-foot-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+.bd-anchor-foot-icon {
+  color: var(--bd-gold);
+  background: var(--bd-gold-soft);
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.bd-anchor-foot h5 {
+  font-size: 11px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--bd-muted);
+  font-weight: 800;
+  margin-bottom: 4px;
+}
+.bd-anchor-foot p {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--bd-text);
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Horizons (Previsora Section 6) — vertical timeline
+   ============================================================ */
+.bd-horizons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+}
+.bd-horizons::before {
+  content: '';
+  position: absolute;
+  left: 31px;
+  top: 16px;
+  bottom: 16px;
+  width: 2px;
+  background: linear-gradient(180deg, var(--bd-electric), var(--bd-gold));
+  opacity: 0.35;
+  border-radius: 2px;
+}
+@media (max-width: 600px) {
+  .bd-horizons::before {
+    display: none;
+  }
+}
+.bd-horizon {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 18px;
+  background: var(--bd-card);
+  border: 1px solid var(--bd-border);
+  border-radius: 16px;
+  padding: 22px;
+  position: relative;
+}
+.bd-horizon-highlight {
+  border-color: rgba(200, 169, 81, 0.5);
+  background: linear-gradient(180deg, rgba(200, 169, 81, 0.08), var(--bd-card));
+}
+.bd-horizon-num {
+  width: 64px;
+  height: 64px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bd-electric-soft);
+  color: var(--bd-electric);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  z-index: 1;
+}
+.bd-horizon-highlight .bd-horizon-num {
+  background: var(--bd-gold-soft);
+  color: var(--bd-gold);
+}
+.bd-horizon-name {
+  font-size: 18px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.bd-horizon-range {
+  color: var(--bd-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--bd-border);
+  padding: 4px 10px;
+  border-radius: 999px;
+}
+.bd-horizon-bullets {
+  margin-top: 12px;
+  list-style: none;
+  padding: 0;
+}
+.bd-horizon-bullets li {
+  color: var(--bd-text);
+  font-size: 14px;
+  padding: 5px 0 5px 18px;
+  position: relative;
+  line-height: 1.55;
+}
+.bd-horizon-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 4px;
+  top: 14px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--bd-electric);
+}
+.bd-horizon-highlight .bd-horizon-bullets li::before {
+  background: var(--bd-gold);
+}
+
+/* ============================================================
+   Stakeholders (Previsora Section 7)
+   ============================================================ */
+.bd-stake-card {
+  background: var(--bd-card);
+  border: 1px solid var(--bd-border);
+  border-radius: 14px;
+  padding: 22px;
+}
+.bd-stake-name {
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+.bd-stake-role {
+  color: var(--bd-muted);
+  font-size: 13px;
+  margin-top: 4px;
+}
+.bd-stake-align {
+  margin-top: 14px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+.bd-stake-align-high {
+  background: rgba(34, 197, 94, 0.12);
+  color: #86efac;
+  border-color: rgba(34, 197, 94, 0.35);
+}
+.bd-stake-align-medium {
+  background: rgba(245, 158, 11, 0.12);
+  color: #fbbf24;
+  border-color: rgba(245, 158, 11, 0.35);
+}
+.bd-stake-align-tech {
+  background: var(--bd-electric-soft);
+  color: var(--bd-electric);
+  border-color: rgba(58, 123, 213, 0.35);
+}
+.bd-stake-quote {
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-left: 3px solid var(--bd-electric);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0 8px 8px 0;
+  color: var(--bd-text);
+  font-size: 14px;
+  font-style: italic;
+  line-height: 1.5;
+}
+
+/* ============================================================
+   Success criteria (Previsora Section 9)
+   ============================================================ */
+.bd-success-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 768px) {
+  .bd-success-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.bd-success-card {
+  background: rgba(34, 197, 94, 0.05);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 14px;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+}
+.bd-success-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: rgba(34, 197, 94, 0.18);
+  color: #4ade80;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.bd-success-cat {
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #86efac;
+  margin-bottom: 4px;
+}
+.bd-success-text {
+  font-size: 14px;
+  color: var(--bd-text);
+  line-height: 1.55;
+}
+
+/* ============================================================
+   Profile table (Previsora Section 1) — 2-col labelled table
+   ============================================================ */
+.bd-profile {
+  background: var(--bd-card);
+  border: 1px solid var(--bd-border);
+  border-radius: 14px;
+  overflow: hidden;
+}
+.bd-profile-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-bottom: 1px solid var(--bd-border);
+}
+@media (min-width: 720px) {
+  .bd-profile-row {
+    grid-template-columns: 220px 1fr;
+  }
+}
+.bd-profile-row:last-child {
+  border-bottom: none;
+}
+.bd-profile-key {
+  background: var(--bd-navy-2);
+  padding: 14px 18px;
+  color: var(--bd-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.bd-profile-val {
+  padding: 14px 18px;
+  color: var(--bd-text);
+  font-size: 14.5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bd-agent-card,
+  .bd-deal-card {
+    transition: none !important;
+  }
+}

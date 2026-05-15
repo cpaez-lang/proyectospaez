@@ -1,0 +1,32 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  current: 'index' | 'bbva' | 'previsora';
+}
+const { current } = Astro.props;
+
+const deals = [
+  { key: 'index',     href: '/bigdeals',                label: 'Todos los deals', icon: 'lucide:layout-grid' },
+  { key: 'bbva',      href: '/bigdeals/bbva-colombia',  label: 'BBVA Colombia',   icon: 'lucide:landmark' },
+  { key: 'previsora', href: '/bigdeals/la-previsora',   label: 'La Previsora',    icon: 'lucide:shield' }
+];
+---
+<nav class="bd-dealnav" aria-label="Selector de BigDeals">
+  <div class="container">
+    <div class="bd-dealnav-row">
+      <span class="bd-dealnav-label">BigDeals</span>
+      {deals.map((d) => (
+        <a
+          href={d.href}
+          data-active={current === d.key ? 'true' : 'false'}
+          class="bd-dealtab"
+          aria-current={current === d.key ? 'page' : undefined}
+        >
+          <Icon name={d.icon} class="w-4 h-4" />
+          {d.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</nav>

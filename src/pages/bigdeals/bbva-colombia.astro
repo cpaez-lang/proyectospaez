@@ -1,0 +1,561 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import DealNav from '../../components/DealNav.astro';
+import { Icon } from 'astro-icon/components';
+import {
+  heroKpis,
+  portfolio,
+  agents,
+  investment,
+  roiLevel1,
+  roiLevel2,
+  roiLevel3,
+  roiSummary,
+  roiBadges,
+  inaction,
+  roadmap,
+  agentKpis,
+  beforeAfter,
+  benchmarks,
+  risks,
+  groupCountries,
+  nextSteps
+} from '../../data/bbva-bigdeal';
+import '../../styles/bigdeals.css';
+
+const statusBadge = (s: string) => {
+  switch (s) {
+    case 'active':   return { icon: 'lucide:check-circle-2', label: 'Activo',   classes: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' };
+    case 'partial':  return { icon: 'lucide:alert-circle',   label: 'Parcial',  classes: 'bg-amber-500/10 text-amber-300 border-amber-500/30' };
+    case 'gap':      return { icon: 'lucide:x-circle',       label: 'Brecha',   classes: 'bg-red-500/10 text-red-300 border-red-500/30' };
+    case 'excluded': return { icon: 'lucide:slash',          label: 'Excluido', classes: 'bg-slate-500/10 text-slate-400 border-slate-500/30' };
+    default:         return { icon: 'lucide:circle',         label: '—',        classes: 'bg-slate-500/10 text-slate-400 border-slate-500/30' };
+  }
+};
+
+const probBadge = (p: string) => {
+  switch (p) {
+    case 'low':    return { label: 'Baja',  classes: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' };
+    case 'medium': return { label: 'Media', classes: 'bg-amber-500/15 text-amber-300 border-amber-500/30' };
+    case 'high':   return { label: 'Alta',  classes: 'bg-red-500/15 text-red-300 border-red-500/30' };
+    default:       return { label: '—',     classes: '' };
+  }
+};
+
+const impactBadge = (s: string) => {
+  switch (s) {
+    case 'low':      return { label: 'Bajo',      classes: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' };
+    case 'medium':   return { label: 'Medio',     classes: 'bg-amber-500/15 text-amber-300 border-amber-500/30' };
+    case 'high':     return { label: 'Alto',      classes: 'bg-orange-500/15 text-orange-300 border-orange-500/30' };
+    case 'critical': return { label: 'Muy alto',  classes: 'bg-red-500/15 text-red-300 border-red-500/30' };
+    default:         return { label: '—',         classes: '' };
+  }
+};
+---
+<Layout
+  title="BigDeal BBVA Colombia — Camilo Páez"
+  description="Business case ejecutivo: el primer banco agéntico de Colombia. ROI Año 3 +268% sobre inversión total."
+>
+  <DealNav current="bbva" />
+
+  <!-- 0. HERO -->
+  <section class="bd-hero relative overflow-hidden">
+    <div class="absolute inset-0 -z-10" aria-hidden="true">
+      <div class="absolute inset-0" style="background:radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59,130,246,0.15), transparent 60%);"></div>
+      <svg class="absolute inset-0 w-full h-full opacity-[0.04]" aria-hidden="true">
+        <pattern id="bd-grid-bbva" width="48" height="48" patternUnits="userSpaceOnUse">
+          <path d="M48 0H0V48" fill="none" stroke="currentColor" stroke-width="0.5"/>
+        </pattern>
+        <rect width="100%" height="100%" fill="url(#bd-grid-bbva)"/>
+      </svg>
+    </div>
+
+    <div class="container pt-12 pb-12">
+      <div class="bd-tag inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[11px] font-bold uppercase tracking-[0.18em] mb-8" style="border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.08); color: #FBBF24;">
+        <Icon name="lucide:landmark" class="w-3.5 h-3.5" />
+        BigDeal · BBVA Colombia · FY27
+      </div>
+
+      <h1 class="bd-title">BigDeal BBVA Colombia</h1>
+      <p class="bd-subtitle">El primer banco agéntico de Colombia — y el blueprint para todo el Grupo BBVA en Latam.</p>
+
+      <div class="bd-kpi-grid mt-14">
+        {heroKpis.map((k, i) => (
+          <article class={`bd-kpi-card bd-kpi-${i}`}>
+            <div class="bd-kpi-icon"><Icon name={k.icon} class="w-6 h-6" /></div>
+            <div class="bd-kpi-label">{k.label}</div>
+            <div class="bd-kpi-value">{k.value}</div>
+            {k.sub && <div class="bd-kpi-sub">{k.sub}</div>}
+          </article>
+        ))}
+      </div>
+
+      <div class="bd-callout bd-callout-warning mt-10">
+        <Icon name="lucide:info" class="w-5 h-5 shrink-0 mt-0.5" />
+        <div>
+          <div class="font-bold mb-1">Nota metodológica</div>
+          <div class="text-sm leading-relaxed">
+            Todas las métricas de ROI están atadas a una sola fuente de verdad por palanca.
+            Los beneficios están organizados en 3 niveles acumulativos y se proyectan año a año
+            con supuestos explícitos y auditables.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 1. CONTEXTO -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">01 · Contexto</div>
+      <h2 class="bd-h2">Por qué BBVA Colombia — ahora</h2>
+      <p class="bd-lead max-w-3xl mt-5">
+        BBVA Global está construyendo la <strong>AELA (AI Enterprise Layer Architecture)</strong> — una de las
+        apuestas de IA más ambiciosas del sector financiero mundial. La <strong>GAM (Global AI Management)</strong>
+        coordina esta visión en todas las geografías del banco.
+      </p>
+      <aside class="bd-highlight mt-8">
+        <div class="bd-highlight-bar"></div>
+        <div class="bd-highlight-body">
+          <p>
+            BBVA Colombia <strong>no adopta IA de manera aislada</strong> — está siendo llamada a ser
+            el <strong>nodo agéntico piloto de Latam</strong>. Una implementación exitosa en Colombia
+            crea el patrón replicable para México, Perú, Argentina y España. El deal de
+            ~$1M USD en ACV tiene potencial de escalar a <strong>$10M+ a nivel grupo</strong>.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- 2. PORTAFOLIO -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">02 · Diagnóstico</div>
+      <h2 class="bd-h2">Portafolio Salesforce — estado actual vs. visión</h2>
+      <div class="bd-table mt-8">
+        <table>
+          <thead><tr><th>Producto</th><th>Estado</th><th>Estado actual</th><th>Estado objetivo</th></tr></thead>
+          <tbody>
+            {portfolio.map((row) => {
+              const sb = statusBadge(row.status);
+              return (
+                <tr class={`${row.status === 'gap' ? 'bd-row-warn' : ''} ${row.critical ? 'bd-row-critical' : ''}`}>
+                  <td class="font-bold">{row.product}</td>
+                  <td><span class={`bd-badge ${sb.classes}`}><Icon name={sb.icon} class="w-3.5 h-3.5" />{sb.label}</span></td>
+                  <td class="text-cp-muted">{row.current}</td>
+                  <td>{row.target}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3. AGENTES -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">03 · Agentforce</div>
+      <h2 class="bd-h2">Los 6 Agentes — casos de uso identificados</h2>
+      <div class="bd-grid-3 mt-10">
+        {agents.map((a) => (
+          <article class="bd-agent-card">
+            <div class="bd-agent-icon"><Icon name={a.icon} class="w-7 h-7" /></div>
+            <h3 class="bd-agent-name">{a.name}</h3>
+            <p class="bd-agent-fn">{a.function}</p>
+            <div class="bd-agent-impact">{a.impact}</div>
+            <div class="bd-agent-source">Fuente: {a.source}</div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 4. INVERSIÓN -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">04 · Inversión</div>
+      <h2 class="bd-h2">Estructura de inversión — ACV vs. inversión total</h2>
+      <div class="bd-callout bd-callout-info mt-8">
+        <Icon name="lucide:lightbulb" class="w-5 h-5 shrink-0 mt-0.5" />
+        <div>
+          <div class="font-bold mb-1">Clarificación clave</div>
+          <div class="text-sm leading-relaxed">
+            El ACV (~$1.05M/año) es lo que <strong>factura Salesforce</strong>. La inversión
+            total del banco incluye implementación con partner y puede llegar a <strong>$1.3-1.4M en año 1</strong>.
+            El ROI se calcula sobre la inversión total, no solo el ACV.
+          </div>
+        </div>
+      </div>
+      <div class="bd-table mt-8">
+        <table>
+          <thead><tr><th>Componente</th><th class="text-right">ACV Salesforce (USD/año)</th><th class="text-right">Inversión Total BBVA</th></tr></thead>
+          <tbody>
+            {investment.map((row) => (
+              <tr class={row.isTotal ? 'bd-row-total' : ''}>
+                <td class={row.isTotal ? 'font-extrabold' : ''}>{row.component}</td>
+                <td class="text-right tabular-nums">{row.acv}</td>
+                <td class="text-right tabular-nums">{row.total}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. ROI -->
+  <section class="bd-section bd-section-spotlight">
+    <div class="container">
+      <div class="bd-eyebrow text-cp-gold">05 · Modelo de ROI</div>
+      <h2 class="bd-h2">3 niveles acumulativos · una sola fuente de verdad</h2>
+      <p class="bd-lead max-w-3xl mt-3">Sin contradicciones. Cada palanca tiene su benchmark, su supuesto y su año de impacto.</p>
+
+      <div class="bd-roi-levels mt-10">
+        <details class="bd-acc" open>
+          <summary class="bd-acc-summary">
+            <span class="bd-acc-num bd-acc-1">N1</span>
+            <span><span class="bd-acc-title">Eficiencias operativas</span><span class="bd-acc-meta">Forrester TEI Service Cloud — 248% ROI</span></span>
+            <Icon name="lucide:chevron-down" class="bd-acc-chev w-5 h-5 ml-auto" />
+          </summary>
+          <div class="bd-table mt-4">
+            <table>
+              <thead><tr><th>Palanca</th><th>Supuesto</th><th class="text-right">Año 1</th><th class="text-right">Año 2</th><th class="text-right">Año 3</th></tr></thead>
+              <tbody>
+                {roiLevel1.map((r) => (
+                  <tr class={r.isSubtotal ? 'bd-row-subtotal' : ''}>
+                    <td class={r.isSubtotal ? 'font-extrabold' : 'font-semibold'}>{r.lever}</td>
+                    <td class="text-cp-muted text-sm">{r.assumption}</td>
+                    <td class="text-right tabular-nums">{r.y1}</td>
+                    <td class="text-right tabular-nums">{r.y2}</td>
+                    <td class="text-right tabular-nums">{r.y3}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="bd-acc" open>
+          <summary class="bd-acc-summary">
+            <span class="bd-acc-num bd-acc-2">N2</span>
+            <span><span class="bd-acc-title">Ingresos incrementales</span><span class="bd-acc-meta">Accenture Banking 2024 + McKinsey Retail Banking 2024</span></span>
+            <Icon name="lucide:chevron-down" class="bd-acc-chev w-5 h-5 ml-auto" />
+          </summary>
+          <div class="bd-table mt-4">
+            <table>
+              <thead><tr><th>Palanca</th><th>Supuesto</th><th class="text-right">Año 1</th><th class="text-right">Año 2</th><th class="text-right">Año 3</th></tr></thead>
+              <tbody>
+                {roiLevel2.map((r) => (
+                  <tr class={r.isSubtotal ? 'bd-row-subtotal' : ''}>
+                    <td class={r.isSubtotal ? 'font-extrabold' : 'font-semibold'}>{r.lever}</td>
+                    <td class="text-cp-muted text-sm">{r.assumption}</td>
+                    <td class="text-right tabular-nums">{r.y1}</td>
+                    <td class="text-right tabular-nums">{r.y2}</td>
+                    <td class="text-right tabular-nums">{r.y3}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="bd-acc" open>
+          <summary class="bd-acc-summary">
+            <span class="bd-acc-num bd-acc-3">N3</span>
+            <span><span class="bd-acc-title">Beneficios estratégicos</span><span class="bd-acc-meta">Salesforce Customer Success Metrics FY26 Q3 + IDC</span></span>
+            <Icon name="lucide:chevron-down" class="bd-acc-chev w-5 h-5 ml-auto" />
+          </summary>
+          <div class="bd-table mt-4">
+            <table>
+              <thead><tr><th>Palanca</th><th>Supuesto</th><th class="text-right">Año 1</th><th class="text-right">Año 2</th><th class="text-right">Año 3</th></tr></thead>
+              <tbody>
+                {roiLevel3.map((r) => (
+                  <tr class={r.isSubtotal ? 'bd-row-subtotal' : ''}>
+                    <td class={r.isSubtotal ? 'font-extrabold' : 'font-semibold'}>{r.lever}</td>
+                    <td class="text-cp-muted text-sm">{r.assumption}</td>
+                    <td class="text-right tabular-nums">{r.y1}</td>
+                    <td class="text-right tabular-nums">{r.y2}</td>
+                    <td class="text-right tabular-nums">{r.y3}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+
+      <div class="bd-roi-summary mt-16">
+        <div>
+          <h3 class="text-2xl font-extrabold">ROI consolidado · 3 años</h3>
+          <p class="text-sm text-cp-muted mt-1">La estrella del modelo. Sin contradicciones con las palancas de arriba.</p>
+        </div>
+        <div class="bd-table bd-table-summary mt-6">
+          <table>
+            <thead><tr><th></th><th class="text-right">Año 1</th><th class="text-right">Año 2</th><th class="text-right">Año 3</th><th class="text-right">Total 3 años</th></tr></thead>
+            <tbody>
+              {roiSummary.map((r) => (
+                <tr class={r.tone ? `bd-row-${r.tone}` : ''}>
+                  <td class="font-semibold">{r.label}</td>
+                  <td class="text-right tabular-nums">{r.y1}</td>
+                  <td class="text-right tabular-nums">{r.y2}</td>
+                  <td class="text-right tabular-nums">{r.y3}</td>
+                  <td class="text-right tabular-nums font-bold">{r.total3y}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="bd-roi-badges mt-10">
+          <div class="bd-roi-badge bd-roi-badge-amber">
+            <div class="bd-roi-badge-year">Año 1</div>
+            <div class="bd-roi-badge-value">{roiBadges.y1.label}</div>
+            <div class="bd-roi-badge-blurb">{roiBadges.y1.blurb}</div>
+          </div>
+          <div class="bd-roi-badge bd-roi-badge-green">
+            <div class="bd-roi-badge-year">Año 2</div>
+            <div class="bd-roi-badge-value">{roiBadges.y2.label}</div>
+            <div class="bd-roi-badge-blurb">{roiBadges.y2.blurb}</div>
+          </div>
+          <div class="bd-roi-badge bd-roi-badge-green-bright">
+            <div class="bd-roi-badge-year">Año 3</div>
+            <div class="bd-roi-badge-value">{roiBadges.y3.label}</div>
+            <div class="bd-roi-badge-blurb">{roiBadges.y3.blurb}</div>
+          </div>
+          <div class="bd-roi-badge bd-roi-badge-green">
+            <div class="bd-roi-badge-year">Total 3 años</div>
+            <div class="bd-roi-badge-value">{roiBadges.total.label}</div>
+            <div class="bd-roi-badge-blurb">{roiBadges.total.blurb}</div>
+          </div>
+        </div>
+
+        <div class="bd-callout bd-callout-info mt-10">
+          <Icon name="lucide:pin" class="w-5 h-5 shrink-0 mt-0.5" />
+          <div>
+            <div class="font-bold mb-1">¿Por qué el Año 1 es +14%?</div>
+            <div class="text-sm leading-relaxed">
+              En año 1 la inversión es la más alta (incluye implementación) y los agentes entran en
+              producción <strong>escalonadamente desde el mes 5</strong>. El banco recibe solo 5-7 meses
+              de beneficio operativo. Esto es correcto y honesto — no inflar el año 1 es lo que le da
+              credibilidad al modelo. Desde el año 2, la inversión baja a solo el ACV de licencias
+              → <strong>ROI se dispara a 205% y 268%</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6. INACCIÓN -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">06 · Costo de inacción</div>
+      <h2 class="bd-h2">Costo de no actuar</h2>
+      <div class="bd-inaction-hero mt-10">
+        <div class="bd-inaction-amount">$97,000</div>
+        <div class="bd-inaction-period">por mes</div>
+      </div>
+      <div class="bd-table mt-8">
+        <table>
+          <thead><tr><th>Fuente de costo</th><th>Cálculo</th><th class="text-right">Monto / mes</th></tr></thead>
+          <tbody>
+            {inaction.map((row) => (
+              <tr class={row.isTotal ? 'bd-row-total' : ''}>
+                <td class={row.isTotal ? 'font-extrabold' : 'font-semibold'}>{row.source}</td>
+                <td class="text-cp-muted text-sm">{row.calc}</td>
+                <td class={`text-right tabular-nums ${row.isTotal ? 'font-extrabold text-red-300' : ''}`}>{row.monthly}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p class="bd-inaction-quote mt-10">
+        Cada mes sin actuar = <span class="text-red-300">$97,000</span> en eficiencias, revenue y conversión que se pierden.
+        En un año: <span class="text-red-300">$1,164,000</span>.
+      </p>
+    </div>
+  </section>
+
+  <!-- 7. ROADMAP -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">07 · Roadmap</div>
+      <h2 class="bd-h2">Valor temprano, no big bang</h2>
+      <div class="bd-roadmap mt-12">
+        {roadmap.map((p, i) => (
+          <article class={`bd-phase ${i === 1 ? 'bd-phase-quickwin' : ''}`}>
+            <div class="bd-phase-num">{p.number}</div>
+            <div class="bd-phase-body">
+              <div class="flex items-baseline justify-between gap-4 flex-wrap">
+                <h3 class="bd-phase-name">FASE {p.number} — {p.name}</h3>
+                <span class="bd-phase-range">{p.range}</span>
+              </div>
+              <ul class="bd-phase-bullets">{p.bullets.map((b) => <li>{b}</li>)}</ul>
+              <div class="bd-phase-delivers">
+                <Icon name="lucide:check-circle-2" class="w-4 h-4 shrink-0" />
+                <span>{p.delivers}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 8. KPIs -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">08 · OKRs</div>
+      <h2 class="bd-h2">KPIs comprometidos por agente</h2>
+      <div class="bd-table mt-8">
+        <table>
+          <thead><tr><th>Agente</th><th>KPI principal</th><th>OKR</th><th>Medición</th></tr></thead>
+          <tbody>
+            {agentKpis.map((row) => (
+              <tr>
+                <td class="font-bold">{row.agent}</td>
+                <td>{row.kpi}</td>
+                <td class="text-cp-gold font-semibold">{row.okr}</td>
+                <td class="text-cp-muted text-sm">{row.measurement}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9. ANTES/DESPUÉS -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">09 · Transformación</div>
+      <h2 class="bd-h2">Antes vs. después — la historia</h2>
+      <div class="bd-grid-3 mt-10">
+        {beforeAfter.map((b) => (
+          <article class="bd-ba-card">
+            <div class="bd-ba-block bd-ba-before">
+              <div class="bd-ba-tag">ANTES</div>
+              <p>{b.before}</p>
+            </div>
+            <div class="bd-ba-arrow"><Icon name="lucide:arrow-down" class="w-5 h-5" /></div>
+            <div class="bd-ba-block bd-ba-after">
+              <div class="bd-ba-tag bd-ba-tag-after">DESPUÉS</div>
+              <p>{b.after}</p>
+            </div>
+            <div class="bd-ba-impact">
+              <Icon name="lucide:zap" class="w-4 h-4 shrink-0" />
+              <span>{b.impact}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 10. BENCHMARKS -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">10 · Industria</div>
+      <h2 class="bd-h2">Respaldo de la industria — no somos los únicos que lo decimos</h2>
+      <div class="bd-grid-3 mt-10">
+        {benchmarks.map((b) => (
+          <article class="bd-bench-card">
+            <div class="bd-bench-icon"><Icon name={b.icon} class="w-6 h-6" /></div>
+            <div class="bd-bench-source">{b.source}</div>
+            <div class="bd-bench-highlight">{b.highlight}</div>
+            {b.detail && <div class="bd-bench-detail">{b.detail}</div>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- 11. RIESGOS -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">11 · Mitigación</div>
+      <h2 class="bd-h2">Riesgos identificados y plan de mitigación</h2>
+      <div class="bd-table mt-8">
+        <table>
+          <thead><tr><th>Riesgo</th><th>Probabilidad</th><th>Impacto</th><th>Mitigación</th></tr></thead>
+          <tbody>
+            {risks.map((r) => {
+              const pb = probBadge(r.prob);
+              const ib = impactBadge(r.impact);
+              return (
+                <tr>
+                  <td class="font-semibold">{r.risk}</td>
+                  <td><span class={`bd-badge ${pb.classes}`}>{pb.label}</span></td>
+                  <td><span class={`bd-badge ${ib.classes}`}>{ib.label}</span></td>
+                  <td class="text-sm">{r.mitigation}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12. EFECTO GRUPO -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">12 · Multiplicador</div>
+      <h2 class="bd-h2">Este deal no vale $1M — vale $10M+</h2>
+      <article class="bd-group-card mt-10">
+        <Icon name="lucide:globe-2" class="bd-group-icon" />
+        <p class="bd-group-text">
+          BBVA opera en México, Perú, Argentina, España y Turquía. Un caso de éxito certificado en
+          Colombia → patrón replicable → todas las filiales en la misma conversación.
+          La <strong>GAM (Global AI Management)</strong> es el puente. Involucrarlos desde el inicio
+          convierte a <strong>Colombia en el nodo de innovación agéntica de Latam</strong>.
+        </p>
+        <div class="bd-flags">
+          {groupCountries.map((c) => (
+            <div class={`bd-flag ${c.highlight ? 'bd-flag-highlight' : ''}`}>
+              <span class="bd-flag-emoji">{c.flag}</span>
+              <span class="bd-flag-name">{c.name}</span>
+            </div>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- 13. NEXT STEPS -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">13 · Acción</div>
+      <h2 class="bd-h2">Próximos pasos</h2>
+      <ul class="bd-checklist mt-10">
+        {nextSteps.map((s) => (
+          <li class="bd-checkitem">
+            <span class="bd-check"><Icon name="lucide:check" class="w-3.5 h-3.5" /></span>
+            <span>{s.task}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="bd-meta">
+    <div class="container py-12">
+      <div class="bd-meta-line"></div>
+      <div class="grid sm:grid-cols-2 gap-6 text-sm">
+        <div>
+          <div class="text-xs uppercase tracking-[0.2em] text-cp-muted mb-2">Preparado por</div>
+          <div class="font-bold">Camilo Páez</div>
+          <div class="text-cp-muted">Lead SE · Salesforce Colombia</div>
+        </div>
+        <div class="sm:text-right">
+          <div class="text-xs uppercase tracking-[0.2em] text-cp-muted mb-2">Versión</div>
+          <div class="font-bold">FY2027 · v2.0</div>
+          <div class="text-cp-muted">Fundamentos validados · ROI consolidado</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
