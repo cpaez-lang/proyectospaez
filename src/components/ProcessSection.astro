@@ -1,0 +1,31 @@
+---
+const proceso = [
+  { n: '01', t: 'Discovery', d: 'Entiendo el caso de uso y los datos del cliente. Diseño la demo en función del valor de negocio, no de la feature.' },
+  { n: '02', t: 'Arquitectura', d: 'Planifico el stack Salesforce: objetos, FlexiPages, agentes, flows, automations. Todo metadata-first.' },
+  { n: '03', t: 'Construcción', d: 'Build con Claude Code: Apex, LWC, Agentforce, portales LWR. De idea a deploy en horas.' },
+  { n: '04', t: 'Demo', d: 'Guion narrativo con personajes canónicos, casos edge y wow moments. Una historia, no una feature list.' }
+];
+---
+<section id="proceso" class="py-32 border-t border-cp-border">
+  <div class="container">
+    <div class="reveal max-w-3xl">
+      <div class="text-cp-success text-sm font-semibold tracking-widest uppercase">Proceso</div>
+      <h2 class="mt-3">De la idea al deploy en horas.</h2>
+      <p class="mt-4 text-cp-muted text-lg">
+        Mi proceso es simple: entender, arquitectar, construir, demostrar.
+      </p>
+    </div>
+
+    <div class="mt-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-6 reveal-stagger">
+      {proceso.map((p) => (
+        <div class="rounded-2xl p-6 border border-cp-border hover:border-cp-accent transition relative overflow-hidden bg-cp-surface/40">
+          <div class="text-7xl font-extrabold gradient-text opacity-20 absolute -top-4 -right-2 select-none pointer-events-none">{p.n}</div>
+          <div class="relative">
+            <h3 class="text-xl font-bold">{p.t}</h3>
+            <p class="mt-3 text-cp-muted text-sm leading-relaxed">{p.d}</p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -9,13 +9,13 @@ export default {
       colors: {
         cp: {
           bg: '#0C0C0E',
-          surface: '#15161B',
-          border: '#262830',
-          text: '#F2F2F7',
-          muted: '#9A9CA5',
+          surface: '#141416',
+          border: '#1E1E22',
+          text: '#E8E0D4',
+          muted: '#6B6872',
           accent: '#0070D2',
           gold: '#EF9F27',
-          success: '#16C172'
+          success: '#1D9E75'
         }
       },
       fontFamily: {
@@ -26,6 +26,12 @@ export default {
           '-apple-system',
           'Segoe UI',
           'sans-serif'
+        ],
+        mono: [
+          '"JetBrains Mono Variable"',
+          'ui-monospace',
+          'SFMono-Regular',
+          'monospace'
         ]
       }
     }

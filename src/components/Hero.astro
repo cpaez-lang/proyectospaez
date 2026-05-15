@@ -1,0 +1,63 @@
+---
+import { Icon } from 'astro-icon/components';
+---
+<section id="inicio" class="relative flex items-center justify-center overflow-hidden" style="min-height:100dvh;">
+  <!-- Radial gradient background -->
+  <div class="absolute inset-0 -z-10 pointer-events-none" aria-hidden="true">
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse 90% 60% at 50% 20%, color-mix(in oklab, var(--cp-accent) 16%, transparent), transparent 70%);"></div>
+    <div class="absolute inset-0" style="background:radial-gradient(ellipse 60% 50% at 80% 80%, color-mix(in oklab, var(--cp-gold) 10%, transparent), transparent 70%);"></div>
+    <!-- Grain overlay -->
+    <svg class="absolute inset-0 w-full h-full opacity-[0.06] mix-blend-overlay" aria-hidden="true">
+      <filter id="hero-noise">
+        <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3"/>
+        <feColorMatrix values="0 0 0 0 1  0 0 0 0 1  0 0 0 0 1  0 0 0 0.6 0"/>
+      </filter>
+      <rect width="100%" height="100%" filter="url(#hero-noise)"/>
+    </svg>
+  </div>
+
+  <div class="container relative z-10 py-24">
+    <div class="max-w-5xl">
+      <div class="hero-line inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-cp-border text-[12px] font-medium uppercase tracking-[0.18em]" style="background: color-mix(in oklab, var(--cp-surface) 50%, transparent);">
+        <span class="w-2 h-2 rounded-full bg-cp-success animate-pulse"></span>
+        Solutions Engineer · Colombia · 2026
+      </div>
+
+      <h1 class="mt-7 leading-[1.02]" style="font-size: clamp(3rem, 5vw + 1rem, 5rem);">
+        <span class="hero-line block">Proyectos que</span>
+        <span class="hero-line block">construimos <span style="color: var(--cp-gold);">juntos.</span></span>
+      </h1>
+
+      <p class="hero-line mt-7 max-w-2xl text-cp-muted" style="font-size: 18px; line-height: 1.6;">
+        Soy <strong class="text-cp-text font-semibold">Camilo Páez</strong>. Construyo demos de Salesforce de clase mundial usando Claude Code como co-piloto de arquitectura. De idea a deploy en horas, no semanas.
+      </p>
+
+      <div class="hero-line mt-10 flex flex-wrap gap-3">
+        <a href="#proyectos" class="magnetic-btn inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-cp-accent text-white font-semibold hover:opacity-90 transition focus-visible:outline-2 focus-visible:outline-cp-gold focus-visible:outline-offset-2">
+          Ver proyectos
+          <Icon name="lucide:arrow-down-right" class="w-4 h-4" />
+        </a>
+        <a href="#sobre-mi" class="magnetic-btn inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-cp-border hover:border-cp-accent transition font-semibold focus-visible:outline-2 focus-visible:outline-cp-accent focus-visible:outline-offset-2">
+          Sobre mí
+          <Icon name="lucide:user" class="w-4 h-4" />
+        </a>
+      </div>
+    </div>
+
+    <!-- Floating logos -->
+    <div class="hero-line absolute left-0 right-0 bottom-8 hidden md:flex items-center justify-center gap-12" aria-hidden="true" style="opacity: 0.15;">
+      <Icon name="simple-icons:salesforce" class="w-10 h-10" />
+      <Icon name="simple-icons:astro" class="w-10 h-10" />
+      <Icon name="simple-icons:anthropic" class="w-10 h-10" />
+    </div>
+  </div>
+
+  <!-- Scroll cue -->
+  <a href="#sobre-mi" aria-label="Bajar a la siguiente sección" class="absolute bottom-4 left-1/2 -translate-x-1/2 text-cp-muted hover:text-cp-accent transition opacity-70">
+    <Icon name="lucide:chevron-down" class="w-6 h-6 animate-bounce" />
+  </a>
+</section>
+
+<style>
+  .hero-line { opacity: 0; transform: translateY(24px); }
+</style>

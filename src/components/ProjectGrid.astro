@@ -1,0 +1,150 @@
+---
+import { getCollection } from 'astro:content';
+import ProjectCard from './ProjectCard.astro';
+
+const projects = (await getCollection('projects')).sort((a, b) => {
+  const oa = a.data.order ?? 999;
+  const ob = b.data.order ?? 999;
+  if (oa !== ob) return oa - ob;
+  return b.data.publishedAt.getTime() - a.data.publishedAt.getTime();
+});
+
+const filterPills: { label: string; value: string }[] = [
+  { label: 'Todos', value: 'Todos' },
+  { label: 'FSC', value: 'FSC' },
+  { label: 'Health Cloud', value: 'HealthCloud' },
+  { label: 'Experience Cloud', value: 'ExperienceCloud' },
+  { label: 'Seguros', value: 'Seguros' },
+  { label: 'PYMES', value: 'PYMES' },
+  { label: 'Demo', value: 'Demo' }
+];
+---
+<section id="proyectos" class="py-32 border-t border-cp-border">
+  <div class="container">
+    <div class="reveal max-w-3xl">
+      <div class="text-cp-accent text-sm font-semibold tracking-widest uppercase">Proyectos</div>
+      <h2 class="mt-3">Demos que cuentan historias.</h2>
+      <p class="mt-4 text-cp-muted text-lg">
+        Cada proyecto resuelve un caso real con personajes canónicos, datos seedeados y wow moments coreografiados.
+      </p>
+    </div>
+
+    <!-- Filters -->
+    <div
+      class="reveal mt-10 flex flex-wrap gap-2"
+      role="tablist"
+      aria-label="Filtrar proyectos por categoría"
+      id="project-filters"
+    >
+      {filterPills.map((p, i) => (
+        <button
+          type="button"
+          role="tab"
+          class="filter-pill px-4 py-2 rounded-full border text-sm font-medium transition-all focus-visible:outline-2 focus-visible:outline-cp-accent focus-visible:outline-offset-2"
+          data-filter={p.value}
+          aria-selected={i === 0 ? 'true' : 'false'}
+          data-active={i === 0 ? 'true' : 'false'}
+        >
+          {p.label}
+        </button>
+      ))}
+    </div>
+
+    <!-- Grid -->
+    <div
+      class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 reveal-stagger"
+      id="project-grid"
+    >
+      {projects.map((p) => (
+        <ProjectCard
+          slug={p.id}
+          title={p.data.title}
+          tagline={p.data.tagline}
+          client={p.data.client}
+          category={p.data.category}
+          stack={p.data.stack}
+          coverImage={p.data.coverImage}
+          keyMetric={p.data.keyMetric}
+          keyMetricLabel={p.data.keyMetricLabel}
+          featured={p.data.featured}
+        />
+      ))}
+    </div>
+  </div>
+</section>
+
+<style>
+  .filter-pill {
+    color: var(--cp-text);
+    border-color: var(--cp-border);
+    background: transparent;
+  }
+  .filter-pill:hover {
+    border-color: var(--cp-accent);
+    color: var(--cp-accent);
+  }
+  .filter-pill[data-active="true"] {
+    background: var(--cp-accent);
+    border-color: var(--cp-accent);
+    color: #fff;
+  }
+
+  #project-grid > * {
+    will-change: opacity, transform;
+  }
+</style>
+
+<script>
+  type GsapModule = typeof import('gsap');
+
+  const setupProjectFilters = async () => {
+    const filtersEl = document.getElementById('project-filters');
+    const gridEl = document.getElementById('project-grid');
+    if (!filtersEl || !gridEl) return;
+
+    const gsap = ((await import('gsap')) as GsapModule).default;
+
+    const cards = Array.from(gridEl.querySelectorAll<HTMLElement>('[data-category]'));
+    const pills = Array.from(filtersEl.querySelectorAll<HTMLButtonElement>('.filter-pill'));
+
+    const applyFilter = (filter: string) => {
+      cards.forEach((card) => {
+        const cat = card.dataset.category ?? '';
+        const matches = filter === 'Todos' || cat === filter;
+
+        if (matches) {
+          card.style.display = '';
+          gsap.to(card, {
+            opacity: 1,
+            scale: 1,
+            duration: 0.4,
+            ease: 'power2.out',
+            clearProps: 'transform'
+          });
+        } else {
+          gsap.to(card, {
+            opacity: 0,
+            scale: 0.95,
+            duration: 0.3,
+            ease: 'power2.in',
+            onComplete: () => { card.style.display = 'none'; }
+          });
+        }
+      });
+    };
+
+    pills.forEach((pill) => {
+      pill.addEventListener('click', () => {
+        const filter = pill.dataset.filter ?? 'Todos';
+        pills.forEach((p) => {
+          const active = p === pill;
+          p.dataset.active = active ? 'true' : 'false';
+          p.setAttribute('aria-selected', active ? 'true' : 'false');
+        });
+        applyFilter(filter);
+      });
+    });
+  };
+
+  document.addEventListener('astro:page-load', setupProjectFilters);
+</script>

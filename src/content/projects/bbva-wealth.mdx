@@ -1,0 +1,50 @@
+---
+title: "BBVA Wealth Management"
+tagline: "Vista 360 + Agentforce para banca selecta"
+client: "BBVA Colombia"
+category: "FSC"
+stack: ["Salesforce FSC", "Agentforce", "LWC", "Apex", "Experience Cloud"]
+coverImage: "/images/projects/bbva-wealth-cover.svg"
+bannerImage: "/images/projects/bbva-wealth-banner.svg"
+duration: "4 días"
+linesOfCode: "0 líneas manuales"
+keyMetric: "100"
+keyMetricLabel: "clientes wealth colombianos en la demo"
+featured: true
+publishedAt: 2025-01-15
+videoUrl: "/videos/bbva-wealth-demo.mp4"
+order: 1
+---
+
+## Contexto
+Demo interna para banqueros de BBVA Colombia — división Wealth Management.
+Los asesores necesitaban ver todo sobre un cliente (portafolio, churn, NBA, NBO,
+historial de interacciones) en una sola pantalla sin cambiar de tab.
+
+**Para quién:** Banqueros de BBVA Wealth Management Colombia
+**Problema:** Los asesores tardaban 15+ minutos preparando información para
+cada reunión con clientes de banca selecta.
+
+## Stack Tecnológico
+Salesforce Financial Services Cloud · Agentforce con 8 topics y 12 acciones Apex
+LWC con gráficos SVG nativos · Markowitz-Ledoit-Wolf en Apex puro
+Experience Cloud LWR · Motor de priorización Kanban con score diario
+
+## El Reto
+Implementar el modelo de optimización de portafolio Markowitz con estimación
+de covarianza Ledoit-Wolf **completamente en Apex** — sin servicios externos,
+sin Python, sin llamadas a APIs de IA. El modelo debía correr dentro de los
+límites de CPU de Salesforce (10 segundos por transacción).
+
+## La Solución
+Gradiente proyectado al simplex en Apex puro. El algoritmo converge en
+30-60 iteraciones para 6 activos, bien dentro del límite de CPU.
+El agente Agentforce opera en dos modos: cliente activo y cartera completa,
+cambiando de contexto automáticamente sin que el banquero lo indique.
+
+## Resultado
+- **4 días** de construcción vs 4-8 semanas tradicional
+- **100 clientes** colombianos con datos reales en COP
+- **63 pruebas** automatizadas pasando
+- **Sharpe ratio** calculado en tiempo real para cada portafolio
+- Tablero Kanban de priorización: Crítico / Importante / Seguimiento

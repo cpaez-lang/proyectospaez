@@ -1,62 +1,181 @@
 ---
+// Custom cursor: only renders on desktop (>1024px) via CSS media query.
+// Initialised on `astro:page-load`, cleaned up on `astro:before-swap`.
 ---
-<div id="cp-cursor" aria-hidden="true"></div>
+<div id="cp-cursor" class="cp-cursor" aria-hidden="true">
+  <div class="cursor-outer"></div>
+  <div class="cursor-inner"></div>
+</div>
 
 <style>
-  #cp-cursor {
+  .cp-cursor {
     position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9999;
+    display: none;
+  }
+  @media (pointer: fine) and (min-width: 1024px) {
+    .cp-cursor { display: block; }
+    /* Hide native cursor only on devices using the custom one */
+    :global(html.cp-cursor-active),
+    :global(html.cp-cursor-active *) {
+      cursor: none !important;
+    }
+  }
+
+  .cursor-inner,
+  .cursor-outer {
+    position: absolute;
     top: 0;
     left: 0;
-    width: 22px;
-    height: 22px;
-    border: 1.5px solid var(--cp-accent);
     border-radius: 9999px;
     pointer-events: none;
-    z-index: 90;
-    transform: translate(-50%, -50%);
-    transition: width 0.18s ease, height 0.18s ease, background-color 0.18s ease, opacity 0.18s ease;
-    opacity: 0;
-    mix-blend-mode: difference;
     will-change: transform;
+    transform: translate3d(-100px, -100px, 0);
   }
-  #cp-cursor.cp-hover {
-    width: 44px;
-    height: 44px;
-    background: color-mix(in oklab, var(--cp-accent) 15%, transparent);
+  .cursor-inner {
+    width: 12px;
+    height: 12px;
+    background: var(--cp-text);
+    margin: -6px 0 0 -6px;
+    mix-blend-mode: difference;
   }
-  @media (hover: none), (pointer: coarse), (prefers-reduced-motion: reduce) {
-    #cp-cursor { display: none; }
+  .cursor-outer {
+    width: 32px;
+    height: 32px;
+    border: 1.5px solid var(--cp-text);
+    margin: -16px 0 0 -16px;
+    transition: border-color 0.25s ease, background-color 0.25s ease, opacity 0.25s ease;
+    opacity: 0.7;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cp-cursor { display: none !important; }
   }
 </style>
 
 <script>
-  const setupCursor = () => {
-    const cursor = document.getElementById('cp-cursor');
-    if (!cursor) return;
+  type GsapModule = typeof import('gsap');
+
+  let cursorState: {
+    raf: number;
+    stop: () => void;
+    onMove: (e: MouseEvent) => void;
+    onDown: () => void;
+    onUp: () => void;
+    onOver: (e: MouseEvent) => void;
+  } | null = null;
+
+  const setupCustomCursor = async () => {
+    if (typeof window === 'undefined') return;
+    // Only enable on real pointer devices and large screens
+    const supportsFine = window.matchMedia('(pointer: fine)').matches;
+    const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    if (reduced) return;
+    if (!supportsFine || !isDesktop || reduced) return;
 
-    let x = 0, y = 0, tx = 0, ty = 0;
-    const move = (e: MouseEvent) => {
-      tx = e.clientX;
-      ty = e.clientY;
-      cursor.style.opacity = '1';
+    const root = document.getElementById('cp-cursor');
+    const inner = root?.querySelector<HTMLDivElement>('.cursor-inner');
+    const outer = root?.querySelector<HTMLDivElement>('.cursor-outer');
+    if (!root || !inner || !outer) return;
+
+    document.documentElement.classList.add('cp-cursor-active');
+
+    const gsap = ((await import('gsap')) as GsapModule).default;
+
+    const setInnerX = gsap.quickSetter(inner, 'x', 'px');
+    const setInnerY = gsap.quickSetter(inner, 'y', 'px');
+    const setOuterX = gsap.quickSetter(outer, 'x', 'px');
+    const setOuterY = gsap.quickSetter(outer, 'y', 'px');
+
+    let mx = window.innerWidth / 2;
+    let my = window.innerHeight / 2;
+    let ox = mx;
+    let oy = my;
+    let running = true;
+
+    const onMove = (e: MouseEvent) => {
+      mx = e.clientX;
+      my = e.clientY;
     };
+
+    let rafId = 0;
     const tick = () => {
-      x += (tx - x) * 0.2;
-      y += (ty - y) * 0.2;
-      cursor.style.transform = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
-      requestAnimationFrame(tick);
+      if (!running) return;
+      // Lerp outer toward target
+      ox += (mx - ox) * 0.18;
+      oy += (my - oy) * 0.18;
+      setInnerX(mx);
+      setInnerY(my);
+      setOuterX(ox);
+      setOuterY(oy);
+      rafId = requestAnimationFrame(tick);
     };
-    window.addEventListener('mousemove', move);
-    requestAnimationFrame(tick);
 
-    const hoverables = 'a, button, [role="button"], input, textarea, select';
-    document.querySelectorAll<HTMLElement>(hoverables).forEach((el) => {
-      el.addEventListener('mouseenter', () => cursor.classList.add('cp-hover'));
-      el.addEventListener('mouseleave', () => cursor.classList.remove('cp-hover'));
-    });
+    const interactiveSelector = 'a, button, [role="button"], .project-card, .magnetic-btn, input, textarea, select, label, summary';
+
+    const onOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement | null;
+      const interactive = target?.closest(interactiveSelector);
+      if (interactive) {
+        gsap.to(outer, {
+          scale: 2.5,
+          backgroundColor: 'color-mix(in oklab, var(--cp-accent) 25%, transparent)',
+          borderColor: 'var(--cp-accent)',
+          duration: 0.25,
+          ease: 'power2.out'
+        });
+      } else {
+        gsap.to(outer, {
+          scale: 1,
+          backgroundColor: 'transparent',
+          borderColor: 'var(--cp-text)',
+          duration: 0.25,
+          ease: 'power2.out'
+        });
+      }
+    };
+
+    const onDown = () => {
+      gsap.to([inner, outer], { scale: (i) => (i === 1 ? 2 : 0.8), duration: 0.18, ease: 'power2.out' });
+    };
+    const onUp = () => {
+      gsap.to(inner, { scale: 1, duration: 0.25, ease: 'power2.out' });
+      // Don't reset outer to 1 here; onOver will set the right value next tick
+    };
+
+    window.addEventListener('mousemove', onMove, { passive: true });
+    window.addEventListener('mouseover', onOver, { passive: true });
+    window.addEventListener('mousedown', onDown, { passive: true });
+    window.addEventListener('mouseup', onUp, { passive: true });
+
+    rafId = requestAnimationFrame(tick);
+
+    cursorState = {
+      raf: rafId,
+      stop: () => {
+        running = false;
+        cancelAnimationFrame(rafId);
+      },
+      onMove,
+      onOver,
+      onDown,
+      onUp
+    };
   };
 
-  document.addEventListener('astro:page-load', setupCursor);
+  const teardownCustomCursor = () => {
+    if (!cursorState) return;
+    cursorState.stop();
+    window.removeEventListener('mousemove', cursorState.onMove);
+    window.removeEventListener('mouseover', cursorState.onOver);
+    window.removeEventListener('mousedown', cursorState.onDown);
+    window.removeEventListener('mouseup', cursorState.onUp);
+    cursorState = null;
+    document.documentElement.classList.remove('cp-cursor-active');
+  };
+
+  document.addEventListener('astro:page-load', setupCustomCursor);
+  document.addEventListener('astro:before-swap', teardownCustomCursor);
 </script>

@@ -1,0 +1,46 @@
+---
+title: "AXA Colpatria — Salud y Seguros"
+tagline: "Vista 360 bilingüe para ajustadores y revisores médicos"
+client: "AXA Colpatria Colombia"
+category: "Seguros"
+stack: ["Salesforce FSC", "Health Cloud", "Agentforce", "Experience Cloud LWR"]
+coverImage: "/images/projects/axa-colpatria-cover.svg"
+bannerImage: "/images/projects/axa-colpatria-banner.svg"
+duration: "5 días"
+linesOfCode: "0 líneas manuales"
+keyMetric: "2 demos"
+keyMetricLabel: "seguros y salud en paralelo"
+featured: true
+publishedAt: 2025-03-01
+order: 3
+---
+
+## Contexto
+AXA Colpatria necesitaba dos demos simultáneas: una para ajustadores de
+seguros (Hogar/Auto/Vida/SOAT) y otra para revisores médicos (Autorizaciones).
+
+**Para quién:** Ajustadores de siniestros y revisores médicos internos
+**Problema:** Proceso de autorizaciones 100% manual, sin trazabilidad digital.
+
+## Stack Tecnológico
+FSC + Health Cloud · Vista 360 con métricas de churn y lealtad
+AXIO (agente portal seguros) · AXIA (agente portal salud)
+Tabla de 12 autorizaciones médicas con reglas automáticas por código CIE-10
+Flow FNOL (First Notice of Loss) · Screen Flow de 5 pasos en el portal
+
+## El Reto
+El agente del portal de salud debía clasificar procedimientos médicos por código
+CIE-10 y aplicar reglas de aprobación automática vs revisión médica, todo dentro
+de Agentforce, sin lógica en código externo.
+
+## La Solución
+Tabla de autorizaciones con 12 procedimientos colombianos reales (ecografías,
+laboratorios, consultas = automáticas; TAC, cirugías = revisión médica).
+El flujo de escalamiento lleva el caso al CRM del revisor médico donde puede
+Aprobar/Rechazar/Escalar con un click, y el sistema notifica al paciente automáticamente.
+
+## Resultado
+- **70%** de autorizaciones aprobadas automáticamente
+- **menos de 3 minutos** para casos simples (medicamentos, laboratorios)
+- **menos de 4 horas** para casos de revisión médica
+- Portal LWR con verificación de identidad por email

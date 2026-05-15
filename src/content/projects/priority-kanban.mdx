@@ -1,0 +1,40 @@
+---
+title: "Tablero de Priorización Wealth"
+tagline: "Ranking diario de clientes críticos con motor Apex"
+client: "BBVA Colombia — Wealth"
+category: "FSC"
+stack: ["Apex", "Score Engine", "LWC Kanban", "Scheduled Job"]
+coverImage: "/images/projects/priority-kanban-cover.svg"
+duration: "2 días"
+linesOfCode: "0 líneas manuales"
+keyMetric: "5 factores"
+keyMetricLabel: "score 0-100 calculado diario"
+featured: false
+publishedAt: 2025-02-20
+order: 5
+---
+
+## Contexto
+Los banqueros de Wealth tenían 100+ clientes activos y no había forma objetiva
+de priorizar a quién contactar primero cada día. Decisión por intuición =
+clientes importantes olvidados.
+
+## Stack Tecnológico
+Apex Score Engine · LWC Kanban con drag & drop · Scheduled Job nocturno
+Custom Object `BBVA_PriorityScore__c` · Salesforce Reports automatizados
+
+## El Reto
+Calcular un score 0-100 que combine 5 señales heterogéneas (churn, vencimientos,
+NPS, AUM y eventos de vida) y refrescarlo cada noche para 100 clientes sin
+exceder los governor limits del Scheduled Apex.
+
+## La Solución
+Motor de scoring en Apex con pesos configurables por Custom Metadata.
+LWC Kanban con tres columnas (Crítico / Importante / Seguimiento) que el
+banquero puede reorganizar manualmente con override registrado en auditoría.
+
+## Resultado
+- **Score diario** automatizado para 100 clientes
+- **3 columnas** Kanban: Crítico, Importante, Seguimiento
+- **Pesos configurables** sin redeploy (Custom Metadata)
+- Auditoría completa de overrides manuales

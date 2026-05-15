@@ -1,0 +1,57 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="BBVA Wealth Management cover">
+  <defs>
+    <linearGradient id="bg-bw" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#004481"/>
+      <stop offset="100%" stop-color="#072146"/>
+    </linearGradient>
+    <linearGradient id="acc-bw" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#0088CE"/>
+      <stop offset="100%" stop-color="#1FE0E0"/>
+    </linearGradient>
+    <pattern id="grid-bw" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-bw)"/>
+  <rect width="1200" height="630" fill="url(#grid-bw)"/>
+
+  <!-- Decorative orbits -->
+  <g opacity="0.7" fill="none" stroke="url(#acc-bw)" stroke-width="1.5">
+    <circle cx="980" cy="120" r="180"/>
+    <circle cx="980" cy="120" r="120" stroke-dasharray="4 8"/>
+    <circle cx="980" cy="120" r="60"/>
+  </g>
+  <g opacity="0.5">
+    <circle cx="1040" cy="60" r="6" fill="#1FE0E0"/>
+    <circle cx="900" cy="180" r="4" fill="#0088CE"/>
+    <circle cx="1010" cy="240" r="3" fill="#1FE0E0"/>
+  </g>
+
+  <!-- Frontier curve (Markowitz hint) -->
+  <path d="M 90 540 Q 280 460 400 420 T 720 360" stroke="url(#acc-bw)" stroke-width="3" fill="none" opacity="0.85"/>
+  <circle cx="90" cy="540" r="6" fill="#0088CE"/>
+  <circle cx="400" cy="420" r="6" fill="#1FE0E0"/>
+  <circle cx="720" cy="360" r="6" fill="#0088CE"/>
+
+  <!-- Tag -->
+  <rect x="80" y="80" width="170" height="40" rx="20" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.20)"/>
+  <text x="165" y="106" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" letter-spacing="3">FSC · WEALTH</text>
+
+  <!-- Title -->
+  <text x="80" y="240" font-family="Inter, system-ui, sans-serif" font-size="92" font-weight="800" fill="#fff" letter-spacing="-3">BBVA Wealth</text>
+  <text x="80" y="320" font-family="Inter, system-ui, sans-serif" font-size="92" font-weight="800" fill="url(#acc-bw)" letter-spacing="-3">Management</text>
+
+  <!-- Tagline -->
+  <text x="80" y="370" font-family="Inter, system-ui, sans-serif" font-size="22" fill="rgba(255,255,255,0.78)">Vista 360 + Agentforce para banca selecta</text>
+
+  <!-- Stack chips -->
+  <g font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#fff">
+    <g><rect x="80" y="555" width="118" height="34" rx="17" fill="rgba(255,255,255,0.12)"/><text x="139" y="577" text-anchor="middle">Salesforce FSC</text></g>
+    <g><rect x="208" y="555" width="98" height="34" rx="17" fill="rgba(255,255,255,0.12)"/><text x="257" y="577" text-anchor="middle">Agentforce</text></g>
+    <g><rect x="316" y="555" width="62" height="34" rx="17" fill="rgba(255,255,255,0.12)"/><text x="347" y="577" text-anchor="middle">Apex</text></g>
+    <g><rect x="388" y="555" width="62" height="34" rx="17" fill="rgba(255,255,255,0.12)"/><text x="419" y="577" text-anchor="middle">LWC</text></g>
+  </g>
+
+  <!-- Author footer -->
+  <text x="1120" y="582" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="13" fill="rgba(255,255,255,0.55)" letter-spacing="2">CAMILO PÁEZ · 2025</text>
+</svg>

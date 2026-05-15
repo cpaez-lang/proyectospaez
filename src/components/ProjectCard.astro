@@ -1,0 +1,154 @@
+---
+import { Icon } from 'astro-icon/components';
+import TechBadge from './TechBadge.astro';
+
+interface Props {
+  slug: string;
+  title: string;
+  tagline: string;
+  client: string;
+  category: string;
+  stack: string[];
+  coverImage: string;
+  keyMetric: string;
+  keyMetricLabel: string;
+  featured?: boolean;
+}
+
+const {
+  slug,
+  title,
+  tagline,
+  client,
+  category,
+  stack = [],
+  coverImage,
+  keyMetric,
+  keyMetricLabel,
+  featured = false
+} = Astro.props;
+
+const stackIconMap: Record<string, string> = {
+  'Salesforce FSC': 'simple-icons:salesforce',
+  'Salesforce Sales Cloud': 'simple-icons:salesforce',
+  'FSC Insurance': 'simple-icons:salesforce',
+  'Health Cloud': 'simple-icons:salesforce',
+  'Service Cloud': 'simple-icons:salesforce',
+  'Agentforce': 'simple-icons:salesforce',
+  'Experience Cloud': 'simple-icons:salesforce',
+  'Experience Cloud LWR': 'simple-icons:salesforce',
+  'LWC': 'lucide:code',
+  'LWC Kanban': 'lucide:kanban',
+  'Apex': 'lucide:braces',
+  'Score Engine': 'lucide:gauge',
+  'Scheduled Job': 'lucide:timer',
+  'Flow': 'lucide:workflow',
+  'Python': 'simple-icons:python',
+  'Pillow': 'lucide:image',
+  'espeak-ng': 'lucide:audio-lines',
+  'ffmpeg': 'lucide:film',
+  'moviepy': 'lucide:film',
+  'HTML': 'simple-icons:html5',
+  'JavaScript': 'simple-icons:javascript',
+  'Markowitz-Ledoit-Wolf': 'lucide:trending-up'
+};
+
+const categoryStyle: Record<string, { color: string; accent: string; label: string }> = {
+  FSC: { color: '#004481', accent: '#0088CE', label: 'FSC' },
+  HealthCloud: { color: '#00A1DF', accent: '#16C172', label: 'Health Cloud' },
+  ExperienceCloud: { color: '#0070D2', accent: '#EF9F27', label: 'Experience' },
+  Seguros: { color: '#00008F', accent: '#FF1721', label: 'Seguros' },
+  PYMES: { color: '#004481', accent: '#FF6B35', label: 'PYMES' },
+  Demo: { color: '#1A4DA0', accent: '#EF9F27', label: 'Demo' }
+};
+const cat = categoryStyle[category] ?? categoryStyle.Demo;
+const stackTags = stack.slice(0, 4);
+const initials = title.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).join('').toUpperCase();
+---
+<a
+  href={`/proyectos/${slug}`}
+  class="project-card group relative block rounded-3xl overflow-hidden border border-cp-border bg-cp-surface focus-visible:outline-2 focus-visible:outline-cp-accent focus-visible:outline-offset-2"
+  data-category={category}
+  data-stack={stack.join(',')}
+  aria-label={`Ver caso de estudio: ${title}`}
+>
+  <!-- Banner -->
+  <div
+    class="project-banner relative aspect-[16/10] overflow-hidden"
+    transition:name={`project-img-${slug}`}
+  >
+    {coverImage ? (
+      <img
+        src={coverImage}
+        alt=""
+        loading="lazy"
+        decoding="async"
+        class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-[1.03]"
+      />
+    ) : (
+      <div
+        class="absolute inset-0 transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-[1.03]"
+        style={`background:linear-gradient(135deg, ${cat.color} 0%, ${cat.accent} 100%);`}
+      >
+        <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+          <span class="font-extrabold text-white/15 select-none" style="font-size:clamp(80px,18vw,140px); letter-spacing:-0.06em;">
+            {initials}
+          </span>
+        </div>
+      </div>
+    )}
+
+    <div class="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-cp-surface to-transparent pointer-events-none"></div>
+
+    <span
+      class="absolute top-4 left-4 px-3 py-1 rounded-full text-[11px] font-semibold uppercase tracking-widest text-white"
+      style={`background:color-mix(in oklab, ${cat.accent} 80%, black);`}
+    >
+      {cat.label}
+    </span>
+
+    {featured && (
+      <span class="absolute top-4 right-4 px-3 py-1 rounded-full text-[10px] font-semibold uppercase tracking-widest text-cp-bg bg-cp-gold">
+        Destacado
+      </span>
+    )}
+  </div>
+
+  <!-- Content -->
+  <div class="p-7">
+    <h3 class="text-2xl font-bold tracking-tight">{title}</h3>
+    <p class="mt-1 text-sm text-cp-muted">{client}</p>
+
+    <p class="mt-4 text-cp-text/90 leading-relaxed text-[15px]">{tagline}</p>
+
+    <div class="mt-5 flex flex-wrap gap-1.5">
+      {stackTags.map((t) => (
+        <TechBadge name={t} icon={stackIconMap[t] ?? 'lucide:tag'} />
+      ))}
+    </div>
+
+    <div class="mt-6 flex items-end justify-between gap-4">
+      <div>
+        <div class="text-[10px] uppercase tracking-widest text-cp-muted">{keyMetricLabel}</div>
+        <div class="text-2xl font-extrabold gradient-text mt-0.5">{keyMetric}</div>
+      </div>
+      <span class="inline-flex items-center gap-2 text-sm font-semibold text-cp-accent group-hover:gap-3 transition-all">
+        Ver caso
+        <Icon name="lucide:arrow-right" class="w-4 h-4" />
+      </span>
+    </div>
+  </div>
+</a>
+
+<style>
+  .project-card {
+    transition: box-shadow 0.5s cubic-bezier(0.2, 0.8, 0.2, 1), border-color 0.3s, transform 0.4s;
+    will-change: transform, box-shadow;
+  }
+  .project-card:hover {
+    border-color: var(--cp-accent);
+    box-shadow:
+      0 30px 60px -20px rgba(0, 0, 0, 0.45),
+      0 0 0 1px color-mix(in oklab, var(--cp-accent) 30%, transparent);
+  }
+</style>

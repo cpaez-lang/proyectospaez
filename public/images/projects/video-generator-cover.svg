@@ -1,0 +1,64 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Video Generator cover">
+  <defs>
+    <linearGradient id="bg-vg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#1A0F3A"/>
+      <stop offset="100%" stop-color="#03020A"/>
+    </linearGradient>
+    <linearGradient id="acc-vg" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#FF3DAA"/>
+      <stop offset="100%" stop-color="#7A4DFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg-vg)"/>
+
+  <!-- Frames filmstrip -->
+  <g transform="translate(700,140)" opacity="0.95">
+    <g font-family="Inter, system-ui, sans-serif">
+      <rect x="0" y="0" width="180" height="100" rx="10" fill="rgba(122,77,255,0.18)" stroke="#7A4DFF" stroke-width="2"/>
+      <rect x="22" y="22" width="136" height="56" rx="6" fill="#7A4DFF" opacity="0.5"/>
+      <text x="90" y="58" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">▶</text>
+    </g>
+    <g transform="translate(0,120)" font-family="Inter, system-ui, sans-serif">
+      <rect x="0" y="0" width="180" height="100" rx="10" fill="rgba(255,61,170,0.18)" stroke="#FF3DAA" stroke-width="2"/>
+      <rect x="22" y="22" width="136" height="56" rx="6" fill="#FF3DAA" opacity="0.5"/>
+      <text x="90" y="58" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">★</text>
+    </g>
+    <g transform="translate(0,240)" font-family="Inter, system-ui, sans-serif">
+      <rect x="0" y="0" width="180" height="100" rx="10" fill="rgba(122,77,255,0.18)" stroke="#7A4DFF" stroke-width="2"/>
+      <rect x="22" y="22" width="136" height="56" rx="6" fill="#7A4DFF" opacity="0.5"/>
+      <text x="90" y="58" text-anchor="middle" font-size="24" font-weight="800" fill="#fff">⏵</text>
+    </g>
+
+    <!-- Audio waveform -->
+    <g transform="translate(220,30)" stroke="#FF3DAA" stroke-width="2.5" stroke-linecap="round" fill="none">
+      <line x1="0" y1="20" x2="0" y2="40"/>
+      <line x1="10" y1="10" x2="10" y2="50"/>
+      <line x1="20" y1="22" x2="20" y2="38"/>
+      <line x1="30" y1="2" x2="30" y2="58"/>
+      <line x1="40" y1="14" x2="40" y2="46"/>
+      <line x1="50" y1="6" x2="50" y2="54"/>
+      <line x1="60" y1="22" x2="60" y2="38"/>
+      <line x1="70" y1="0" x2="70" y2="60"/>
+      <line x1="80" y1="14" x2="80" y2="46"/>
+      <line x1="90" y1="20" x2="90" y2="40"/>
+    </g>
+  </g>
+
+  <!-- Tag -->
+  <rect x="80" y="80" width="220" height="40" rx="20" fill="rgba(255,255,255,0.10)" stroke="rgba(255,255,255,0.20)"/>
+  <text x="190" y="106" text-anchor="middle" font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="700" fill="#fff" letter-spacing="3">DEMO · PYTHON</text>
+
+  <text x="80" y="240" font-family="Inter, system-ui, sans-serif" font-size="78" font-weight="800" fill="#fff" letter-spacing="-3">Generador</text>
+  <text x="80" y="310" font-family="Inter, system-ui, sans-serif" font-size="78" font-weight="800" fill="url(#acc-vg)" letter-spacing="-3">de Videos IA</text>
+
+  <text x="80" y="360" font-family="Inter, system-ui, sans-serif" font-size="22" fill="rgba(255,255,255,0.78)">Markdown → frames → voz colombiana → mp4</text>
+
+  <g font-family="Inter, system-ui, sans-serif" font-size="14" font-weight="600" fill="#fff">
+    <g><rect x="80" y="555" width="80" height="34" rx="17" fill="rgba(255,255,255,0.12)"/><text x="120" y="577" text-anchor="middle">Python</text></g>
+    <g><rect x="170" y="555" width="80" height="34" rx="17" fill="rgba(255,255,255,0.12)"/><text x="210" y="577" text-anchor="middle">Pillow</text></g>
+    <g><rect x="260" y="555" width="100" height="34" rx="17" fill="rgba(255,255,255,0.12)"/><text x="310" y="577" text-anchor="middle">espeak-ng</text></g>
+    <g><rect x="370" y="555" width="80" height="34" rx="17" fill="rgba(255,255,255,0.12)"/><text x="410" y="577" text-anchor="middle">ffmpeg</text></g>
+  </g>
+
+  <text x="1120" y="582" text-anchor="end" font-family="Inter, system-ui, sans-serif" font-size="13" fill="rgba(255,255,255,0.55)" letter-spacing="2">CAMILO PÁEZ · 2025</text>
+</svg>

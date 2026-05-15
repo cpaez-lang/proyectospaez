@@ -4,52 +4,171 @@
 
 :root {
   --cp-bg: #0c0c0e;
-  --cp-surface: #15161b;
-  --cp-border: #262830;
-  --cp-text: #f2f2f7;
-  --cp-muted: #9a9ca5;
+  --cp-surface: #141416;
+  --cp-border: #1e1e22;
+  --cp-text: #e8e0d4;
+  --cp-muted: #6b6872;
   --cp-accent: #0070d2;
   --cp-gold: #ef9f27;
-  --cp-success: #16c172;
+  --cp-success: #1d9e75;
+  color-scheme: dark;
 }
 
+:root.light,
 html.light {
-  --cp-bg: #ffffff;
-  --cp-surface: #f5f6f9;
-  --cp-border: #e2e4ea;
-  --cp-text: #0c0c0e;
-  --cp-muted: #5b5e69;
+  --cp-bg: #fafaf8;
+  --cp-surface: #f2f0ec;
+  --cp-border: #e0ddd8;
+  --cp-text: #1a1814;
+  --cp-muted: #8a8580;
+  color-scheme: light;
 }
 
 @layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
   html {
-    color-scheme: dark;
+    scroll-behavior: smooth;
     -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
   }
-  html.light { color-scheme: light; }
+
   body {
     background: var(--cp-bg);
     color: var(--cp-text);
     font-family: theme('fontFamily.sans');
+    font-feature-settings: 'cv11', 'ss01', 'ss03';
+    font-variation-settings: 'opsz' 14;
+    line-height: 1.6;
+    overflow-x: hidden;
+    transition: background 0.3s ease, color 0.3s ease;
   }
-  h1, h2, h3, h4 { letter-spacing: -0.02em; font-weight: 800; }
-  h2 { font-size: clamp(2rem, 3vw + 0.5rem, 3rem); line-height: 1.05; }
-  h3 { font-size: clamp(1.25rem, 1vw + 0.75rem, 1.5rem); }
+
+  ::selection {
+    background: var(--cp-accent);
+    color: #fff;
+  }
+
+  h1, .h1 {
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+    font-size: clamp(2.5rem, 5vw + 1rem, 5.5rem);
+  }
+  h2, .h2 {
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    font-size: clamp(1.8rem, 3vw + 1rem, 3rem);
+  }
+  h3, .h3 {
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+    font-size: clamp(1.3rem, 1.5vw + 0.5rem, 1.75rem);
+  }
+  p, li {
+    font-size: clamp(0.95rem, 0.5vw + 0.85rem, 1.05rem);
+    line-height: 1.7;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  a:hover {
+    color: var(--cp-accent);
+  }
+
+  button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: inherit;
+    font-family: inherit;
+  }
+
+  img, svg {
+    max-width: 100%;
+    display: block;
+  }
 }
 
 @layer components {
-  .container { @apply mx-auto px-6 md:px-8; max-width: 1200px; }
-  .glass {
-    background: color-mix(in oklab, var(--cp-surface) 75%, transparent);
-    border: 1px solid var(--cp-border);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  .container {
+    width: min(100% - 2rem, 1200px);
+    margin-inline: auto;
   }
+
+  .glass {
+    background: color-mix(in oklab, var(--cp-surface) 70%, transparent);
+    border: 1px solid var(--cp-border);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+
   .gradient-text {
-    background: linear-gradient(90deg, var(--cp-accent), var(--cp-gold));
+    background: linear-gradient(135deg, var(--cp-accent) 0%, var(--cp-gold) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
+  }
+
+  .noise::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.025;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  .reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+}
+
+@layer utilities {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.4s;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: var(--cp-bg);
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--cp-border);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--cp-muted);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

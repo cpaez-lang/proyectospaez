@@ -1,0 +1,74 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const stack = [
+  {
+    cat: 'Salesforce',
+    tag: 'Plataforma',
+    items: [
+      { n: 'Financial Services Cloud', i: 'simple-icons:salesforce' },
+      { n: 'Health Cloud', i: 'simple-icons:salesforce' },
+      { n: 'Service Cloud', i: 'simple-icons:salesforce' },
+      { n: 'Agentforce', i: 'simple-icons:salesforce' },
+      { n: 'Experience Cloud LWR', i: 'simple-icons:salesforce' },
+      { n: 'Apex / LWC', i: 'lucide:code' }
+    ]
+  },
+  {
+    cat: 'AI Engineering',
+    tag: 'Co-piloto',
+    items: [
+      { n: 'Claude Code', i: 'simple-icons:anthropic' },
+      { n: 'Anthropic SDK', i: 'simple-icons:anthropic' },
+      { n: 'Agent SDK', i: 'lucide:bot' },
+      { n: 'GenAI Functions', i: 'lucide:wand-2' },
+      { n: 'GenAI Plugins', i: 'lucide:puzzle' },
+      { n: 'Prompt Engineering', i: 'lucide:sparkles' }
+    ]
+  },
+  {
+    cat: 'Web & Demo',
+    tag: 'Frontend',
+    items: [
+      { n: 'Astro 5', i: 'simple-icons:astro' },
+      { n: 'TypeScript', i: 'simple-icons:typescript' },
+      { n: 'Tailwind CSS 4', i: 'simple-icons:tailwindcss' },
+      { n: 'GSAP', i: 'simple-icons:greensock' },
+      { n: 'Node.js', i: 'simple-icons:nodedotjs' },
+      { n: 'Vercel', i: 'simple-icons:vercel' }
+    ]
+  }
+];
+---
+<section id="stack" class="py-32 border-t border-cp-border">
+  <div class="container">
+    <div class="reveal max-w-3xl">
+      <div class="text-cp-gold text-sm font-semibold tracking-widest uppercase">Stack técnico</div>
+      <h2 class="mt-3">Las herramientas que uso todos los días.</h2>
+      <p class="mt-4 text-cp-muted text-lg">
+        Salesforce platform completo, AI Engineering con Anthropic, y un stack web moderno para presentar el trabajo.
+      </p>
+    </div>
+
+    <div class="mt-16 grid md:grid-cols-3 gap-6 reveal-stagger">
+      {stack.map((s) => (
+        <div class="glass rounded-2xl p-6">
+          <div class="flex items-baseline justify-between mb-5">
+            <h3 class="text-lg font-bold">{s.cat}</h3>
+            <span class="text-[10px] uppercase tracking-widest text-cp-muted">{s.tag}</span>
+          </div>
+          <ul class="space-y-3">
+            {s.items.map((it) => (
+              <li class="flex items-center gap-3 text-sm">
+                <span class="w-8 h-8 rounded-lg bg-cp-bg border border-cp-border flex items-center justify-center shrink-0">
+                  <Icon name={it.i} class="w-4 h-4" aria-hidden="true" />
+                </span>
+                <span>{it.n}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

@@ -1,0 +1,281 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { SEO } from 'astro-seo';
+import '@fontsource-variable/inter';
+import '@fontsource-variable/jetbrains-mono';
+import '../styles/global.css';
+import Logo from '../components/Logo.astro';
+import Nav from '../components/Nav.astro';
+import CustomCursor from '../components/CustomCursor.astro';
+import { Icon } from 'astro-icon/components';
+
+interface Props {
+  title?: string;
+  description?: string;
+  image?: string;
+}
+const {
+  title = 'Camilo Páez — Solutions Engineer Salesforce Colombia',
+  description = 'Solutions Engineer que une la arquitectura técnica de Salesforce con la velocidad de Claude Code para construir demos de clase mundial en horas.',
+  image = '/images/og-cover.svg'
+} = Astro.props;
+
+const canonical = new URL(Astro.url.pathname, Astro.site).toString();
+---
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#0C0C0E" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
+    <link rel="manifest" href="/manifest.webmanifest" />
+
+    <SEO
+      title={title}
+      description={description}
+      canonical={canonical}
+      openGraph={{
+        basic: { title, type: 'website', image: new URL(image, Astro.site).toString(), url: canonical },
+        optional: { description, siteName: 'Camilo Páez · Salesforce SE', locale: 'es_CO' }
+      }}
+      twitter={{ card: 'summary_large_image', title, description, image: new URL(image, Astro.site).toString() }}
+      extend={{
+        meta: [
+          { name: 'author', content: 'Camilo Páez' },
+          { name: 'robots', content: 'index, follow' },
+          { name: 'keywords', content: 'Salesforce, Solutions Engineer, Agentforce, Claude Code, Colombia, Demo, FSC, Health Cloud' }
+        ]
+      }}
+    />
+
+    <ClientRouter />
+
+    <script is:inline>
+      // Theme: detect + persist
+      (function() {
+        const saved = localStorage.getItem('theme');
+        const sysLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+        if (saved === 'light' || (!saved && sysLight)) document.documentElement.classList.add('light');
+      })();
+    </script>
+  </head>
+  <body class="noise">
+    <a href="#main" class="sr-only focus:not-sr-only fixed top-2 left-2 z-50 px-4 py-2 bg-cp-accent text-white rounded">Saltar al contenido</a>
+
+    <Nav />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <footer class="border-t border-cp-border mt-32">
+      <div class="container py-12 grid md:grid-cols-3 gap-8">
+        <div>
+          <Logo size={28} variant="horizontal" />
+          <p class="mt-4 text-cp-muted text-sm leading-relaxed">Solutions Engineer · Salesforce Colombia<br/>Construyo demos que se convierten en negocios.</p>
+        </div>
+        <div>
+          <h4 class="font-semibold text-sm mb-3 text-cp-text">Navegación</h4>
+          <ul class="space-y-2 text-sm text-cp-muted">
+            <li><a href="/#proyectos" class="hover:text-cp-accent">Proyectos</a></li>
+            <li><a href="/#sobre-mi" class="hover:text-cp-accent">Sobre mí</a></li>
+            <li><a href="/#stack" class="hover:text-cp-accent">Stack técnico</a></li>
+            <li><a href="/#proceso" class="hover:text-cp-accent">Proceso</a></li>
+            <li><a href="/#contacto" class="hover:text-cp-accent">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="font-semibold text-sm mb-3 text-cp-text">Conecta</h4>
+          <div class="flex gap-3">
+            <a href="https://linkedin.com/in/camilopaez" aria-label="LinkedIn" class="p-2 rounded-lg border border-cp-border hover:border-cp-accent hover:text-cp-accent transition"><Icon name="lucide:linkedin" class="w-5 h-5"/></a>
+            <a href="https://github.com/camilopaez" aria-label="GitHub" class="p-2 rounded-lg border border-cp-border hover:border-cp-accent hover:text-cp-accent transition"><Icon name="lucide:github" class="w-5 h-5"/></a>
+            <a href="mailto:cpaez@salesforce.com" aria-label="Email" class="p-2 rounded-lg border border-cp-border hover:border-cp-accent hover:text-cp-accent transition"><Icon name="lucide:mail" class="w-5 h-5"/></a>
+          </div>
+        </div>
+      </div>
+      <div class="border-t border-cp-border">
+        <div class="container py-6 flex flex-wrap justify-between gap-4 text-xs text-cp-muted">
+          <p>© 2026 Camilo Páez. Todos los derechos reservados.</p>
+          <p>Construido con Astro 5 · Tailwind 4 · GSAP · Claude Code</p>
+        </div>
+      </div>
+    </footer>
+
+    <CustomCursor />
+
+    <script>
+      type GsapModule = typeof import('gsap');
+      type ScrollTriggerInstance = ReturnType<typeof import('gsap/ScrollTrigger').ScrollTrigger.create>;
+
+      // Theme toggle
+      const setupTheme = () => {
+        const btn = document.getElementById('theme-toggle');
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          document.documentElement.classList.toggle('light');
+          localStorage.setItem('theme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
+        });
+      };
+      document.addEventListener('astro:page-load', setupTheme);
+
+      // Navbar scroll effect (glass after 50px)
+      let navScrollHandler: (() => void) | null = null;
+      const setupNav = () => {
+        const nav = document.getElementById('navbar');
+        if (!nav) return;
+        const onScroll = () => {
+          if (window.scrollY > 50) nav.classList.add('glass'); else nav.classList.remove('glass');
+        };
+        navScrollHandler = onScroll;
+        window.addEventListener('scroll', onScroll, { passive: true });
+        onScroll();
+      };
+      const teardownNav = () => {
+        if (navScrollHandler) {
+          window.removeEventListener('scroll', navScrollHandler);
+          navScrollHandler = null;
+        }
+      };
+      document.addEventListener('astro:page-load', setupNav);
+      document.addEventListener('astro:before-swap', teardownNav);
+
+      // Lenis smooth scroll
+      let lenisInstance: { destroy: () => void; raf: (t: number) => void } | null = null;
+      const setupLenis = async () => {
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced) return;
+        const { default: Lenis } = await import('lenis');
+        if (lenisInstance) lenisInstance.destroy();
+        lenisInstance = new Lenis({ duration: 1.0, easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) });
+        function raf(time: number) {
+          if (lenisInstance) {
+            lenisInstance.raf(time);
+            requestAnimationFrame(raf);
+          }
+        }
+        requestAnimationFrame(raf);
+      };
+      const teardownLenis = () => { if (lenisInstance) { lenisInstance.destroy(); lenisInstance = null; } };
+      document.addEventListener('astro:page-load', setupLenis);
+      document.addEventListener('astro:before-swap', teardownLenis);
+
+      // Magnetic buttons
+      type MagneticHandlers = { move: (e: MouseEvent) => void; leave: () => void };
+      const magneticHandlers = new WeakMap<HTMLElement, MagneticHandlers>();
+      let magneticGsap: GsapModule['default'] | null = null;
+      const setupMagnetic = async () => {
+        if (!magneticGsap) magneticGsap = ((await import('gsap')) as GsapModule).default;
+        const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (reduced) return;
+        document.querySelectorAll<HTMLElement>('.magnetic-btn').forEach((btn) => {
+          if (magneticHandlers.has(btn)) return; // already wired
+          const move = (e: MouseEvent) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+            magneticGsap!.to(btn, { x: x * 0.3, y: y * 0.3, duration: 0.3, ease: 'power3.out' });
+          };
+          const leave = () => {
+            magneticGsap!.to(btn, { x: 0, y: 0, duration: 0.5, ease: 'elastic.out(1,0.4)' });
+          };
+          btn.addEventListener('mousemove', move);
+          btn.addEventListener('mouseleave', leave);
+          magneticHandlers.set(btn, { move, leave });
+        });
+      };
+      const teardownMagnetic = () => {
+        document.querySelectorAll<HTMLElement>('.magnetic-btn').forEach((btn) => {
+          const h = magneticHandlers.get(btn);
+          if (h) {
+            btn.removeEventListener('mousemove', h.move);
+            btn.removeEventListener('mouseleave', h.leave);
+            magneticHandlers.delete(btn);
+          }
+        });
+      };
+      document.addEventListener('astro:page-load', setupMagnetic);
+      document.addEventListener('astro:before-swap', teardownMagnetic);
+
+      // GSAP global setup
+      let gsapTriggers: ScrollTriggerInstance[] = [];
+      const setupGsap = async () => {
+        const gsap = ((await import('gsap')) as GsapModule).default;
+        const { ScrollTrigger } = await import('gsap/ScrollTrigger');
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero line stagger
+        const heroLines = document.querySelectorAll<HTMLElement>('.hero-line');
+        if (heroLines.length) {
+          gsap.to(heroLines, {
+            y: 0, opacity: 1, duration: 0.9, ease: 'power3.out', stagger: 0.1
+          });
+        }
+
+        // Reveal animations
+        document.querySelectorAll<HTMLElement>('.reveal').forEach((el) => {
+          const t = gsap.fromTo(el, { y: 40, opacity: 0 }, {
+            y: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
+            scrollTrigger: { trigger: el, start: 'top 85%', toggleActions: 'play none none reverse' }
+          });
+          if (t.scrollTrigger) gsapTriggers.push(t.scrollTrigger);
+        });
+
+        document.querySelectorAll<HTMLElement>('.reveal-stagger').forEach((parent) => {
+          const children = parent.querySelectorAll(':scope > *');
+          const t = gsap.fromTo(children, { y: 30, opacity: 0 }, {
+            y: 0, opacity: 1, duration: 0.7, ease: 'power3.out', stagger: 0.08,
+            scrollTrigger: { trigger: parent, start: 'top 85%', toggleActions: 'play none none reverse' }
+          });
+          if (t.scrollTrigger) gsapTriggers.push(t.scrollTrigger);
+        });
+
+        // Project card individual reveal (overrides batch grid behavior for staggered cards)
+        document.querySelectorAll<HTMLElement>('.project-card').forEach((card, i) => {
+          const t = gsap.fromTo(card, { y: 40, opacity: 0, scale: 0.97 }, {
+            y: 0, opacity: 1, scale: 1, duration: 0.8, ease: 'power3.out', delay: i * 0.05,
+            scrollTrigger: { trigger: card, start: 'top 90%', toggleActions: 'play none none reverse' }
+          });
+          if (t.scrollTrigger) gsapTriggers.push(t.scrollTrigger);
+        });
+      };
+      const teardownGsap = () => {
+        gsapTriggers.forEach((t) => t.kill());
+        gsapTriggers = [];
+      };
+      document.addEventListener('astro:page-load', setupGsap);
+      document.addEventListener('astro:before-swap', teardownGsap);
+
+      // Active nav link highlighter (scroll-spy)
+      let navObserver: IntersectionObserver | null = null;
+      const setupActiveNav = () => {
+        const links = document.querySelectorAll<HTMLAnchorElement>('[data-nav-link]');
+        if (!links.length) return;
+        const sections = Array.from(links)
+          .map((l) => document.getElementById(l.dataset.navLink ?? ''))
+          .filter((el): el is HTMLElement => !!el);
+        if (!sections.length) return;
+        navObserver = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                const id = entry.target.id;
+                links.forEach((l) => {
+                  l.dataset.active = l.dataset.navLink === id ? 'true' : 'false';
+                });
+              }
+            });
+          },
+          { rootMargin: '-40% 0px -55% 0px', threshold: 0 }
+        );
+        sections.forEach((s) => navObserver!.observe(s));
+      };
+      const teardownActiveNav = () => {
+        if (navObserver) { navObserver.disconnect(); navObserver = null; }
+      };
+      document.addEventListener('astro:page-load', setupActiveNav);
+      document.addEventListener('astro:before-swap', teardownActiveNav);
+    </script>
+  </body>
+</html>

@@ -1,0 +1,295 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import TechBadge from '../../components/TechBadge.astro';
+import { Icon } from 'astro-icon/components';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((p) => ({
+    params: { slug: p.id },
+    props: { project: p }
+  }));
+}
+
+const { project } = Astro.props;
+const { Content } = await render(project);
+const {
+  title,
+  tagline,
+  client,
+  category,
+  stack,
+  coverImage,
+  bannerImage,
+  duration,
+  linesOfCode,
+  keyMetric,
+  keyMetricLabel,
+  publishedAt,
+  videoUrl,
+  liveUrl,
+  githubUrl
+} = project.data;
+
+const stackIconMap: Record<string, string> = {
+  'Salesforce FSC': 'simple-icons:salesforce',
+  'Salesforce Sales Cloud': 'simple-icons:salesforce',
+  'FSC Insurance': 'simple-icons:salesforce',
+  'Health Cloud': 'simple-icons:salesforce',
+  'Service Cloud': 'simple-icons:salesforce',
+  'Agentforce': 'simple-icons:salesforce',
+  'Experience Cloud': 'simple-icons:salesforce',
+  'Experience Cloud LWR': 'simple-icons:salesforce',
+  'LWC': 'lucide:code',
+  'LWC Kanban': 'lucide:kanban',
+  'Apex': 'lucide:braces',
+  'Score Engine': 'lucide:gauge',
+  'Scheduled Job': 'lucide:timer',
+  'Flow': 'lucide:workflow',
+  'Python': 'simple-icons:python',
+  'Pillow': 'lucide:image',
+  'espeak-ng': 'lucide:audio-lines',
+  'ffmpeg': 'lucide:film',
+  'moviepy': 'lucide:film',
+  'HTML': 'simple-icons:html5',
+  'JavaScript': 'simple-icons:javascript',
+  'Markowitz-Ledoit-Wolf': 'lucide:trending-up'
+};
+
+const categoryStyle: Record<string, { color: string; accent: string; label: string }> = {
+  FSC: { color: '#004481', accent: '#0088CE', label: 'FSC' },
+  HealthCloud: { color: '#00A1DF', accent: '#16C172', label: 'Health Cloud' },
+  ExperienceCloud: { color: '#0070D2', accent: '#EF9F27', label: 'Experience' },
+  Seguros: { color: '#00008F', accent: '#FF1721', label: 'Seguros' },
+  PYMES: { color: '#004481', accent: '#FF6B35', label: 'PYMES' },
+  Demo: { color: '#1A4DA0', accent: '#EF9F27', label: 'Demo' }
+};
+const cat = categoryStyle[category] ?? categoryStyle.Demo;
+const banner = bannerImage ?? coverImage;
+const year = publishedAt.getFullYear();
+const initials = title.split(' ').filter(Boolean).slice(0, 2).map((w: string) => w[0]).join('').toUpperCase();
+---
+<Layout title={`${title} — Camilo Páez`} description={tagline}>
+  <div class="progress-bar" aria-hidden="true"></div>
+
+  <article class="pt-12 pb-32">
+    <div class="container">
+      <a
+        href="/#proyectos"
+        class="inline-flex items-center gap-2 text-sm text-cp-muted hover:text-cp-accent transition mb-10 focus-visible:outline-2 focus-visible:outline-cp-accent focus-visible:outline-offset-2 rounded"
+      >
+        <Icon name="lucide:arrow-left" class="w-4 h-4" />
+        Volver a proyectos
+      </a>
+
+      <div class="grid lg:grid-cols-[360px_1fr] gap-10 lg:gap-14 items-start">
+        <!-- LEFT (sticky) -->
+        <aside class="lg:sticky lg:top-28 self-start">
+          <div class="glass rounded-3xl p-7">
+            <div
+              class="text-[10px] uppercase tracking-widest font-semibold mb-3"
+              style={`color:${cat.accent};`}
+            >
+              {cat.label}
+            </div>
+            <h1 class="text-3xl font-extrabold leading-tight" style="font-size:clamp(1.5rem,2vw+1rem,2.25rem);">
+              {title}
+            </h1>
+            <p class="mt-3 text-cp-muted text-sm">{client} · {year}</p>
+            <p class="mt-4 text-[15px] text-cp-text/90 leading-relaxed">{tagline}</p>
+
+            <!-- Stack -->
+            <div class="mt-6">
+              <div class="text-[10px] uppercase tracking-widest text-cp-muted mb-2">Stack</div>
+              <div class="flex flex-wrap gap-1.5">
+                {stack.map((t: string) => (
+                  <TechBadge name={t} icon={stackIconMap[t] ?? 'lucide:tag'} />
+                ))}
+              </div>
+            </div>
+
+            <!-- Key facts -->
+            <div class="mt-6 grid grid-cols-2 gap-2">
+              <div class="rounded-xl border border-cp-border p-3 bg-cp-bg/40">
+                <div class="text-lg font-extrabold gradient-text leading-none">{keyMetric}</div>
+                <div class="text-[10px] text-cp-muted mt-1.5 uppercase tracking-widest">{keyMetricLabel}</div>
+              </div>
+              <div class="rounded-xl border border-cp-border p-3 bg-cp-bg/40">
+                <div class="text-lg font-extrabold leading-none">{duration}</div>
+                <div class="text-[10px] text-cp-muted mt-1.5 uppercase tracking-widest">duración</div>
+              </div>
+              <div class="rounded-xl border border-cp-border p-3 bg-cp-bg/40 col-span-2">
+                <div class="text-lg font-extrabold leading-none">{linesOfCode}</div>
+                <div class="text-[10px] text-cp-muted mt-1.5 uppercase tracking-widest">construcción</div>
+              </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="mt-7 flex flex-col gap-2">
+              {videoUrl && (
+                <a
+                  href={videoUrl}
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg bg-cp-accent text-white font-semibold hover:opacity-90 transition"
+                >
+                  <Icon name="lucide:play" class="w-4 h-4" />
+                  Ver video
+                </a>
+              )}
+              {liveUrl && (
+                <a
+                  href={liveUrl}
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-cp-border hover:border-cp-accent transition font-semibold"
+                >
+                  <Icon name="lucide:external-link" class="w-4 h-4" />
+                  Ver en vivo
+                </a>
+              )}
+              {githubUrl && (
+                <a
+                  href={githubUrl}
+                  target="_blank"
+                  rel="noopener"
+                  class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-cp-border hover:border-cp-accent transition font-semibold"
+                >
+                  <Icon name="lucide:github" class="w-4 h-4" />
+                  Código
+                </a>
+              )}
+              <a
+                href="/#proyectos"
+                class="inline-flex items-center justify-center gap-2 px-4 py-3 rounded-lg border border-cp-border hover:border-cp-accent transition font-semibold"
+              >
+                <Icon name="lucide:layout-grid" class="w-4 h-4" />
+                Otros proyectos
+              </a>
+            </div>
+          </div>
+        </aside>
+
+        <!-- RIGHT: banner + content -->
+        <div class="min-w-0">
+          <div
+            class="relative aspect-[16/8] rounded-3xl overflow-hidden border border-cp-border"
+            transition:name={`project-img-${project.id}`}
+          >
+            {banner ? (
+              <img
+                src={banner}
+                alt={`Cover ${title}`}
+                class="absolute inset-0 w-full h-full object-cover"
+              />
+            ) : (
+              <div
+                class="absolute inset-0"
+                style={`background:linear-gradient(135deg, ${cat.color} 0%, ${cat.accent} 100%);`}
+              >
+                <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+                  <span class="font-extrabold text-white/15 select-none" style="font-size:clamp(120px,18vw,200px); letter-spacing:-0.06em;">
+                    {initials}
+                  </span>
+                </div>
+              </div>
+            )}
+          </div>
+
+          <p class="mt-8 text-xl text-cp-text/90 leading-relaxed max-w-3xl">
+            {tagline}
+          </p>
+
+          <div class="prose-cp mt-12 max-w-3xl">
+            <Content />
+          </div>
+        </div>
+      </div>
+    </div>
+  </article>
+</Layout>
+
+<style>
+  body { scroll-timeline: --cp-scroll block; }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--cp-accent), var(--cp-gold));
+    z-index: 100;
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: cp-scroll-progress linear both;
+    animation-timeline: --cp-scroll;
+  }
+
+  @keyframes cp-scroll-progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  @supports not (animation-timeline: scroll()) {
+    .progress-bar { display: none; }
+  }
+
+  .prose-cp :global(h2) {
+    font-size: clamp(1.5rem, 2vw + 0.5rem, 2rem);
+    font-weight: 700;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    letter-spacing: -0.02em;
+    color: var(--cp-text);
+  }
+  .prose-cp :global(h3) {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    color: var(--cp-text);
+  }
+  .prose-cp :global(p) {
+    margin-bottom: 1.1rem;
+    color: var(--cp-text);
+    line-height: 1.75;
+  }
+  .prose-cp :global(ul),
+  .prose-cp :global(ol) {
+    margin-left: 1.25rem;
+    margin-bottom: 1.1rem;
+    color: var(--cp-text);
+  }
+  .prose-cp :global(li) {
+    margin-bottom: 0.5rem;
+    line-height: 1.7;
+  }
+  .prose-cp :global(li::marker) {
+    color: var(--cp-accent);
+  }
+  .prose-cp :global(strong) {
+    color: var(--cp-text);
+    font-weight: 700;
+  }
+  .prose-cp :global(a) {
+    color: var(--cp-accent);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 3px;
+  }
+  .prose-cp :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    padding: 0.15em 0.4em;
+    border-radius: 0.35rem;
+    background: var(--cp-surface);
+    border: 1px solid var(--cp-border);
+  }
+  .prose-cp :global(em) {
+    color: var(--cp-gold);
+    font-style: normal;
+    font-weight: 600;
+  }
+</style>

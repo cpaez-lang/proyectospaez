@@ -1,0 +1,40 @@
+---
+title: "Generador de Videos con IA"
+tagline: "Videos narrados con voz colombiana generados en Python"
+client: "Demo interna · Solutions Engineering"
+category: "Demo"
+stack: ["Python", "Pillow", "espeak-ng", "ffmpeg", "moviepy"]
+coverImage: "/images/projects/video-generator-cover.svg"
+duration: "1 día"
+linesOfCode: "0 líneas manuales"
+keyMetric: "5 min"
+keyMetricLabel: "por video generado end-to-end"
+featured: false
+publishedAt: 2025-04-15
+order: 6
+---
+
+## Contexto
+Las demos en formato video son las que mejor convierten en comités directivos,
+pero grabar, editar y narrar cada una toma horas. Necesitábamos automatizar
+todo el pipeline de producción.
+
+## Stack Tecnológico
+Python 3.11 · Pillow para frames · espeak-ng para TTS en español colombiano
+ffmpeg para composición · moviepy para sincronización audio/video
+
+## El Reto
+Generar voz neutra y entendible en español colombiano sin servicios cloud
+(latencia, costo) y sincronizar la narración con frames generados a partir
+de un guion en Markdown.
+
+## La Solución
+Pipeline `markdown → frames PIL → audio espeak-ng → mp4 ffmpeg`. El guion
+en Markdown se parsea por secciones, cada sección genera frame + locución,
+y el ensamble final empaqueta todo con transiciones.
+
+## Resultado
+- **5 minutos** de generación por video de 60s narrado
+- **0 servicios cloud** — corre 100% local
+- Voz colombiana legible (espeak-ng + post-proceso)
+- Pipeline reutilizable para múltiples demos

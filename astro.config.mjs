@@ -2,6 +2,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 import mdx from '@astrojs/mdx';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import icon from 'astro-icon';
 import AstroPWA from '@vite-pwa/astro';
 
 export default defineConfig({
@@ -10,6 +11,7 @@ export default defineConfig({
     mdx(),
     tailwind({ applyBaseStyles: false }),
     sitemap(),
+    icon({ include: { lucide: ['*'], 'simple-icons': ['*'] } }),
     AstroPWA({
       registerType: 'autoUpdate',
       manifest: {

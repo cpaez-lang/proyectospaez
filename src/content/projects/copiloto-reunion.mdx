@@ -1,0 +1,40 @@
+---
+title: "Co-piloto de Reunión PYMES"
+tagline: "Guía al banquero en 12 preguntas · Markowitz al final"
+client: "BBVA Colombia — Wealth"
+category: "Demo"
+stack: ["HTML", "JavaScript", "Markowitz-Ledoit-Wolf", "espeak-ng"]
+coverImage: "/images/projects/copiloto-reunion-cover.svg"
+duration: "2 días"
+linesOfCode: "0 líneas manuales"
+keyMetric: "12 preguntas"
+keyMetricLabel: "perfil de riesgo en vivo"
+featured: false
+publishedAt: 2025-05-01
+order: 7
+---
+
+## Contexto
+Los banqueros de Wealth tenían que dirigir entrevistas estructuradas con
+clientes nuevos para perfilar riesgo. Sin guía visual y con presión de tiempo,
+saltaban preguntas o perdían el orden.
+
+## Stack Tecnológico
+HTML/CSS standalone · JavaScript vainilla · Markowitz-Ledoit-Wolf en JS puro
+espeak-ng para narración offline · sin backend, sin dependencias
+
+## El Reto
+Replicar en JavaScript del navegador la misma lógica Markowitz-Ledoit-Wolf
+que corre en Apex, para que el copiloto pueda mostrar la frontera eficiente
+en tiempo real al final de las 12 preguntas.
+
+## La Solución
+Aplicación de una sola página con flujo bienvenida → 12 preguntas → resultado.
+Cada pregunta narrada (opcional) por TTS local. El motor Markowitz JS calcula
+el portafolio óptimo en menos de 500 ms mientras el banquero mira al cliente.
+
+## Resultado
+- **12 preguntas** estructuradas con narración opcional
+- **Markowitz en vivo** al cierre, sin esperas
+- **0 backend** — se abre en cualquier navegador
+- Perfil de riesgo conservador / moderado / agresivo

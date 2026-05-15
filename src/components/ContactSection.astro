@@ -1,0 +1,49 @@
+---
+import { Icon } from 'astro-icon/components';
+
+const links = [
+  { href: 'mailto:cpaez@salesforce.com', label: 'Email', icon: 'lucide:mail', detail: 'cpaez@salesforce.com' },
+  { href: 'https://linkedin.com/in/camilopaez', label: 'LinkedIn', icon: 'lucide:linkedin', detail: '@camilopaez' },
+  { href: 'https://github.com/camilopaez', label: 'GitHub', icon: 'lucide:github', detail: '@camilopaez' }
+];
+---
+<section id="contacto" class="py-32 border-t border-cp-border">
+  <div class="container">
+    <div class="reveal max-w-3xl mx-auto text-center">
+      <div class="text-cp-accent text-sm font-semibold tracking-widest uppercase">Contacto</div>
+      <h2 class="mt-4" style="font-size: clamp(2.5rem, 5vw + 0.5rem, 4.5rem); line-height:1.05;">
+        ¿Tienes un proyecto<br/>ambicioso?
+      </h2>
+      <p class="mt-6 gradient-text font-extrabold" style="font-size: clamp(2rem, 3vw + 0.5rem, 3rem);">
+        Hablemos.
+      </p>
+    </div>
+
+    <div class="mt-16 flex flex-col sm:flex-row items-stretch justify-center gap-4 max-w-3xl mx-auto reveal-stagger">
+      {links.map((l) => {
+        const external = l.href.startsWith('http');
+        return (
+          <a
+            href={l.href}
+            target={external ? '_blank' : undefined}
+            rel={external ? 'noopener noreferrer' : undefined}
+            class="magnetic-btn group flex-1 glass rounded-2xl p-6 hover:border-cp-accent transition focus-visible:outline-2 focus-visible:outline-cp-accent focus-visible:outline-offset-2"
+            aria-label={`Contactar por ${l.label}`}
+          >
+            <div class="flex flex-col items-center text-center">
+              <span class="w-14 h-14 rounded-2xl bg-cp-bg border border-cp-border flex items-center justify-center group-hover:border-cp-accent group-hover:bg-cp-accent/10 transition-colors mb-4">
+                <Icon name={l.icon} class="w-6 h-6 text-cp-accent" aria-hidden="true" />
+              </span>
+              <div class="font-semibold text-lg">{l.label}</div>
+              <div class="text-sm text-cp-muted mt-1 break-all">{l.detail}</div>
+            </div>
+          </a>
+        );
+      })}
+    </div>
+
+    <p class="mt-12 text-center text-xs text-cp-muted tracking-widest uppercase">
+      Basado en Colombia · Disponible globalmente
+    </p>
+  </div>
+</section>
