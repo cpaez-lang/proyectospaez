@@ -1,0 +1,90 @@
+---
+import { Icon } from 'astro-icon/components';
+
+interface Crumb {
+  label: string;
+  href?: string;
+}
+interface Props {
+  items: Crumb[];
+}
+const { items } = Astro.props;
+
+// JSON-LD BreadcrumbList for SEO
+const siteOrigin = Astro.site ? Astro.site.toString().replace(/\/$/, '') : '';
+const itemListElement = items.map((c, i) => ({
+  '@type': 'ListItem',
+  position: i + 1,
+  name: c.label,
+  ...(c.href ? { item: `${siteOrigin}${c.href}` } : {})
+}));
+const ldJson = {
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement
+};
+---
+<nav class="cp-breadcrumb" aria-label="Migas de pan">
+  <ol>
+    {items.map((c, i) => (
+      <li>
+        {c.href && i < items.length - 1 ? (
+          <a href={c.href}>{c.label}</a>
+        ) : (
+          <span aria-current="page">{c.label}</span>
+        )}
+        {i < items.length - 1 && (
+          <Icon name="lucide:chevron-right" class="cp-breadcrumb-sep" aria-hidden="true" />
+        )}
+      </li>
+    ))}
+  </ol>
+</nav>
+
+<script type="application/ld+json" set:html={JSON.stringify(ldJson)} />
+
+<style>
+  .cp-breadcrumb {
+    margin-top: 16px;
+    font-size: 13px;
+    color: var(--cp-muted);
+  }
+  .cp-breadcrumb ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .cp-breadcrumb li {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .cp-breadcrumb a {
+    color: var(--cp-muted);
+    text-decoration: none;
+    transition: color 0.18s;
+    border-radius: 4px;
+  }
+  .cp-breadcrumb a:hover,
+  .cp-breadcrumb a:focus-visible {
+    color: var(--cp-accent);
+  }
+  .cp-breadcrumb a:focus-visible {
+    outline: 2px solid var(--cp-accent);
+    outline-offset: 2px;
+  }
+  .cp-breadcrumb [aria-current='page'] {
+    color: var(--cp-text);
+    font-weight: 600;
+  }
+  .cp-breadcrumb-sep {
+    width: 14px;
+    height: 14px;
+    color: var(--cp-muted);
+    opacity: 0.65;
+  }
+</style>

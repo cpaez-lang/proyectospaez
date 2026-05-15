@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import DealNav from '../../components/DealNav.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import { Icon } from 'astro-icon/components';
 import {
   heroKpis,
@@ -49,6 +50,16 @@ const alignClass = (level: string) => {
 >
   <div class="deal-prev">
     <DealNav current="previsora" />
+
+    <div class="container pt-6">
+      <Breadcrumb
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'BigDeals', href: '/bigdeals' },
+          { label: 'La Previsora' }
+        ]}
+      />
+    </div>
 
     <!-- 0. HERO -->
     <section class="bd-hero relative overflow-hidden">

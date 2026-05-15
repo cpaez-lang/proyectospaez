@@ -7,7 +7,7 @@
   --cp-surface: #141416;
   --cp-border: #1e1e22;
   --cp-text: #e8e0d4;
-  --cp-muted: #6b6872;
+  --cp-muted: #9aa3b2;
   --cp-accent: #0070d2;
   --cp-gold: #ef9f27;
   --cp-success: #1d9e75;
@@ -20,7 +20,7 @@ html.light {
   --cp-surface: #f2f0ec;
   --cp-border: #e0ddd8;
   --cp-text: #1a1814;
-  --cp-muted: #8a8580;
+  --cp-muted: #5a6068;
   color-scheme: light;
 }
 
@@ -130,13 +130,36 @@ html.light {
     background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
-  .reveal {
-    opacity: 0;
-    transform: translateY(30px);
-  }
+  .reveal,
+  .hero-line,
+  .project-card,
   .reveal-stagger > * {
     opacity: 0;
-    transform: translateY(20px);
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+                transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: opacity, transform;
+  }
+  .reveal.is-revealed,
+  .hero-line.is-revealed,
+  .project-card.is-revealed,
+  .reveal-stagger.is-revealed > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  /* Stagger children by 80ms increments */
+  .reveal-stagger.is-revealed > *:nth-child(1) { transition-delay: 0ms; }
+  .reveal-stagger.is-revealed > *:nth-child(2) { transition-delay: 80ms; }
+  .reveal-stagger.is-revealed > *:nth-child(3) { transition-delay: 160ms; }
+  .reveal-stagger.is-revealed > *:nth-child(4) { transition-delay: 240ms; }
+  .reveal-stagger.is-revealed > *:nth-child(5) { transition-delay: 320ms; }
+  .reveal-stagger.is-revealed > *:nth-child(6) { transition-delay: 400ms; }
+  .reveal-stagger.is-revealed > *:nth-child(7) { transition-delay: 480ms; }
+  .reveal-stagger.is-revealed > *:nth-child(8) { transition-delay: 560ms; }
+
+  .magnetic-btn {
+    transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+    will-change: transform;
   }
 
   /* Dev mode: revela elementos solo cuando el flag está activo */

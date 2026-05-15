@@ -95,14 +95,11 @@ const filterPills: { label: string; value: string }[] = [
 </style>
 
 <script>
-  type GsapModule = typeof import('gsap');
-
-  const setupProjectFilters = async () => {
+  // Project filters — vanilla CSS transitions, no GSAP.
+  const setupProjectFilters = () => {
     const filtersEl = document.getElementById('project-filters');
     const gridEl = document.getElementById('project-grid');
     if (!filtersEl || !gridEl) return;
-
-    const gsap = ((await import('gsap')) as GsapModule).default;
 
     const cards = Array.from(gridEl.querySelectorAll<HTMLElement>('[data-category]'));
     const pills = Array.from(filtersEl.querySelectorAll<HTMLButtonElement>('.filter-pill'));
@@ -111,24 +108,16 @@ const filterPills: { label: string; value: string }[] = [
       cards.forEach((card) => {
         const cat = card.dataset.category ?? '';
         const matches = filter === 'Todos' || cat === filter;
-
         if (matches) {
-          card.style.display = '';
-          gsap.to(card, {
-            opacity: 1,
-            scale: 1,
-            duration: 0.4,
-            ease: 'power2.out',
-            clearProps: 'transform'
-          });
+          card.removeAttribute('hidden');
+          card.style.opacity = '';
+          card.style.transform = '';
         } else {
-          gsap.to(card, {
-            opacity: 0,
-            scale: 0.95,
-            duration: 0.3,
-            ease: 'power2.in',
-            onComplete: () => { card.style.display = 'none'; }
-          });
+          card.style.opacity = '0';
+          card.style.transform = 'scale(0.95)';
+          window.setTimeout(() => {
+            if (card.style.opacity === '0') card.setAttribute('hidden', '');
+          }, 320);
         }
       });
     };

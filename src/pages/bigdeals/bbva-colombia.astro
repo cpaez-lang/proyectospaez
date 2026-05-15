@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import DealNav from '../../components/DealNav.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import { Icon } from 'astro-icon/components';
 import {
   heroKpis,
@@ -57,6 +58,16 @@ const impactBadge = (s: string) => {
   description="Business case ejecutivo: el primer banco agéntico de Colombia. ROI Año 3 +268% sobre inversión total."
 >
   <DealNav current="bbva" />
+
+  <div class="container pt-6">
+    <Breadcrumb
+      items={[
+        { label: 'Inicio', href: '/' },
+        { label: 'BigDeals', href: '/bigdeals' },
+        { label: 'BBVA Colombia' }
+      ]}
+    />
+  </div>
 
   <!-- 0. HERO -->
   <section class="bd-hero relative overflow-hidden">

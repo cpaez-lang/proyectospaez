@@ -10,6 +10,11 @@ interface Props {
   title: string;
 }
 const { videoUrl, animationKey, poster, title } = Astro.props;
+
+// Derive caption track URL from videoUrl (e.g. /videos/x.mp4 -> /videos/captions/x.vtt)
+const captionsUrl = videoUrl
+  ? videoUrl.replace(/^\/videos\/([^/]+)\.mp4$/, '/videos/captions/$1.vtt')
+  : null;
 ---
 {videoUrl && (
   <figure class="mt-10 rounded-3xl overflow-hidden border border-cp-border bg-cp-surface">
@@ -22,6 +27,15 @@ const { videoUrl, animationKey, poster, title } = Astro.props;
       aria-label={`Demo en video: ${title}`}
     >
       <source src={videoUrl} type="video/mp4" />
+      {captionsUrl && (
+        <track
+          default
+          kind="captions"
+          srclang="es"
+          label="Español"
+          src={captionsUrl}
+        />
+      )}
       Tu navegador no soporta video HTML5.
     </video>
     <figcaption class="px-5 py-3 text-xs text-cp-muted flex items-center gap-2">

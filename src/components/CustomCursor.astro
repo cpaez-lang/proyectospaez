@@ -49,6 +49,16 @@
     transition: border-color 0.25s ease, background-color 0.25s ease, opacity 0.25s ease;
     opacity: 0.7;
   }
+  .cursor-outer.is-hovering {
+    border-color: var(--cp-accent);
+    background: color-mix(in oklab, var(--cp-accent) 22%, transparent);
+  }
+  .cursor-inner {
+    transition: transform 0.15s ease;
+  }
+  .cursor-inner.is-pressed {
+    transform-origin: center;
+  }
 
   @media (prefers-reduced-motion: reduce) {
     .cp-cursor { display: none !important; }
@@ -56,10 +66,10 @@
 </style>
 
 <script>
-  type GsapModule = typeof import('gsap');
+  // Custom cursor — vanilla, no GSAP. RAF-driven lerp on outer ring,
+  // direct setting on inner dot. Hover state via class toggle + CSS transition.
 
   let cursorState: {
-    raf: number;
     stop: () => void;
     onMove: (e: MouseEvent) => void;
     onDown: () => void;
@@ -67,9 +77,8 @@
     onOver: (e: MouseEvent) => void;
   } | null = null;
 
-  const setupCustomCursor = async () => {
+  const setupCustomCursor = () => {
     if (typeof window === 'undefined') return;
-    // Only enable on real pointer devices and large screens
     const supportsFine = window.matchMedia('(pointer: fine)').matches;
     const isDesktop = window.matchMedia('(min-width: 1024px)').matches;
     const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -82,67 +91,48 @@
 
     document.documentElement.classList.add('cp-cursor-active');
 
-    const gsap = ((await import('gsap')) as GsapModule).default;
-
-    const setInnerX = gsap.quickSetter(inner, 'x', 'px');
-    const setInnerY = gsap.quickSetter(inner, 'y', 'px');
-    const setOuterX = gsap.quickSetter(outer, 'x', 'px');
-    const setOuterY = gsap.quickSetter(outer, 'y', 'px');
-
     let mx = window.innerWidth / 2;
     let my = window.innerHeight / 2;
     let ox = mx;
     let oy = my;
+    let scale = 1;
     let running = true;
+    let rafId = 0;
 
     const onMove = (e: MouseEvent) => {
       mx = e.clientX;
       my = e.clientY;
     };
 
-    let rafId = 0;
     const tick = () => {
       if (!running) return;
-      // Lerp outer toward target
       ox += (mx - ox) * 0.18;
       oy += (my - oy) * 0.18;
-      setInnerX(mx);
-      setInnerY(my);
-      setOuterX(ox);
-      setOuterY(oy);
+      inner.style.transform = `translate3d(${mx}px, ${my}px, 0)`;
+      outer.style.transform = `translate3d(${ox}px, ${oy}px, 0) scale(${scale})`;
       rafId = requestAnimationFrame(tick);
     };
 
-    const interactiveSelector = 'a, button, [role="button"], .project-card, .magnetic-btn, input, textarea, select, label, summary';
+    const interactiveSelector =
+      'a, button, [role="button"], .project-card, .magnetic-btn, input, textarea, select, label, summary';
 
     const onOver = (e: MouseEvent) => {
       const target = e.target as HTMLElement | null;
       const interactive = target?.closest(interactiveSelector);
       if (interactive) {
-        gsap.to(outer, {
-          scale: 2.5,
-          backgroundColor: 'color-mix(in oklab, var(--cp-accent) 25%, transparent)',
-          borderColor: 'var(--cp-accent)',
-          duration: 0.25,
-          ease: 'power2.out'
-        });
+        outer.classList.add('is-hovering');
+        scale = 2.5;
       } else {
-        gsap.to(outer, {
-          scale: 1,
-          backgroundColor: 'transparent',
-          borderColor: 'var(--cp-text)',
-          duration: 0.25,
-          ease: 'power2.out'
-        });
+        outer.classList.remove('is-hovering');
+        scale = 1;
       }
     };
 
     const onDown = () => {
-      gsap.to([inner, outer], { scale: (i) => (i === 1 ? 2 : 0.8), duration: 0.18, ease: 'power2.out' });
+      inner.classList.add('is-pressed');
     };
     const onUp = () => {
-      gsap.to(inner, { scale: 1, duration: 0.25, ease: 'power2.out' });
-      // Don't reset outer to 1 here; onOver will set the right value next tick
+      inner.classList.remove('is-pressed');
     };
 
     window.addEventListener('mousemove', onMove, { passive: true });
@@ -153,7 +143,6 @@
     rafId = requestAnimationFrame(tick);
 
     cursorState = {
-      raf: rafId,
       stop: () => {
         running = false;
         cancelAnimationFrame(rafId);

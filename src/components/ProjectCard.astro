@@ -80,7 +80,7 @@ const initials = title.split(' ').filter(Boolean).slice(0, 2).map((w) => w[0]).j
     {coverImage ? (
       <img
         src={coverImage}
-        alt=""
+        alt={`${title} · ${client}`}
         loading="lazy"
         decoding="async"
         class="absolute inset-0 w-full h-full object-cover transition-transform duration-700 ease-[cubic-bezier(.2,.8,.2,1)] group-hover:scale-[1.03]"

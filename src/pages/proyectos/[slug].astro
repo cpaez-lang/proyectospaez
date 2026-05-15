@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import TechBadge from '../../components/TechBadge.astro';
 import MediaShowcase from '../../components/MediaShowcase.astro';
+import Breadcrumb from '../../components/Breadcrumb.astro';
 import { Icon } from 'astro-icon/components';
 
 export async function getStaticPaths() {
@@ -78,13 +79,14 @@ const initials = title.split(' ').filter(Boolean).slice(0, 2).map((w: string) =>
 
   <article class="pt-12 pb-32">
     <div class="container">
-      <a
-        href="/#proyectos"
-        class="inline-flex items-center gap-2 text-sm text-cp-muted hover:text-cp-accent transition mb-10 focus-visible:outline-2 focus-visible:outline-cp-accent focus-visible:outline-offset-2 rounded"
-      >
-        <Icon name="lucide:arrow-left" class="w-4 h-4" />
-        Volver a proyectos
-      </a>
+      <Breadcrumb
+        items={[
+          { label: 'Inicio', href: '/' },
+          { label: 'Proyectos', href: '/#proyectos' },
+          { label: title }
+        ]}
+      />
+      <div class="mb-10"></div>
 
       <div class="grid lg:grid-cols-[360px_1fr] gap-10 lg:gap-14 items-start">
         <!-- LEFT (sticky) -->
@@ -197,8 +199,11 @@ const initials = title.split(' ').filter(Boolean).slice(0, 2).map((w: string) =>
             {banner ? (
               <img
                 src={banner}
-                alt={`Cover ${title}`}
+                alt={`${title} · ${client}`}
                 class="absolute inset-0 w-full h-full object-cover"
+                loading="eager"
+                fetchpriority="high"
+                decoding="async"
               />
             ) : (
               <div

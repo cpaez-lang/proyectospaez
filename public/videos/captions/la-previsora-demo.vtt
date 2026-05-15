@@ -1,0 +1,134 @@
+WEBVTT
+
+00:00.000 --> 00:05.360
+Les presento una historia real de la previsora, la aseguradora estatal de los colombianos
+
+00:05.360 --> 00:11.440
+con más de 70 años de tradición, una historia hilada que recorre tres momentos, el cliente
+
+00:11.440 --> 00:18.120
+radicando una solicitud, el agente de servicio atendiendo la con apoyo de inteligencia artificial,
+
+00:18.120 --> 00:24.840
+y el asesor comercial detectando una oportunidad, todo en un solo día, todo en Salesforce son las
+
+00:24.840 --> 00:30.880
+diez y media de la mañana, Ana Lucia Rodríguez, asegurada de la previsora en Cali, entra
+
+00:30.880 --> 00:36.160
+al portal público para radicar una queja, tiene el seguro de hogar básico y reporta
+
+00:36.160 --> 00:41.560
+una gotera persistente que el administrador del edificio no ha resuelto, completa el
+
+00:41.560 --> 00:48.080
+formulario en dos minutos, sin llamadas, sin esperas, recibe automáticamente el radicado
+
+00:48.080 --> 00:54.480
+Cas 2.026.042 con fecha límite regulatoria de la superintendencia financiera.
+
+00:54.480 --> 01:01.200
+Detrás del clic de Ana Lucia, Salesforce ejecuta seis automatizaciones en cuatro segundos,
+
+01:01.200 --> 01:07.480
+el flow autoclassifica la queja en la categoría SFC correcta, calcula la fecha límite legal
+
+01:07.480 --> 01:13.720
+de 15 días sábiles, asigna a la gente de servicio disponible, envía el límil de confirmación
+
+01:13.720 --> 01:20.280
+al cliente, y precarga los artículos de knowledge relevantes, todo invisible al asegurado,
+
+01:20.280 --> 01:26.200
+todo trasable para el regulador Mauricio Ruiz, agente de servicio en Cali, abre su consola
+
+01:26.200 --> 01:33.520
+de servicio previsora, el caso Cas 0.040 y 2 aparece automáticamente asignado, en lugar
+
+01:33.520 --> 01:40.240
+de buscar información manualmente, consulta a previo, el asistente de inteligencia artificial,
+
+01:40.240 --> 01:46.320
+que polizas tiene Ana Lucia, previo responde en dos segundos con el contexto completo,
+
+01:46.320 --> 01:51.000
+detecta que lo que el cliente radicó como queja es en realidad un siniestro real dentro
+
+01:51.000 --> 01:57.000
+de cobertura, y sugiere las cuatro acciones concretas a seguir, Mauricio Valida y convierte
+
+01:57.000 --> 02:00.640
+el PQRS en reclamación formal con un solo clic.
+
+02:00.640 --> 02:09.000
+El PQRS se convierte automáticamente en reclamación formal, radiando 2.026.0015 entra en estado
+
+02:09.000 --> 02:14.480
+en estudio con un valor reclamado de 4 millones y medio, el sistema aplica las reglas
+
+02:14.480 --> 02:20.280
+de cobertura de la poliza, hasta 10 millones por daños por agua, dentro del límite, en
+
+02:20.280 --> 02:26.560
+20 minutos desde que Ana Lucia hizo clic en el portal, ya tiene ajustador asignado, visita
+
+02:26.560 --> 02:32.560
+técnica agendada para mañana y notificaciones automáticas por iméil y mensaje de texto,
+
+02:32.560 --> 02:38.880
+el es la regulatorio de 30 días apenas consumió el 2% mientras tanto, Camila Vega en
+
+02:38.880 --> 02:44.920
+el equipo comercial recibe una notificación automática, NextBest Act con detectada,
+
+02:44.920 --> 02:51.000
+Ana Lucia tiene hogar básico pero su siniestro muestra la vulnerabilidad de estar subasegurada,
+
+02:51.000 --> 02:57.040
+Camila consulta a previo, con para hogar básico ver su integral, le conviene upgrade,
+
+02:57.040 --> 03:02.760
+previo responde con el análisis financiero completo, cita el siniestro como argumento,
+
+03:02.760 --> 03:09.080
+que genera automáticamente una oportunidad comercial, valor 530.000 adicionales al año
+
+03:09.080 --> 03:15.840
+con 5 veces más cobertura, propuesta enviada por iméil y whatsapp en un solo clic 72 horas
+
+03:15.840 --> 03:22.160
+después de que Ana Lucia hizo clic en el portal, ella recibe tres cosas simultaneamente,
+
+03:22.160 --> 03:28.080
+primero, el dictamen aprobado por 4.300.000 pesos con reparación a través de taller
+
+03:28.080 --> 03:33.480
+aliado y asistencia gratuita, segundo, la propuesta de upgrade a hogar integral con
+
+03:33.480 --> 03:40.400
+5 veces más cobertura y tercero, una encuesta de satisfacción que ella califica con 10 sobre 10,
+
+03:40.400 --> 03:46.800
+el caso antes habría tomado 22 días, hoy se resolvió en 72 horas, cero llamadas
+
+03:46.800 --> 03:53.360
+alcohol center, 530.000 pesos adicionales en Crossel, y un cliente que acepta renovar
+
+03:53.360 --> 03:58.600
+la poliza por un año más, esta no es una promesa, es una demo funcional que corre
+
+03:58.600 --> 04:05.080
+hoy en Salesforce, construida en tres horas con clodcord sobre la plataforma de Salesforce,
+
+04:05.080 --> 04:11.280
+demuestra cómo la previsora puede transformar cada interacción con sus 300.000 asegurados,
+
+04:11.280 --> 04:18.880
+reducción del 86% en tiempos de resolución, más de 45 puntos adicionales de NPS, y
+
+04:18.880 --> 04:26.520
+3.200.000 pesos de Crossel proyectado por año, una historia, un cliente, tres equipos,
+
+04:26.520 --> 04:30.960
+cero fricción, así se construye la aseguradora agéntica de Colombia.
+
