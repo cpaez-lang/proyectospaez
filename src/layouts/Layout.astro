@@ -88,14 +88,15 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
       <slot />
     </main>
 
-    <footer class="border-t border-cp-border mt-32">
+    <footer class="border-t border-cp-border mt-32" aria-labelledby="footer-heading">
+      <h2 id="footer-heading" class="sr-only">Pie de página</h2>
       <div class="container py-12 grid md:grid-cols-3 gap-8">
         <div>
           <Logo size={28} variant="horizontal" />
           <p class="mt-4 text-cp-muted text-sm leading-relaxed">Solutions Engineer · Salesforce Colombia<br/>Construyo demos que se convierten en negocios.</p>
         </div>
-        <div>
-          <h4 class="font-semibold text-sm mb-3 text-cp-text">Navegación</h4>
+        <nav aria-label="Navegación de pie de página">
+          <p class="font-semibold text-sm mb-3 text-cp-text">Navegación</p>
           <ul class="space-y-2 text-sm text-cp-muted">
             <li><a href="/#proyectos" class="hover:text-cp-accent">Proyectos</a></li>
             <li><a href="/#sobre-mi" class="hover:text-cp-accent">Sobre mí</a></li>
@@ -103,20 +104,20 @@ const canonical = new URL(Astro.url.pathname, Astro.site).toString();
             <li><a href="/#proceso" class="hover:text-cp-accent">Proceso</a></li>
             <li><a href="/#contacto" class="hover:text-cp-accent">Contacto</a></li>
           </ul>
-        </div>
+        </nav>
         <div>
-          <h4 class="font-semibold text-sm mb-3 text-cp-text">Conecta</h4>
+          <p class="font-semibold text-sm mb-3 text-cp-text">Conecta</p>
           <div class="flex gap-3">
-            <a href="https://linkedin.com/in/camilopaez" aria-label="LinkedIn" class="p-2 rounded-lg border border-cp-border hover:border-cp-accent hover:text-cp-accent transition"><Icon name="lucide:linkedin" class="w-5 h-5"/></a>
-            <a href="https://github.com/camilopaez" aria-label="GitHub" class="p-2 rounded-lg border border-cp-border hover:border-cp-accent hover:text-cp-accent transition"><Icon name="lucide:github" class="w-5 h-5"/></a>
-            <a href="mailto:cpaez@salesforce.com" aria-label="Email" class="p-2 rounded-lg border border-cp-border hover:border-cp-accent hover:text-cp-accent transition"><Icon name="lucide:mail" class="w-5 h-5"/></a>
+            <a href="https://linkedin.com/in/camilopaez" aria-label="Camilo Páez en LinkedIn" target="_blank" rel="noopener" class="p-2 rounded-lg border border-cp-border hover:border-cp-accent hover:text-cp-accent transition"><Icon name="lucide:linkedin" class="w-5 h-5"/></a>
+            <a href="https://github.com/camilopaez" aria-label="Camilo Páez en GitHub" target="_blank" rel="noopener" class="p-2 rounded-lg border border-cp-border hover:border-cp-accent hover:text-cp-accent transition"><Icon name="lucide:github" class="w-5 h-5"/></a>
+            <a href="mailto:cpaez@salesforce.com" aria-label="Enviar email a Camilo Páez" class="p-2 rounded-lg border border-cp-border hover:border-cp-accent hover:text-cp-accent transition"><Icon name="lucide:mail" class="w-5 h-5"/></a>
           </div>
         </div>
       </div>
       <div class="border-t border-cp-border">
         <div class="container py-6 flex flex-wrap justify-between gap-4 text-xs text-cp-muted">
           <p>© 2026 Camilo Páez. Todos los derechos reservados.</p>
-          <p>Construido con Astro 5 · Tailwind 4 · GSAP · Claude Code</p>
+          <p>Construido con Astro 6 · Tailwind 3 · Claude Code</p>
         </div>
       </div>
     </footer>
