@@ -8,14 +8,14 @@ export default {
     extend: {
       colors: {
         cp: {
-          bg: '#0C0C0E',
-          surface: '#141416',
-          border: '#1E1E22',
-          text: '#E8E0D4',
-          muted: '#6B6872',
-          accent: '#0070D2',
-          gold: '#EF9F27',
-          success: '#1D9E75'
+          bg: 'var(--cp-bg)',
+          surface: 'var(--cp-surface)',
+          border: 'var(--cp-border)',
+          text: 'var(--cp-text)',
+          muted: 'var(--cp-muted)',
+          accent: 'var(--cp-accent)',
+          gold: 'var(--cp-gold)',
+          success: 'var(--cp-success)'
         }
       },
       fontFamily: {
