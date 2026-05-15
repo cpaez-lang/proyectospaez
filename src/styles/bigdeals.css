@@ -27,9 +27,16 @@
   --bd-gold-soft: rgba(200, 169, 81, 0.18);
 }
 
-/* Override body bg (war-room) when bigdeal hero present */
+/* Override body bg + force dark cp-* tokens when bigdeal hero present */
 body:has(.bd-hero) {
   background: var(--bd-navy);
+  --cp-bg: #0a0f1e;
+  --cp-surface: #121935;
+  --cp-border: #262830;
+  --cp-text: #e6e9f2;
+  --cp-muted: #9aa3b2;
+  --cp-accent: #3b82f6;
+  --cp-gold: #f59e0b;
 }
 
 .bd-hero,
@@ -359,7 +366,7 @@ body:has(.bd-hero) {
   padding: 6px 12px;
   border-radius: 8px;
   background: var(--bd-electric-soft);
-  color: var(--bd-electric);
+  color: #93c5fd;
   font-size: 13px;
   font-weight: 800;
   margin-bottom: 12px;
@@ -409,7 +416,7 @@ body:has(.bd-hero) {
 }
 .bd-acc-1 {
   background: rgba(59, 130, 246, 0.18);
-  color: var(--bd-electric);
+  color: #93c5fd;
 }
 .bd-acc-2 {
   background: rgba(22, 163, 74, 0.18);
@@ -696,7 +703,7 @@ body:has(.bd-hero) {
   padding: 8px 12px;
   border-radius: 10px;
   background: var(--bd-electric-soft);
-  color: var(--bd-electric);
+  color: #93c5fd;
   font-size: 12px;
   font-weight: 700;
   align-self: flex-start;
@@ -821,7 +828,7 @@ body:has(.bd-hero) {
   height: 22px;
   border-radius: 6px;
   background: var(--bd-electric-soft);
-  color: var(--bd-electric);
+  color: #93c5fd;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -880,9 +887,9 @@ body:has(.bd-hero) {
   color: var(--bd-electric);
 }
 .bd-dealtab[data-active='true'] {
-  background: var(--bd-electric-soft);
+  background: var(--bd-electric);
   border-color: var(--bd-electric);
-  color: var(--bd-electric);
+  color: #ffffff;
 }
 
 /* ============================================================
@@ -1057,7 +1064,7 @@ body:has(.bd-hero) {
   padding: 6px 12px;
   border-radius: 999px;
   background: var(--bd-electric-soft);
-  color: var(--bd-electric);
+  color: #93c5fd;
   border: 1px solid rgba(58, 123, 213, 0.45);
   font-size: 11px;
   font-weight: 800;
