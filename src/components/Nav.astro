@@ -4,6 +4,7 @@ import { Icon } from 'astro-icon/components';
 
 const navLinks = [
   { href: '/#proyectos', label: 'Proyectos', section: 'proyectos' },
+  { href: '/bigdeals', label: 'BigDeals', section: 'bigdeals', icon: 'lucide:briefcase' },
   { href: '/#sobre-mi', label: 'Sobre mí', section: 'sobre-mi' },
   { href: '/#stack', label: 'Stack', section: 'stack' },
   { href: '/#proceso', label: 'Proceso', section: 'proceso' }
@@ -17,7 +18,8 @@ const navLinks = [
 
     <nav aria-label="Principal" class="hidden md:flex items-center gap-7 text-sm font-medium">
       {navLinks.map((l) => (
-        <a href={l.href} data-nav-link={l.section} class="nav-link relative py-1 transition-colors hover:text-cp-accent">
+        <a href={l.href} data-nav-link={l.section} class="nav-link relative inline-flex items-center gap-1.5 py-1 transition-colors hover:text-cp-accent">
+          {l.icon && <Icon name={l.icon} class="w-4 h-4" />}
           {l.label}
         </a>
       ))}

@@ -1,0 +1,1397 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { Icon } from 'astro-icon/components';
+import {
+  heroKpis,
+  portfolio,
+  agents,
+  investment,
+  roiLevel1,
+  roiLevel2,
+  roiLevel3,
+  roiSummary,
+  roiBadges,
+  inaction,
+  roadmap,
+  agentKpis,
+  beforeAfter,
+  benchmarks,
+  risks,
+  groupCountries,
+  nextSteps
+} from '../data/bbva-bigdeal';
+
+const statusBadge = (s: string) => {
+  switch (s) {
+    case 'active':   return { icon: 'lucide:check-circle-2', label: 'Activo',   classes: 'bg-emerald-500/10 text-emerald-300 border-emerald-500/30' };
+    case 'partial':  return { icon: 'lucide:alert-circle',   label: 'Parcial',  classes: 'bg-amber-500/10 text-amber-300 border-amber-500/30' };
+    case 'gap':      return { icon: 'lucide:x-circle',       label: 'Brecha',   classes: 'bg-red-500/10 text-red-300 border-red-500/30' };
+    case 'excluded': return { icon: 'lucide:slash',          label: 'Excluido', classes: 'bg-slate-500/10 text-slate-400 border-slate-500/30' };
+    default:         return { icon: 'lucide:circle',         label: '—',        classes: 'bg-slate-500/10 text-slate-400 border-slate-500/30' };
+  }
+};
+
+const probBadge = (p: string) => {
+  switch (p) {
+    case 'low':    return { label: 'Baja',  classes: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' };
+    case 'medium': return { label: 'Media', classes: 'bg-amber-500/15 text-amber-300 border-amber-500/30' };
+    case 'high':   return { label: 'Alta',  classes: 'bg-red-500/15 text-red-300 border-red-500/30' };
+    default:       return { label: '—',     classes: '' };
+  }
+};
+
+const impactBadge = (s: string) => {
+  switch (s) {
+    case 'low':      return { label: 'Bajo',      classes: 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30' };
+    case 'medium':   return { label: 'Medio',     classes: 'bg-amber-500/15 text-amber-300 border-amber-500/30' };
+    case 'high':     return { label: 'Alto',      classes: 'bg-orange-500/15 text-orange-300 border-orange-500/30' };
+    case 'critical': return { label: 'Muy alto',  classes: 'bg-red-500/15 text-red-300 border-red-500/30' };
+    default:         return { label: '—',         classes: '' };
+  }
+};
+---
+<Layout
+  title="BigDeal BBVA Colombia — Camilo Páez"
+  description="Business case ejecutivo: el primer banco agéntico de Colombia. ROI Año 3 +268% sobre inversión total."
+>
+  <!-- ============================================================ -->
+  <!-- 0. HERO HEADER                                                -->
+  <!-- ============================================================ -->
+  <section class="bd-hero relative overflow-hidden">
+    <div class="absolute inset-0 -z-10" aria-hidden="true">
+      <div class="absolute inset-0" style="background:radial-gradient(ellipse 80% 50% at 50% 0%, rgba(59,130,246,0.15), transparent 60%);"></div>
+      <svg class="absolute inset-0 w-full h-full opacity-[0.04]" aria-hidden="true">
+        <pattern id="bd-grid" width="48" height="48" patternUnits="userSpaceOnUse">
+          <path d="M48 0H0V48" fill="none" stroke="currentColor" stroke-width="0.5"/>
+        </pattern>
+        <rect width="100%" height="100%" fill="url(#bd-grid)"/>
+      </svg>
+    </div>
+
+    <div class="container pt-16 pb-12">
+      <a href="/" class="inline-flex items-center gap-2 text-xs uppercase tracking-[0.2em] text-cp-muted hover:text-cp-accent transition mb-10">
+        <Icon name="lucide:arrow-left" class="w-3.5 h-3.5" />
+        proyectospaez · home
+      </a>
+
+      <div class="bd-tag inline-flex items-center gap-2 px-3 py-1.5 rounded-full border text-[11px] font-bold uppercase tracking-[0.18em] mb-8" style="border-color: rgba(245,158,11,0.4); background: rgba(245,158,11,0.08); color: #FBBF24;">
+        <Icon name="lucide:landmark" class="w-3.5 h-3.5" />
+        BigDeal · BBVA Colombia · FY27
+      </div>
+
+      <h1 class="bd-title">BigDeal BBVA Colombia</h1>
+      <p class="bd-subtitle">El primer banco agéntico de Colombia — y el blueprint para todo el Grupo BBVA en Latam.</p>
+
+      <!-- 3 KPI cards -->
+      <div class="bd-kpi-grid mt-14">
+        {heroKpis.map((k, i) => (
+          <article class={`bd-kpi-card bd-kpi-${i}`}>
+            <div class="bd-kpi-icon"><Icon name={k.icon} class="w-6 h-6" /></div>
+            <div class="bd-kpi-label">{k.label}</div>
+            <div class="bd-kpi-value">{k.value}</div>
+            {k.sub && <div class="bd-kpi-sub">{k.sub}</div>}
+          </article>
+        ))}
+      </div>
+
+      <!-- Methodological note callout -->
+      <div class="bd-callout bd-callout-warning mt-10">
+        <Icon name="lucide:info" class="w-5 h-5 shrink-0 mt-0.5" />
+        <div>
+          <div class="font-bold mb-1">Nota metodológica</div>
+          <div class="text-sm leading-relaxed">
+            Todas las métricas de ROI están atadas a una sola fuente de verdad por palanca.
+            Los beneficios están organizados en 3 niveles acumulativos y se proyectan año a año
+            con supuestos explícitos y auditables.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 1. CONTEXTO                                                   -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">01 · Contexto</div>
+      <h2 class="bd-h2">Por qué BBVA Colombia — ahora</h2>
+      <p class="bd-lead max-w-3xl mt-5">
+        BBVA Global está construyendo la <strong>AELA (AI Enterprise Layer Architecture)</strong> — una de las
+        apuestas de IA más ambiciosas del sector financiero mundial. La <strong>GAM (Global AI Management)</strong>
+        coordina esta visión en todas las geografías del banco.
+      </p>
+
+      <aside class="bd-highlight mt-8">
+        <div class="bd-highlight-bar"></div>
+        <div class="bd-highlight-body">
+          <p>
+            BBVA Colombia <strong>no adopta IA de manera aislada</strong> — está siendo llamada a ser
+            el <strong>nodo agéntico piloto de Latam</strong>. Una implementación exitosa en Colombia
+            crea el patrón replicable para México, Perú, Argentina y España. El deal de
+            ~$1M USD en ACV tiene potencial de escalar a <strong>$10M+ a nivel grupo</strong>.
+          </p>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 2. PORTAFOLIO                                                 -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">02 · Diagnóstico</div>
+      <h2 class="bd-h2">Portafolio Salesforce — estado actual vs. visión</h2>
+
+      <div class="bd-table mt-8">
+        <table>
+          <thead>
+            <tr>
+              <th>Producto</th>
+              <th class="bd-th-status">Estado</th>
+              <th>Estado actual</th>
+              <th>Estado objetivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            {portfolio.map((row) => {
+              const sb = statusBadge(row.status);
+              return (
+                <tr class={`${row.status === 'gap' ? 'bd-row-warn' : ''} ${row.critical ? 'bd-row-critical' : ''}`}>
+                  <td class="font-bold">{row.product}</td>
+                  <td>
+                    <span class={`bd-badge ${sb.classes}`}>
+                      <Icon name={sb.icon} class="w-3.5 h-3.5" />
+                      {sb.label}
+                    </span>
+                  </td>
+                  <td class="text-cp-muted">{row.current}</td>
+                  <td>{row.target}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 3. AGENTES                                                    -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">03 · Agentforce</div>
+      <h2 class="bd-h2">Los 6 Agentes — casos de uso identificados</h2>
+
+      <div class="bd-grid-3 mt-10">
+        {agents.map((a) => (
+          <article class="bd-agent-card">
+            <div class="bd-agent-icon">
+              <Icon name={a.icon} class="w-7 h-7" />
+            </div>
+            <h3 class="bd-agent-name">{a.name}</h3>
+            <p class="bd-agent-fn">{a.function}</p>
+            <div class="bd-agent-impact">{a.impact}</div>
+            <div class="bd-agent-source">Fuente: {a.source}</div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 4. INVERSIÓN                                                  -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">04 · Inversión</div>
+      <h2 class="bd-h2">Estructura de inversión — ACV vs. inversión total</h2>
+
+      <div class="bd-callout bd-callout-info mt-8">
+        <Icon name="lucide:lightbulb" class="w-5 h-5 shrink-0 mt-0.5" />
+        <div>
+          <div class="font-bold mb-1">Clarificación clave</div>
+          <div class="text-sm leading-relaxed">
+            El ACV (~$1.05M/año) es lo que <strong>factura Salesforce</strong>. La inversión
+            total del banco incluye implementación con partner y puede llegar a <strong>$1.3-1.4M en año 1</strong>.
+            El ROI se calcula sobre la inversión total, no solo el ACV.
+          </div>
+        </div>
+      </div>
+
+      <div class="bd-table mt-8">
+        <table>
+          <thead>
+            <tr>
+              <th>Componente</th>
+              <th class="text-right">ACV Salesforce (USD/año)</th>
+              <th class="text-right">Inversión Total BBVA</th>
+            </tr>
+          </thead>
+          <tbody>
+            {investment.map((row) => (
+              <tr class={row.isTotal ? 'bd-row-total' : ''}>
+                <td class={row.isTotal ? 'font-extrabold' : ''}>{row.component}</td>
+                <td class="text-right tabular-nums">{row.acv}</td>
+                <td class="text-right tabular-nums">{row.total}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 5. ROI                                                        -->
+  <!-- ============================================================ -->
+  <section class="bd-section bd-section-spotlight">
+    <div class="container">
+      <div class="bd-eyebrow text-cp-gold">05 · Modelo de ROI</div>
+      <h2 class="bd-h2">3 niveles acumulativos · una sola fuente de verdad</h2>
+      <p class="bd-lead max-w-3xl mt-3">
+        Sin contradicciones. Cada palanca tiene su benchmark, su supuesto y su año de impacto.
+      </p>
+
+      <!-- 5A — Niveles -->
+      <div class="bd-roi-levels mt-10">
+        <details class="bd-acc" open>
+          <summary class="bd-acc-summary">
+            <span class="bd-acc-num bd-acc-1">N1</span>
+            <span>
+              <span class="bd-acc-title">Eficiencias operativas</span>
+              <span class="bd-acc-meta">Forrester TEI Service Cloud — 248% ROI</span>
+            </span>
+            <Icon name="lucide:chevron-down" class="bd-acc-chev w-5 h-5 ml-auto" />
+          </summary>
+          <div class="bd-table mt-4">
+            <table>
+              <thead>
+                <tr>
+                  <th>Palanca</th>
+                  <th>Supuesto</th>
+                  <th class="text-right">Año 1</th>
+                  <th class="text-right">Año 2</th>
+                  <th class="text-right">Año 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                {roiLevel1.map((r) => (
+                  <tr class={r.isSubtotal ? 'bd-row-subtotal' : ''}>
+                    <td class={r.isSubtotal ? 'font-extrabold' : 'font-semibold'}>{r.lever}</td>
+                    <td class="text-cp-muted text-sm">{r.assumption}</td>
+                    <td class="text-right tabular-nums">{r.y1}</td>
+                    <td class="text-right tabular-nums">{r.y2}</td>
+                    <td class="text-right tabular-nums">{r.y3}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="bd-acc" open>
+          <summary class="bd-acc-summary">
+            <span class="bd-acc-num bd-acc-2">N2</span>
+            <span>
+              <span class="bd-acc-title">Ingresos incrementales</span>
+              <span class="bd-acc-meta">Accenture Banking 2024 + McKinsey Retail Banking 2024</span>
+            </span>
+            <Icon name="lucide:chevron-down" class="bd-acc-chev w-5 h-5 ml-auto" />
+          </summary>
+          <div class="bd-table mt-4">
+            <table>
+              <thead>
+                <tr>
+                  <th>Palanca</th>
+                  <th>Supuesto</th>
+                  <th class="text-right">Año 1</th>
+                  <th class="text-right">Año 2</th>
+                  <th class="text-right">Año 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                {roiLevel2.map((r) => (
+                  <tr class={r.isSubtotal ? 'bd-row-subtotal' : ''}>
+                    <td class={r.isSubtotal ? 'font-extrabold' : 'font-semibold'}>{r.lever}</td>
+                    <td class="text-cp-muted text-sm">{r.assumption}</td>
+                    <td class="text-right tabular-nums">{r.y1}</td>
+                    <td class="text-right tabular-nums">{r.y2}</td>
+                    <td class="text-right tabular-nums">{r.y3}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+
+        <details class="bd-acc" open>
+          <summary class="bd-acc-summary">
+            <span class="bd-acc-num bd-acc-3">N3</span>
+            <span>
+              <span class="bd-acc-title">Beneficios estratégicos</span>
+              <span class="bd-acc-meta">Salesforce Customer Success Metrics FY26 Q3 + IDC</span>
+            </span>
+            <Icon name="lucide:chevron-down" class="bd-acc-chev w-5 h-5 ml-auto" />
+          </summary>
+          <div class="bd-table mt-4">
+            <table>
+              <thead>
+                <tr>
+                  <th>Palanca</th>
+                  <th>Supuesto</th>
+                  <th class="text-right">Año 1</th>
+                  <th class="text-right">Año 2</th>
+                  <th class="text-right">Año 3</th>
+                </tr>
+              </thead>
+              <tbody>
+                {roiLevel3.map((r) => (
+                  <tr class={r.isSubtotal ? 'bd-row-subtotal' : ''}>
+                    <td class={r.isSubtotal ? 'font-extrabold' : 'font-semibold'}>{r.lever}</td>
+                    <td class="text-cp-muted text-sm">{r.assumption}</td>
+                    <td class="text-right tabular-nums">{r.y1}</td>
+                    <td class="text-right tabular-nums">{r.y2}</td>
+                    <td class="text-right tabular-nums">{r.y3}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </details>
+      </div>
+
+      <!-- 5B — Tabla consolidada -->
+      <div class="bd-roi-summary mt-16">
+        <div class="bd-roi-summary-head">
+          <h3 class="text-2xl font-extrabold">ROI consolidado · 3 años</h3>
+          <p class="text-sm text-cp-muted mt-1">La estrella del modelo. Sin contradicciones con las palancas de arriba.</p>
+        </div>
+
+        <div class="bd-table bd-table-summary mt-6">
+          <table>
+            <thead>
+              <tr>
+                <th></th>
+                <th class="text-right">Año 1</th>
+                <th class="text-right">Año 2</th>
+                <th class="text-right">Año 3</th>
+                <th class="text-right">Total 3 años</th>
+              </tr>
+            </thead>
+            <tbody>
+              {roiSummary.map((r) => (
+                <tr class={r.tone ? `bd-row-${r.tone}` : ''}>
+                  <td class="font-semibold">{r.label}</td>
+                  <td class="text-right tabular-nums">{r.y1}</td>
+                  <td class="text-right tabular-nums">{r.y2}</td>
+                  <td class="text-right tabular-nums">{r.y3}</td>
+                  <td class="text-right tabular-nums font-bold">{r.total3y}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- ROI badges -->
+        <div class="bd-roi-badges mt-10">
+          <div class="bd-roi-badge bd-roi-badge-amber">
+            <div class="bd-roi-badge-year">Año 1</div>
+            <div class="bd-roi-badge-value">{roiBadges.y1.label}</div>
+            <div class="bd-roi-badge-blurb">{roiBadges.y1.blurb}</div>
+          </div>
+          <div class="bd-roi-badge bd-roi-badge-green">
+            <div class="bd-roi-badge-year">Año 2</div>
+            <div class="bd-roi-badge-value">{roiBadges.y2.label}</div>
+            <div class="bd-roi-badge-blurb">{roiBadges.y2.blurb}</div>
+          </div>
+          <div class="bd-roi-badge bd-roi-badge-green-bright">
+            <div class="bd-roi-badge-year">Año 3</div>
+            <div class="bd-roi-badge-value">{roiBadges.y3.label}</div>
+            <div class="bd-roi-badge-blurb">{roiBadges.y3.blurb}</div>
+          </div>
+          <div class="bd-roi-badge bd-roi-badge-green">
+            <div class="bd-roi-badge-year">Total 3 años</div>
+            <div class="bd-roi-badge-value">{roiBadges.total.label}</div>
+            <div class="bd-roi-badge-blurb">{roiBadges.total.blurb}</div>
+          </div>
+        </div>
+
+        <div class="bd-callout bd-callout-info mt-10">
+          <Icon name="lucide:pin" class="w-5 h-5 shrink-0 mt-0.5" />
+          <div>
+            <div class="font-bold mb-1">¿Por qué el Año 1 es +14%?</div>
+            <div class="text-sm leading-relaxed">
+              En año 1 la inversión es la más alta (incluye implementación) y los agentes entran en
+              producción <strong>escalonadamente desde el mes 5</strong>. El banco recibe solo 5-7 meses
+              de beneficio operativo. Esto es correcto y honesto — no inflar el año 1 es lo que le da
+              credibilidad al modelo. Desde el año 2, la inversión baja a solo el ACV de licencias
+              → <strong>ROI se dispara a 205% y 268%</strong>.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 6. INACCIÓN                                                   -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">06 · Costo de inacción</div>
+      <h2 class="bd-h2">Costo de no actuar</h2>
+
+      <div class="bd-inaction-hero mt-10">
+        <div class="bd-inaction-amount">$97,000</div>
+        <div class="bd-inaction-period">por mes</div>
+      </div>
+
+      <div class="bd-table mt-8">
+        <table>
+          <thead>
+            <tr>
+              <th>Fuente de costo</th>
+              <th>Cálculo</th>
+              <th class="text-right">Monto / mes</th>
+            </tr>
+          </thead>
+          <tbody>
+            {inaction.map((row) => (
+              <tr class={row.isTotal ? 'bd-row-total' : ''}>
+                <td class={row.isTotal ? 'font-extrabold' : 'font-semibold'}>{row.source}</td>
+                <td class="text-cp-muted text-sm">{row.calc}</td>
+                <td class={`text-right tabular-nums ${row.isTotal ? 'font-extrabold text-red-300' : ''}`}>{row.monthly}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <p class="bd-inaction-quote mt-10">
+        Cada mes sin actuar = <span class="text-red-300">$97,000</span> en eficiencias, revenue y conversión que se pierden.
+        En un año: <span class="text-red-300">$1,164,000</span>.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 7. ROADMAP                                                    -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">07 · Roadmap</div>
+      <h2 class="bd-h2">Valor temprano, no big bang</h2>
+
+      <div class="bd-roadmap mt-12">
+        {roadmap.map((p, i) => (
+          <article class={`bd-phase ${i === 1 ? 'bd-phase-quickwin' : ''}`}>
+            <div class="bd-phase-num">{p.number}</div>
+            <div class="bd-phase-body">
+              <div class="flex items-baseline justify-between gap-4 flex-wrap">
+                <h3 class="bd-phase-name">FASE {p.number} — {p.name}</h3>
+                <span class="bd-phase-range">{p.range}</span>
+              </div>
+              <ul class="bd-phase-bullets">
+                {p.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+              <div class="bd-phase-delivers">
+                <Icon name="lucide:check-circle-2" class="w-4 h-4 shrink-0" />
+                <span>{p.delivers}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 8. KPIs por agente                                            -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">08 · OKRs</div>
+      <h2 class="bd-h2">KPIs comprometidos por agente</h2>
+
+      <div class="bd-table mt-8">
+        <table>
+          <thead>
+            <tr>
+              <th>Agente</th>
+              <th>KPI principal</th>
+              <th>OKR</th>
+              <th>Medición</th>
+            </tr>
+          </thead>
+          <tbody>
+            {agentKpis.map((row) => (
+              <tr>
+                <td class="font-bold">{row.agent}</td>
+                <td>{row.kpi}</td>
+                <td class="text-cp-gold font-semibold">{row.okr}</td>
+                <td class="text-cp-muted text-sm">{row.measurement}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 9. ANTES/DESPUÉS                                              -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">09 · Transformación</div>
+      <h2 class="bd-h2">Antes vs. después — la historia</h2>
+
+      <div class="bd-grid-3 mt-10">
+        {beforeAfter.map((b) => (
+          <article class="bd-ba-card">
+            <div class="bd-ba-block bd-ba-before">
+              <div class="bd-ba-tag">ANTES</div>
+              <p>{b.before}</p>
+            </div>
+            <div class="bd-ba-arrow">
+              <Icon name="lucide:arrow-down" class="w-5 h-5" />
+            </div>
+            <div class="bd-ba-block bd-ba-after">
+              <div class="bd-ba-tag bd-ba-tag-after">DESPUÉS</div>
+              <p>{b.after}</p>
+            </div>
+            <div class="bd-ba-impact">
+              <Icon name="lucide:zap" class="w-4 h-4 shrink-0" />
+              <span>{b.impact}</span>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 10. BENCHMARKS                                                -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">10 · Industria</div>
+      <h2 class="bd-h2">Respaldo de la industria — no somos los únicos que lo decimos</h2>
+
+      <div class="bd-grid-3 mt-10">
+        {benchmarks.map((b) => (
+          <article class="bd-bench-card">
+            <div class="bd-bench-icon">
+              <Icon name={b.icon} class="w-6 h-6" />
+            </div>
+            <div class="bd-bench-source">{b.source}</div>
+            <div class="bd-bench-highlight">{b.highlight}</div>
+            {b.detail && <div class="bd-bench-detail">{b.detail}</div>}
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 11. RIESGOS                                                   -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">11 · Mitigación</div>
+      <h2 class="bd-h2">Riesgos identificados y plan de mitigación</h2>
+
+      <div class="bd-table mt-8">
+        <table>
+          <thead>
+            <tr>
+              <th>Riesgo</th>
+              <th>Probabilidad</th>
+              <th>Impacto</th>
+              <th>Mitigación</th>
+            </tr>
+          </thead>
+          <tbody>
+            {risks.map((r) => {
+              const pb = probBadge(r.prob);
+              const ib = impactBadge(r.impact);
+              return (
+                <tr>
+                  <td class="font-semibold">{r.risk}</td>
+                  <td><span class={`bd-badge ${pb.classes}`}>{pb.label}</span></td>
+                  <td><span class={`bd-badge ${ib.classes}`}>{ib.label}</span></td>
+                  <td class="text-sm">{r.mitigation}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 12. EFECTO GRUPO                                              -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">12 · Multiplicador</div>
+      <h2 class="bd-h2">Este deal no vale $1M — vale $10M+</h2>
+
+      <article class="bd-group-card mt-10">
+        <Icon name="lucide:globe-2" class="bd-group-icon" />
+        <p class="bd-group-text">
+          BBVA opera en México, Perú, Argentina, España y Turquía. Un caso de éxito certificado en
+          Colombia → patrón replicable → todas las filiales en la misma conversación.
+          La <strong>GAM (Global AI Management)</strong> es el puente. Involucrarlos desde el inicio
+          convierte a <strong>Colombia en el nodo de innovación agéntica de Latam</strong>.
+        </p>
+        <div class="bd-flags">
+          {groupCountries.map((c) => (
+            <div class={`bd-flag ${c.highlight ? 'bd-flag-highlight' : ''}`}>
+              <span class="bd-flag-emoji">{c.flag}</span>
+              <span class="bd-flag-name">{c.name}</span>
+            </div>
+          ))}
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 13. NEXT STEPS                                                -->
+  <!-- ============================================================ -->
+  <section class="bd-section">
+    <div class="container">
+      <div class="bd-eyebrow">13 · Acción</div>
+      <h2 class="bd-h2">Próximos pasos</h2>
+
+      <ul class="bd-checklist mt-10">
+        {nextSteps.map((s, i) => (
+          <li class="bd-checkitem">
+            <span class="bd-check">
+              <Icon name="lucide:check" class="w-3.5 h-3.5" />
+            </span>
+            <span>{s.task}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- FOOTER METADATA                                               -->
+  <!-- ============================================================ -->
+  <section class="bd-meta">
+    <div class="container py-12">
+      <div class="bd-meta-line"></div>
+      <div class="grid sm:grid-cols-2 gap-6 text-sm">
+        <div>
+          <div class="text-xs uppercase tracking-[0.2em] text-cp-muted mb-2">Preparado por</div>
+          <div class="font-bold">Camilo Páez</div>
+          <div class="text-cp-muted">Lead SE · Salesforce Colombia</div>
+        </div>
+        <div class="sm:text-right">
+          <div class="text-xs uppercase tracking-[0.2em] text-cp-muted mb-2">Versión</div>
+          <div class="font-bold">FY2027 · v2.0</div>
+          <div class="text-cp-muted">Fundamentos validados · ROI consolidado</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>
+
+<style>
+  /* ============================================================
+     LOCAL DESIGN SYSTEM — only inside /bigdeals
+     Paleta: navy profundo (#0A0F1E) con acentos azul eléctrico (#3B82F6)
+     y dorado (#F59E0B). Tokens cp-* mantenidos para coherencia.
+     ============================================================ */
+
+  :root {
+    --bd-navy: #0A0F1E;
+    --bd-navy-2: #0E1428;
+    --bd-card: #121935;
+    --bd-border: rgba(255,255,255,0.08);
+    --bd-border-strong: rgba(255,255,255,0.16);
+    --bd-text: #E6E9F2;
+    --bd-muted: #8B91A7;
+    --bd-electric: #3B82F6;
+    --bd-electric-soft: rgba(59,130,246,0.16);
+    --bd-gold: #F59E0B;
+    --bd-gold-soft: rgba(245,158,11,0.16);
+  }
+
+  /* Override body bg (dark "war room") for bigdeals page */
+  :global(body:has(.bd-hero)) {
+    background: var(--bd-navy);
+  }
+
+  .bd-hero,
+  .bd-section,
+  .bd-meta {
+    color: var(--bd-text);
+  }
+
+  .bd-section {
+    padding: 88px 0;
+    border-top: 1px solid var(--bd-border);
+  }
+  .bd-section-spotlight {
+    background: linear-gradient(180deg, rgba(59,130,246,0.04) 0%, transparent 100%);
+  }
+  .bd-meta {
+    border-top: 1px solid var(--bd-border);
+    background: var(--bd-navy-2);
+  }
+  .bd-meta-line {
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--bd-border-strong), transparent);
+    margin-bottom: 28px;
+  }
+
+  /* Typography */
+  .bd-eyebrow {
+    color: var(--bd-electric);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+  .bd-h2 {
+    margin-top: 12px;
+    font-size: clamp(1.75rem, 2vw + 1rem, 2.5rem);
+    font-weight: 800;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+  .bd-lead {
+    color: var(--bd-muted);
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  .bd-lead strong {
+    color: var(--bd-text);
+    font-weight: 700;
+  }
+
+  /* Hero */
+  .bd-title {
+    font-size: clamp(2.6rem, 4vw + 1rem, 4.25rem);
+    font-weight: 900;
+    letter-spacing: -0.03em;
+    line-height: 1.02;
+  }
+  .bd-subtitle {
+    margin-top: 18px;
+    font-size: clamp(1.05rem, 1vw + 0.5rem, 1.35rem);
+    color: var(--bd-muted);
+    max-width: 760px;
+    line-height: 1.5;
+  }
+
+  /* KPI cards */
+  .bd-kpi-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 768px) {
+    .bd-kpi-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+  .bd-kpi-card {
+    position: relative;
+    background: linear-gradient(180deg, var(--bd-card), var(--bd-navy-2));
+    border: 1px solid var(--bd-border);
+    border-radius: 18px;
+    padding: 26px;
+    overflow: hidden;
+  }
+  .bd-kpi-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% -20%, rgba(59,130,246,0.18), transparent 60%);
+    pointer-events: none;
+  }
+  .bd-kpi-1::before { background: radial-gradient(circle at 20% -20%, rgba(245,158,11,0.18), transparent 60%); }
+  .bd-kpi-2::before { background: radial-gradient(circle at 20% -20%, rgba(22,163,74,0.18), transparent 60%); }
+
+  .bd-kpi-icon {
+    width: 42px; height: 42px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 11px;
+    background: var(--bd-electric-soft);
+    color: var(--bd-electric);
+    margin-bottom: 16px;
+  }
+  .bd-kpi-1 .bd-kpi-icon { background: var(--bd-gold-soft); color: var(--bd-gold); }
+  .bd-kpi-2 .bd-kpi-icon { background: rgba(22,163,74,0.18); color: #4ADE80; }
+
+  .bd-kpi-label {
+    color: var(--bd-muted);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .bd-kpi-value {
+    margin-top: 8px;
+    font-size: clamp(1.85rem, 2vw + 1rem, 2.6rem);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    color: var(--bd-text);
+  }
+  .bd-kpi-1 .bd-kpi-value { color: var(--bd-gold); }
+  .bd-kpi-sub {
+    color: var(--bd-muted);
+    font-size: 12px;
+    margin-top: 2px;
+  }
+
+  /* Callouts */
+  .bd-callout {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px 22px;
+    border-radius: 14px;
+    border: 1px solid var(--bd-border);
+    background: var(--bd-navy-2);
+  }
+  .bd-callout-warning {
+    border-color: rgba(245,158,11,0.35);
+    background: rgba(245,158,11,0.06);
+    color: #FBBF24;
+  }
+  .bd-callout-warning strong { color: #FFE2A0; }
+  .bd-callout-info {
+    border-color: rgba(59,130,246,0.35);
+    background: rgba(59,130,246,0.06);
+    color: #93C5FD;
+  }
+  .bd-callout-info strong { color: #DBEAFE; }
+
+  /* Highlight box */
+  .bd-highlight {
+    display: flex;
+    background: var(--bd-card);
+    border: 1px solid var(--bd-border);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .bd-highlight-bar {
+    width: 4px;
+    background: linear-gradient(180deg, var(--bd-electric), var(--bd-gold));
+    flex-shrink: 0;
+  }
+  .bd-highlight-body {
+    padding: 22px 26px;
+    line-height: 1.65;
+    font-size: 16px;
+  }
+  .bd-highlight-body strong { color: var(--bd-text); }
+
+  /* Tables */
+  .bd-table { overflow-x: auto; border-radius: 14px; border: 1px solid var(--bd-border); }
+  .bd-table table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bd-card);
+    font-size: 14px;
+  }
+  .bd-table thead th {
+    text-align: left;
+    padding: 14px 16px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--bd-muted);
+    background: var(--bd-navy-2);
+    border-bottom: 1px solid var(--bd-border-strong);
+  }
+  .bd-table tbody td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--bd-border);
+    vertical-align: top;
+  }
+  .bd-table tbody tr:last-child td { border-bottom: none; }
+
+  .bd-row-warn td { background: rgba(239,68,68,0.04); }
+  .bd-row-critical td:first-child {
+    border-left: 3px solid var(--bd-gold);
+    padding-left: 13px;
+  }
+  .bd-row-critical td { background: rgba(245,158,11,0.05); }
+
+  .bd-row-total td {
+    background: var(--bd-electric-soft);
+    color: var(--bd-text);
+    font-size: 16px;
+    border-top: 1px solid rgba(59,130,246,0.4);
+  }
+  .bd-row-subtotal td {
+    background: rgba(255,255,255,0.04);
+    border-top: 1px solid var(--bd-border-strong);
+    font-weight: 800;
+  }
+
+  /* Badges */
+  .bd-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 10px;
+    border-radius: 9999px;
+    border: 1px solid;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
+
+  /* Agents grid */
+  .bd-grid-3 {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  @media (min-width: 720px) { .bd-grid-3 { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 1024px) { .bd-grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+  .bd-agent-card {
+    background: var(--bd-card);
+    border: 1px solid var(--bd-border);
+    border-radius: 16px;
+    padding: 24px;
+    transition: border-color 0.25s, transform 0.25s;
+  }
+  .bd-agent-card:hover {
+    border-color: var(--bd-electric);
+    transform: translateY(-2px);
+  }
+  .bd-agent-icon {
+    width: 44px; height: 44px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 12px;
+    background: var(--bd-electric-soft);
+    color: var(--bd-electric);
+    margin-bottom: 14px;
+  }
+  .bd-agent-name {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 6px;
+    letter-spacing: -0.01em;
+  }
+  .bd-agent-fn {
+    color: var(--bd-muted);
+    font-size: 14px;
+    line-height: 1.55;
+    margin-bottom: 16px;
+  }
+  .bd-agent-impact {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--bd-electric-soft);
+    color: var(--bd-electric);
+    font-size: 13px;
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+  .bd-agent-source {
+    font-size: 11px;
+    color: var(--bd-muted);
+    border-top: 1px solid var(--bd-border);
+    padding-top: 10px;
+    margin-top: auto;
+  }
+
+  /* ROI accordions */
+  .bd-roi-levels { display: flex; flex-direction: column; gap: 14px; }
+  .bd-acc {
+    border: 1px solid var(--bd-border);
+    border-radius: 14px;
+    background: var(--bd-card);
+    overflow: hidden;
+  }
+  .bd-acc-summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 18px 22px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .bd-acc-summary::-webkit-details-marker { display: none; }
+  .bd-acc-num {
+    width: 38px; height: 38px;
+    border-radius: 10px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900;
+    flex-shrink: 0;
+  }
+  .bd-acc-1 { background: rgba(59,130,246,0.18); color: var(--bd-electric); }
+  .bd-acc-2 { background: rgba(22,163,74,0.18); color: #4ADE80; }
+  .bd-acc-3 { background: rgba(245,158,11,0.18); color: var(--bd-gold); }
+  .bd-acc-title { display: block; font-size: 17px; font-weight: 800; }
+  .bd-acc-meta { display: block; font-size: 12px; color: var(--bd-muted); margin-top: 2px; }
+  .bd-acc-chev { color: var(--bd-muted); transition: transform 0.25s; }
+  .bd-acc[open] .bd-acc-chev { transform: rotate(180deg); }
+  .bd-acc[open] .bd-table { margin: 0 22px 22px; border-radius: 10px; }
+
+  /* ROI summary table — bigger & bolder */
+  .bd-table-summary table { font-size: 15px; }
+  .bd-table-summary tbody td { padding: 16px 18px; }
+  .bd-row-gross td {
+    background: rgba(59,130,246,0.10);
+    color: #DBEAFE;
+    font-weight: 800;
+    border-top: 1px solid rgba(59,130,246,0.4);
+  }
+  .bd-row-negative td {
+    color: #FCA5A5;
+    font-weight: 700;
+  }
+  .bd-row-net td {
+    background: rgba(34,197,94,0.10);
+    color: #86EFAC;
+    font-weight: 800;
+    border-top: 1px solid rgba(34,197,94,0.4);
+    border-bottom: none;
+  }
+
+  /* ROI badges */
+  .bd-roi-badges {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+  }
+  @media (min-width: 768px) { .bd-roi-badges { grid-template-columns: repeat(4, 1fr); } }
+  .bd-roi-badge {
+    border-radius: 18px;
+    padding: 22px;
+    text-align: center;
+    border: 1px solid;
+    background: var(--bd-card);
+  }
+  .bd-roi-badge-amber {
+    border-color: rgba(245,158,11,0.5);
+    background: linear-gradient(180deg, rgba(245,158,11,0.12), rgba(245,158,11,0.02));
+  }
+  .bd-roi-badge-amber .bd-roi-badge-value { color: var(--bd-gold); }
+
+  .bd-roi-badge-green {
+    border-color: rgba(22,163,74,0.5);
+    background: linear-gradient(180deg, rgba(22,163,74,0.12), rgba(22,163,74,0.02));
+  }
+  .bd-roi-badge-green .bd-roi-badge-value { color: #4ADE80; }
+
+  .bd-roi-badge-green-bright {
+    border-color: rgba(34,197,94,0.7);
+    background: linear-gradient(180deg, rgba(34,197,94,0.22), rgba(34,197,94,0.04));
+    box-shadow: 0 0 0 1px rgba(34,197,94,0.18) inset;
+  }
+  .bd-roi-badge-green-bright .bd-roi-badge-value {
+    color: #86EFAC;
+    text-shadow: 0 0 24px rgba(134,239,172,0.5);
+  }
+
+  .bd-roi-badge-year {
+    color: var(--bd-muted);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+  .bd-roi-badge-value {
+    margin-top: 8px;
+    font-size: clamp(2rem, 2vw + 1rem, 2.75rem);
+    font-weight: 900;
+    letter-spacing: -0.025em;
+    line-height: 1;
+  }
+  .bd-roi-badge-blurb {
+    margin-top: 6px;
+    font-size: 12px;
+    color: var(--bd-muted);
+  }
+
+  /* Inaction */
+  .bd-inaction-hero {
+    text-align: center;
+    padding: 32px 0;
+    border: 1px solid rgba(239,68,68,0.3);
+    border-radius: 22px;
+    background: radial-gradient(ellipse at center, rgba(239,68,68,0.08), transparent 70%);
+  }
+  .bd-inaction-amount {
+    font-size: clamp(3.5rem, 8vw + 1rem, 7rem);
+    font-weight: 900;
+    color: #FCA5A5;
+    letter-spacing: -0.04em;
+    line-height: 1;
+    text-shadow: 0 0 40px rgba(252,165,165,0.25);
+  }
+  .bd-inaction-period {
+    margin-top: 8px;
+    color: #FCA5A5;
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+  }
+  .bd-inaction-quote {
+    text-align: center;
+    font-size: 18px;
+    font-style: italic;
+    font-weight: 700;
+    color: var(--bd-text);
+    line-height: 1.5;
+  }
+
+  /* Roadmap */
+  .bd-roadmap { display: flex; flex-direction: column; gap: 14px; }
+  .bd-phase {
+    display: grid;
+    grid-template-columns: 88px 1fr;
+    gap: 18px;
+    background: var(--bd-card);
+    border: 1px solid var(--bd-border);
+    border-radius: 16px;
+    padding: 22px;
+    align-items: stretch;
+  }
+  .bd-phase-quickwin {
+    border-color: rgba(245,158,11,0.4);
+    background: linear-gradient(180deg, rgba(245,158,11,0.06), var(--bd-card));
+  }
+  .bd-phase-num {
+    width: 88px; height: 100%;
+    min-height: 88px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(180deg, var(--bd-electric-soft), transparent);
+    border-radius: 12px;
+    color: var(--bd-electric);
+    font-size: 32px;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+  }
+  .bd-phase-quickwin .bd-phase-num {
+    background: linear-gradient(180deg, var(--bd-gold-soft), transparent);
+    color: var(--bd-gold);
+  }
+  .bd-phase-name {
+    font-size: 17px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+  }
+  .bd-phase-range {
+    color: var(--bd-muted);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--bd-border);
+    padding: 4px 10px;
+    border-radius: 999px;
+  }
+  .bd-phase-bullets {
+    margin-top: 10px;
+    list-style: none;
+    padding: 0;
+  }
+  .bd-phase-bullets li {
+    color: var(--bd-text);
+    font-size: 14px;
+    padding: 4px 0 4px 20px;
+    position: relative;
+    line-height: 1.5;
+  }
+  .bd-phase-bullets li::before {
+    content: '';
+    position: absolute;
+    left: 4px; top: 14px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--bd-electric);
+  }
+  .bd-phase-delivers {
+    margin-top: 14px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 10px;
+    background: rgba(34,197,94,0.12);
+    color: #86EFAC;
+    border: 1px solid rgba(34,197,94,0.35);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  /* Before/after */
+  .bd-ba-card {
+    background: var(--bd-card);
+    border: 1px solid var(--bd-border);
+    border-radius: 16px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .bd-ba-block {
+    padding: 14px 16px;
+    border-radius: 12px;
+    background: var(--bd-navy-2);
+    border: 1px solid var(--bd-border);
+  }
+  .bd-ba-after { border-color: rgba(34,197,94,0.35); background: rgba(34,197,94,0.06); }
+  .bd-ba-tag {
+    color: var(--bd-muted);
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 3px;
+    margin-bottom: 6px;
+  }
+  .bd-ba-tag-after { color: #4ADE80; }
+  .bd-ba-block p { font-size: 14px; line-height: 1.55; }
+  .bd-ba-arrow {
+    align-self: center;
+    color: var(--bd-electric);
+  }
+  .bd-ba-impact {
+    margin-top: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: var(--bd-electric-soft);
+    color: var(--bd-electric);
+    font-size: 12px;
+    font-weight: 700;
+    align-self: flex-start;
+  }
+
+  /* Benchmarks */
+  .bd-bench-card {
+    background: var(--bd-card);
+    border: 1px solid var(--bd-border);
+    border-radius: 14px;
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+  }
+  .bd-bench-icon {
+    width: 38px; height: 38px;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 10px;
+    background: var(--bd-gold-soft);
+    color: var(--bd-gold);
+    margin-bottom: 14px;
+  }
+  .bd-bench-source {
+    color: var(--bd-muted);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .bd-bench-highlight {
+    font-size: 19px;
+    font-weight: 800;
+    color: var(--bd-text);
+    letter-spacing: -0.01em;
+    line-height: 1.25;
+  }
+  .bd-bench-detail {
+    margin-top: 8px;
+    color: var(--bd-muted);
+    font-size: 13px;
+    line-height: 1.5;
+  }
+
+  /* Group effect */
+  .bd-group-card {
+    background: linear-gradient(135deg, rgba(59,130,246,0.18), rgba(245,158,11,0.10));
+    border: 1px solid rgba(59,130,246,0.35);
+    border-radius: 22px;
+    padding: 36px;
+    text-align: center;
+  }
+  .bd-group-icon {
+    width: 64px; height: 64px;
+    margin: 0 auto 16px;
+    color: var(--bd-electric);
+  }
+  .bd-group-text {
+    font-size: clamp(1.05rem, 1vw + 0.4rem, 1.3rem);
+    line-height: 1.55;
+    color: var(--bd-text);
+    max-width: 760px;
+    margin: 0 auto;
+  }
+  .bd-group-text strong { color: var(--bd-gold); }
+  .bd-flags {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+    margin-top: 28px;
+  }
+  .bd-flag {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--bd-border);
+    padding: 10px 16px;
+    border-radius: 999px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 600;
+  }
+  .bd-flag-highlight {
+    border-color: var(--bd-gold);
+    background: var(--bd-gold-soft);
+    color: var(--bd-gold);
+    font-weight: 800;
+  }
+  .bd-flag-emoji { font-size: 18px; line-height: 1; }
+
+  /* Checklist */
+  .bd-checklist { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+  .bd-checkitem {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    background: var(--bd-card);
+    border: 1px solid var(--bd-border);
+    border-radius: 12px;
+    padding: 14px 18px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .bd-check {
+    width: 22px; height: 22px;
+    border-radius: 6px;
+    background: var(--bd-electric-soft);
+    color: var(--bd-electric);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .bd-agent-card { transition: none !important; }
+  }
+</style>
