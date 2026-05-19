@@ -1,0 +1,63 @@
+---
+title: "Camilo & Claudia · Video Institucional"
+tagline: "Cómo un Solutions Engineer y Claude Code transformaron la velocidad de entrega de demos"
+client: "Salesforce Colombia · Solutions Engineering"
+category: "Demo"
+stack: ["Python", "edge-tts", "ffmpeg", "Pillow", "JavaScript", "Canvas API"]
+coverImage: "/images/projects/camilo-claudia-cover.svg"
+duration: "5 min"
+linesOfCode: "0 líneas manuales"
+keyMetric: "10×"
+keyMetricLabel: "más rápido · calidad de producción"
+featured: true
+publishedAt: 2026-05-19
+videoUrl: "/videos/camilo-claudia-institucional.mp4"
+order: 0
+---
+
+## Contexto
+
+Pieza de storytelling ejecutivo para mostrar al equipo de Solutions Engineering
+de Salesforce LATAM cómo la colaboración humano-IA transformó la entrega de
+demos en Colombia. Producido para presentar ante José Luis Varela y líderes
+ejecutivos del equipo.
+
+## Stack Tecnológico
+
+- **Voz**: edge-tts con voz neuronal `es-CO-SalomeNeural` (colombiana femenina)
+- **Frames**: Pillow + tipografía Arial Black con paleta institucional Salesforce
+  (`#032D60` Navy · `#0070D2` Blue · `#00A1E0` Sky · `#1B96FF` Highlight)
+- **Compose**: ffmpeg con `zoompan` (subtle ken-burns) + `fade` global
+- **Output**: 1920×1080 · 30 fps · H.264 + AAC · faststart enabled
+- **Captions**: VTT generado con whisper en español
+
+## El Reto
+
+Comunicar en menos de 5 minutos una idea que normalmente requiere 30 minutos
+de presentación: la colaboración entre Camilo Páez (SE Salesforce Colombia)
+y Claudia (Claude Code) para construir demos personalizadas para AXA, BBVA y
+La Previsora. El video debía ser ejecutivo, inspirador y orientado a ROI.
+
+## La Solución
+
+8 secuencias narrativas de 30-60s cada una:
+1. Intro · "Camilo & Claudia"
+2. El desafío (3 clientes en sectores distintos)
+3. La colaboración (ideas → arquitectura → código)
+4. Los resultados (4 demos rotativas)
+5. El impacto (gráfico antes/después)
+6. Salesforce Days (montaje de fechas)
+7. La fórmula (humano + IA)
+8. Cierre + CTA `proyectospaez.vercel.app`
+
+Pipeline reproducible: edge-tts genera la narración, Pillow renderiza los
+frames base, ffmpeg ensambla con ken-burns y cross-fades. El proceso completo
+toma menos de 10 minutos de cómputo.
+
+## Resultado
+
+- **5 minutos exactos** de video institucional listo para Slack o LinkedIn
+- **Voz colombiana neuronal** sincronizada con cada secuencia
+- **12 MB** en H.264 — apto para CDN sin penalidades de carga
+- **Subtítulos en español** generados automáticamente
+- **Reproducible**: el mismo prompt se puede adaptar a otros narradores y deals
